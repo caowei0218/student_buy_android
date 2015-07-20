@@ -22,7 +22,6 @@ import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.bean.FriendBean;
-import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.SysApplication;
 
 public class ChatActivity extends BaseActivity implements OnClickListener {
@@ -38,6 +37,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去
 
 		friendBean = (FriendBean) getIntent().getExtras().get("friendBean");
+		
 		init();
 		setOnClickListener();
 
@@ -49,7 +49,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * */
 	private void handlePublishAlias(final String msg, final String alias) {
 		if (TextUtils.isEmpty(msg) || TextUtils.isEmpty(alias)) {
-			Toast.makeText(ChatActivity.this, "收信人和消息不能为空", Toast.LENGTH_SHORT)
+			Toast.makeText(ChatActivity.this, "消息不能为空", Toast.LENGTH_SHORT)
 					.show();
 			return;
 		}

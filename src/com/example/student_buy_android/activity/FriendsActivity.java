@@ -39,16 +39,12 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 		friends_list.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				// 跳转好友详情页面
 				Intent intent = new Intent(FriendsActivity.this,
-						ChatActivity.class);
-
-				String username = friendBeans.get(position).getUsername();
-				FriendBean friendBean = new FriendBean();
-				friendBean.setUsername(username);
-
+						FriendInfoActivity.class);
+				FriendBean friendBean = friendBeans.get(position);
 				intent.putExtra("friendBean", friendBean);
 				startActivity(intent);
-
 			}
 		});
 	}

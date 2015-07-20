@@ -10,11 +10,20 @@ public class FriendBean implements Serializable {
 	private String nickname;
 	private String email;
 	private String timeCreated;
-	private String description;
+	private String description;// 个性签名
 	private String address;
 	private String city;
 	private String gender;
 	private String phoneNumber;
+	private String alias;// 备注名
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
 	public String getIsActive() {
 		return isActive;
