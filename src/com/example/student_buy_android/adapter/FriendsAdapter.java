@@ -12,28 +12,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.bean.FriendBean;
 
 @SuppressLint({ "ViewHolder", "InflateParams" })
 public class FriendsAdapter extends BaseAdapter {
 	private LayoutInflater layoutInflater;
 	private Context context;
-	private List<String> data;
+	private List<FriendBean> friendBeans;
 
 	private ImageView show_image;
 	private TextView show_name;
 
-	public FriendsAdapter(List<String> data, Context context) {
+	public FriendsAdapter(List<FriendBean> friendBeans, Context context) {
 		this.layoutInflater = LayoutInflater.from(context);
 		this.context = context;
-		this.data = data;
+		this.friendBeans = friendBeans;
 	}
 
 	public int getCount() {
-		return data.size();
+		return friendBeans.size();
 	}
 
-	public Object getItem(int position) {
-		return data.get(position);
+	public FriendBean getItem(int position) {
+		return friendBeans.get(position);
 	}
 
 	public long getItemId(int position) {
@@ -41,10 +42,10 @@ public class FriendsAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-		convertView = layoutInflater.inflate(
-				R.layout.friends_layout_listitem, null);// 这个过程相当耗时间
+		convertView = layoutInflater.inflate(R.layout.friends_layout_listitem,
+				null);// 这个过程相当耗时间
 		show_name = (TextView) convertView.findViewById(R.id.show_name);
-		show_name.setText(data.get(position));
+		show_name.setText(friendBeans.get(position).getUsername());
 		return convertView;
 	}
 

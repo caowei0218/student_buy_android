@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.SysApplication;
 
@@ -29,14 +30,14 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	private EditText message;
 	private Button send;
 	private ScrollView scroll;
-	private UserBean userBean;
+	private FriendBean friendBean;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.chat_layout);
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去
 
-		userBean = (UserBean) getIntent().getExtras().get("userBean");
+		friendBean = (FriendBean) getIntent().getExtras().get("friendBean");
 		init();
 		setOnClickListener();
 
@@ -116,7 +117,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * 更新聊天窗口
 	 * */
 	public void updateChatView(String topic, String msg) {
-		String str ="“" +topic + "”发来消息:" + msg;
+		String str = "“" + topic + "”发来消息:" + msg;
 		setCostomMsg(str);
 	}
 
@@ -124,7 +125,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.send:
 			String msg = this.message.getText().toString().trim();
-			handlePublishAlias(msg, userBean.getAccount());
+			handlePublishAlias(msg, friendBean.getUsername());
 			// YunBaManager.publish(getApplicationContext(),
 			// MyApplication.TOPIC, "r", null);
 			break;

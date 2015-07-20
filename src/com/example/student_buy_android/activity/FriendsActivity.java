@@ -1,6 +1,5 @@
 package com.example.student_buy_android.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -14,15 +13,16 @@ import android.widget.ListView;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.adapter.FriendsAdapter;
-import com.example.student_buy_android.bean.UserBean;
+import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.util.SysApplication;
+import com.example.student_buy_android.webservice.GetFriendListWebservice;
 
 public class FriendsActivity extends BaseActivity implements OnClickListener {
 
 	private ListView friends_list;
 	private Button btn_add;
 	private FriendsAdapter friendsAdapter;
-	List<String> data;
+	private List<FriendBean> friendBeans;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,10 +31,9 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 
 		init();
 
-		// GetFriendListWebservice getFriendListWebservice = new
-		// GetFriendListWebservice(
-		// FriendsActivity.this, this);
-		// getFriendListWebservice.execute();
+		GetFriendListWebservice getFriendListWebservice = new GetFriendListWebservice(
+				FriendsActivity.this, this);
+		getFriendListWebservice.execute();
 
 		// ListView item点击事件
 		friends_list.setOnItemClickListener(new OnItemClickListener() {
@@ -43,12 +42,13 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 				Intent intent = new Intent(FriendsActivity.this,
 						ChatActivity.class);
 
-				String account = data.get(position);
-				UserBean userBean = new UserBean();
-				userBean.setAccount(account);
+				String username = friendBeans.get(position).getUsername();
+				FriendBean friendBean = new FriendBean();
+				friendBean.setUsername(username);
 
-				intent.putExtra("userBean", userBean);
+				intent.putExtra("friendBean", friendBean);
 				startActivity(intent);
+
 			}
 		});
 	}
@@ -56,19 +56,14 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 	private void init() {
 		findViewById();
 		setOnClickListener();
-
-		data = new ArrayList<String>();
-		data.add("caowei0218");
-		data.add("chenxinchun");
-		data.add("liushun");
-		setAdapter(data);
 	}
 
 	/**
 	 * 绑定Adapter
 	 * */
-	public void setAdapter(List<String> data) {
-		friendsAdapter = new FriendsAdapter(data, FriendsActivity.this);
+	public void setAdapter(List<FriendBean> friendBeans) {
+		this.friendBeans = friendBeans;
+		friendsAdapter = new FriendsAdapter(friendBeans, FriendsActivity.this);
 		friends_list.setAdapter(friendsAdapter);
 	}
 
