@@ -26,6 +26,10 @@ import com.example.student_buy_android.activity.AddFriendActivity;
 import com.example.student_buy_android.activity.FriendsActivity;
 import com.example.student_buy_android.util.Common;
 
+/**
+ * 添加好友
+ * HttpPost请求
+ * */
 public class AddFriendWebservice extends AsyncTask<String, Integer, String> {
 	private AddFriendActivity addFriendActivity;
 	private Context context;

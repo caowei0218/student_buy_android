@@ -36,6 +36,10 @@ import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.ChatUtil;
 import com.example.student_buy_android.util.Common;
 
+/**
+ * 登陆
+ * HttpPost请求
+ * */
 public class LoginWebservice extends AsyncTask<String, Integer, String> {
 	private LoginActivity loginActivity;
 	private Context context = null;

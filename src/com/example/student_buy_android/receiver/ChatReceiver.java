@@ -1,5 +1,8 @@
 package com.example.student_buy_android.receiver;
 
+import com.example.student_buy_android.bean.Message;
+import com.example.student_buy_android.util.JsonBinder;
+
 import io.yunba.android.manager.YunBaManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,19 +14,22 @@ public class ChatReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		if (YunBaManager.MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
 
-			String topic = intent.getStringExtra(YunBaManager.MQTT_TOPIC);
 			String msg = intent.getStringExtra(YunBaManager.MQTT_MSG);
 
-			processCustomMessage(context, topic, msg);
+			JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
+			Message message = jsonBinder.jsonToObj(msg, Message.class);
+			processCustomMessage(context, message.getUid(), message.getMsg());
 		}
 	}
 
 	/**
 	 * 发送消息到MainActivity(广播)
+	 * @param send 发送人
+	 * @param send 发送的消息
 	 * */
-	private void processCustomMessage(Context context, String topic, String msg) {
+	private void processCustomMessage(Context context, String send, String msg) {
 		Intent intent = new Intent("message_received_action");
-		intent.putExtra("topic", topic);
+		intent.putExtra("send", send);
 		intent.putExtra("msg", msg);
 		context.sendBroadcast(intent);
 	}

@@ -23,6 +23,10 @@ import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
 
+/**
+ * 获得好友列表
+ * HttpGet请求
+ * */
 public class GetFriendListWebservice extends AsyncTask<String, Integer, String> {
 	private JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
 	private FriendsActivity friendsActivity;
@@ -81,8 +85,6 @@ public class GetFriendListWebservice extends AsyncTask<String, Integer, String> 
 
 				// 解析获得的好友josn字符串
 				try {
-					String s = jsonObject.getString("friendList");
-					System.out.println(s);
 					friendBeans = jsonBinder.stringToList(
 							jsonObject.getString("friendList"),
 							FriendBean.class);

@@ -10,6 +10,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.bean.FriendBean;
+import com.example.student_buy_android.bean.Message;
+import com.example.student_buy_android.util.JsonBinder;
 import com.example.student_buy_android.util.SysApplication;
 
 public class ChatActivity extends BaseActivity implements OnClickListener {
@@ -53,7 +56,15 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 					.show();
 			return;
 		}
-		YunBaManager.publishToAlias(getApplicationContext(), alias, msg,
+		
+		// 将发送者id和msg进行josn封装
+		JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
+		SharedPreferences preference = getSharedPreferences("user", Context.MODE_PRIVATE);     
+		Message message = new Message();
+		message.setUid(preference.getString("account", ""));//如果取不到值就取值后面的参数
+		message.setMsg(msg);
+		
+		YunBaManager.publishToAlias(getApplicationContext(), alias, jsonBinder.toJson(message),
 				new IMqttActionListener() {
 					public void onSuccess(IMqttToken asyncActionToken) {
 
@@ -107,7 +118,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	public class MyBroadcastReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String topic = intent.getStringExtra("topic");
+			String topic = intent.getStringExtra("send");
 			String msg = intent.getStringExtra("msg");
 			updateChatView(topic, msg);
 		}
@@ -124,8 +135,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.send:
-			String msg = this.message.getText().toString().trim();
-			handlePublishAlias(msg, friendBean.getUsername());
+			handlePublishAlias(this.message.getText().toString().trim(), friendBean.getUsername());
 			// YunBaManager.publish(getApplicationContext(),
 			// MyApplication.TOPIC, "r", null);
 			break;

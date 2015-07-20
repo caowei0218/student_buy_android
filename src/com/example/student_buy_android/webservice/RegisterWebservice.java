@@ -24,7 +24,10 @@ import android.widget.Toast;
 import com.example.student_buy_android.activity.RegistActivity;
 import com.example.student_buy_android.bean.UserBean;
 
-@SuppressWarnings("deprecation")
+/**
+ * æ³¨å†Œ
+ * HttpPostè¯·æ±‚
+ * */
 public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 
 	private RegistActivity registActivity;
@@ -45,11 +48,11 @@ public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		registActivity.beginWaitDialog("ÕýÔÚ×¢²á£¬ÇëµÈ´ý", true);
+		registActivity.beginWaitDialog("ï¿½ï¿½ï¿½ï¿½×¢ï¿½á£¬ï¿½ï¿½È´ï¿½", true);
 
 		httpClient = new DefaultHttpClient();
 		post = new HttpPost(WebserviceUtils.HTTPTRANSPORTSE + method);
-		// Èç¹û´«µÝ²ÎÊý¸öÊý±È½Ï¶àµÄ»°¿ÉÒÔ¶Ô´«µÝµÄ²ÎÊý½øÐÐ·â×°
+		// ï¿½ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È½Ï¶ï¿½Ä»ï¿½ï¿½ï¿½ï¿½Ô¶Ô´ï¿½ï¿½ÝµÄ²ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½×°
 		params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("username", userBean.getAccount()));
 		params.add(new BasicNameValuePair("password", userBean.getPassword()));
@@ -62,12 +65,12 @@ public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 	protected String doInBackground(String... params) {
 		String returnStr = null;
 
-		// ÉèÖÃÇëÇó²ÎÊý
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		try {
 			post.setEntity(new UrlEncodedFormEntity(this.params, HTTP.UTF_8));
-			// ·¢ËÍPOSTÇëÇó
+			// ï¿½ï¿½ï¿½ï¿½POSTï¿½ï¿½ï¿½ï¿½
 			HttpResponse response = httpClient.execute(post);
-			// Èç¹û·þÎñÆ÷³É¹¦µØ·µ»ØÏìÓ¦
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦
 			if (response.getStatusLine().getStatusCode() == 200) {
 				HttpEntity entity = response.getEntity();
 				returnStr = new String(EntityUtils.toByteArray(entity), "UTF-8");
@@ -88,10 +91,10 @@ public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 			JSONTokener jsonParser = new JSONTokener(result);
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
-				Toast.makeText(context, "×¢²á³É¹¦", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "×¢ï¿½ï¿½É¹ï¿½", Toast.LENGTH_SHORT).show();
 				registActivity.finish();
 			} else {
-				Toast.makeText(context, "×¢²áÊ§°Ü", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "×¢ï¿½ï¿½Ê§ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 				System.out.println(jsonObject.getString("errors"));
 				System.out.println(jsonObject.getString("errfor"));
 			}

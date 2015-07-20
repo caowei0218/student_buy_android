@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.util.SysApplication;
+import com.example.student_buy_android.webservice.DelFriendWebservice;
 
 public class FriendInfoActivity extends BaseActivity implements OnClickListener {
 
@@ -72,7 +73,9 @@ public class FriendInfoActivity extends BaseActivity implements OnClickListener 
 			startActivity(intent);
 			break;
 		case R.id.btn_del:
-			
+			DelFriendWebservice delFriendWebservice = new DelFriendWebservice(
+					FriendInfoActivity.this, this, friendBean.getUsername());
+			delFriendWebservice.execute();
 			break;
 		}
 	}

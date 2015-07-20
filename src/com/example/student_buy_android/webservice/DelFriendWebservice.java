@@ -7,25 +7,25 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.student_buy_android.activity.FriendInfoActivity;
-import com.example.student_buy_android.activity.FriendsActivity;
 import com.example.student_buy_android.util.Common;
 
+/**
+ * 删除好友
+ * HttpDelete请求
+ * */
 public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 	private FriendInfoActivity friendInfoActivity;
 	private Context context;
@@ -34,7 +34,7 @@ public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 
 	private HttpClient httpClient;
 	private List<NameValuePair> params;
-	private HttpPost post;
+	private HttpDelete delete;
 
 	public DelFriendWebservice(FriendInfoActivity friendInfoActivity,
 			Context context, String friendID) {
@@ -48,7 +48,7 @@ public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 		friendInfoActivity.beginWaitDialog("正在删除", true);
 
 		httpClient = new DefaultHttpClient();
-		post = new HttpPost(WebserviceUtils.HTTPTRANSPORTSE + method);
+		delete = new HttpDelete(WebserviceUtils.HTTPTRANSPORTSE + method);
 		// 如果传递参数个数比较多的话可以对传递的参数进行封装
 		params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("friendUsername", friendID));
@@ -57,13 +57,13 @@ public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 	protected String doInBackground(String... params) {
 		String result = null;
 		try {
-			post.setEntity(new UrlEncodedFormEntity(this.params, HTTP.UTF_8));
+//			delete.setEntity(new UrlEncodedFormEntity(this.params, HTTP.UTF_8));
 			// 带上session发请求
 			if (null != Common.SESSIONID) {
-				post.setHeader("Cookie", "connect.sid=" + Common.SESSIONID);
+				delete.setHeader("Cookie", "connect.sid=" + Common.SESSIONID);
 			}
 			// 发送POST请求
-			HttpResponse response = httpClient.execute(post);
+			HttpResponse response = httpClient.execute(delete);
 			// 如果服务器成功地返回响应
 			if (response.getStatusLine().getStatusCode() == 200) {
 				HttpEntity entity = response.getEntity();
@@ -85,9 +85,7 @@ public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
 
-				Intent intent = new Intent(context, FriendsActivity.class);
-				context.startActivity(intent);
-				friendInfoActivity.finish();
+				Toast.makeText(context, "删除成功",Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(context, jsonObject.getString("errors"),
 						Toast.LENGTH_SHORT).show();
