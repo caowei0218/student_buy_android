@@ -19,6 +19,7 @@ import com.example.student_buy_android.R;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.BitmapUtil;
 import com.example.student_buy_android.util.SysApplication;
+import com.example.student_buy_android.util.Word;
 import com.example.student_buy_android.webservice.LoginWebservice;
 
 public class LoginActivity extends BaseActivity {
@@ -93,7 +94,9 @@ public class LoginActivity extends BaseActivity {
 				String account = login_et_account.getText().toString();
 				String password = login_et_password.getText().toString();
 				if ("".equals(account) || "".equals(password)) {
-					Toast.makeText(LoginActivity.this, "用户名密码不能为空",
+					Toast.makeText(
+							LoginActivity.this,
+							Word.LOGINACTIVITY_USERNAMEANDPASSWORDCAN_NOT_EMPTY,
 							Toast.LENGTH_SHORT).show();
 				} else {
 					login(account, password);
@@ -106,7 +109,7 @@ public class LoginActivity extends BaseActivity {
 		UserBean userBean = new UserBean();
 		userBean.setAccount(account);
 		userBean.setPassword(MD5Util.str2MD5(password));// 加密
-//		userBean.setPassword(password);// 加密
+		// userBean.setPassword(password);// 加密
 		LoginWebservice loginWebservice = new LoginWebservice(
 				LoginActivity.this, this, userBean);
 		loginWebservice.execute();
@@ -134,7 +137,8 @@ public class LoginActivity extends BaseActivity {
 		if (keyCode == KeyEvent.KEYCODE_BACK
 				&& event.getAction() == KeyEvent.ACTION_DOWN) {
 			if ((System.currentTimeMillis() - exitTime) > 2000) {
-				Toast.makeText(getApplicationContext(), "再按一次退出程序",
+				Toast.makeText(getApplicationContext(),
+						Word.LOGINACTIVITY_PRESS_AGAIN_TO_EXIT_THE_PROGRAM,
 						Toast.LENGTH_SHORT).show();
 				exitTime = System.currentTimeMillis();
 			} else {

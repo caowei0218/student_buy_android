@@ -22,6 +22,7 @@ import com.example.student_buy_android.activity.FriendsActivity;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
+import com.example.student_buy_android.util.Word;
 
 /**
  * 获得好友列表
@@ -47,7 +48,7 @@ public class GetFriendListWebservice extends AsyncTask<String, Integer, String> 
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		friendsActivity.beginWaitDialog("正在登陆", true);
+		friendsActivity.beginWaitDialog(Word.GETFRIENDLISTING, true);
 		httpClient = new DefaultHttpClient();
 		get = new HttpGet(WebserviceUtils.HTTPTRANSPORTSE + method);
 	}

@@ -26,6 +26,7 @@ import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.Message;
 import com.example.student_buy_android.util.JsonBinder;
 import com.example.student_buy_android.util.SysApplication;
+import com.example.student_buy_android.util.Word;
 
 public class ChatActivity extends BaseActivity implements OnClickListener {
 	private TextView jilu;
@@ -40,7 +41,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去
 
 		friendBean = (FriendBean) getIntent().getExtras().get("friendBean");
-		
+
 		init();
 		setOnClickListener();
 
@@ -52,20 +53,21 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * */
 	private void handlePublishAlias(final String msg, final String alias) {
 		if (TextUtils.isEmpty(msg) || TextUtils.isEmpty(alias)) {
-			Toast.makeText(ChatActivity.this, "消息不能为空", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(ChatActivity.this, Word.CHATACTIVITY_MESSAGENOTNULL,
+					Toast.LENGTH_SHORT).show();
 			return;
 		}
-		
+
 		// 将发送者id和msg进行josn封装
 		JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
-		SharedPreferences preference = getSharedPreferences("user", Context.MODE_PRIVATE);     
+		SharedPreferences preference = getSharedPreferences("user",
+				Context.MODE_PRIVATE);
 		Message message = new Message();
-		message.setUid(preference.getString("account", ""));//如果取不到值就取值后面的参数
+		message.setUid(preference.getString("account", ""));// 如果取不到值就取值后面的参数
 		message.setMsg(msg);
-		
-		YunBaManager.publishToAlias(getApplicationContext(), alias, jsonBinder.toJson(message),
-				new IMqttActionListener() {
+
+		YunBaManager.publishToAlias(getApplicationContext(), alias,
+				jsonBinder.toJson(message), new IMqttActionListener() {
 					public void onSuccess(IMqttToken asyncActionToken) {
 
 						StringBuilder showMsg = new StringBuilder();
@@ -76,8 +78,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void onFailure(IMqttToken asyncActionToken,
 							Throwable exception) {
-						String msg = "发送给" + alias + " 失败 : "
-								+ exception.getMessage();
+						String msg = Word.CHATACTIVITY_SENDTO + alias
+								+ " 失败 : " + exception.getMessage();
 						setCostomMsg(msg);
 					}
 				});
@@ -128,14 +130,15 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * 更新聊天窗口
 	 * */
 	public void updateChatView(String topic, String msg) {
-		String str = "“" + topic + "”发来消息:" + msg;
+		String str = "\"" + topic + "\"" + Word.CHATACTIVITY_SENTMESSAGE + msg;
 		setCostomMsg(str);
 	}
 
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.send:
-			handlePublishAlias(this.message.getText().toString().trim(), friendBean.getUsername());
+			handlePublishAlias(this.message.getText().toString().trim(),
+					friendBean.getUsername());
 			// YunBaManager.publish(getApplicationContext(),
 			// MyApplication.TOPIC, "r", null);
 			break;

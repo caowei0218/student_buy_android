@@ -38,6 +38,7 @@ public class BitmapUtil {
 		return image;
 	}
 
+	@SuppressWarnings("unused")
 	public static Bitmap toRoundBitmap(Context context, String filename) {
 		Bitmap bitmap = getBitmap(context, filename);
 		int width = bitmap.getWidth();

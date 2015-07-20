@@ -43,9 +43,7 @@ public class AddFriendActivity extends BaseActivity implements OnClickListener{
 		
 		switch (v.getId()) {
 		case R.id.add_friend:
-			String friendAccount = friend_account.getText().toString().trim();
-			System.out.println("ÃÌº”∫√”—:"+friendAccount);
-			AddFriendWebservice addFriendWebservice = new AddFriendWebservice(AddFriendActivity.this, this, friendAccount);
+			AddFriendWebservice addFriendWebservice = new AddFriendWebservice(AddFriendActivity.this, this, friend_account.getText().toString().trim());
 			addFriendWebservice.execute();
 			break;
 		}

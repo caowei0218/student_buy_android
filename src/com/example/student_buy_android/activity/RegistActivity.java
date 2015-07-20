@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.android.util.MD5Util;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.bean.UserBean;
+import com.example.student_buy_android.util.Word;
 import com.example.student_buy_android.webservice.RegisterWebservice;
 
 /**
@@ -28,7 +29,7 @@ public class RegistActivity extends BaseActivity {
 	private LayoutParams para;
 	private ImageButton back;
 	private Button btn_regist;
-	private EditText account,email,password, password_again;
+	private EditText account, email, password, password_again;
 	private LinearLayout regist_ll_info;
 	private UserBean userBean;
 
@@ -91,25 +92,26 @@ public class RegistActivity extends BaseActivity {
 		String passwordStr = password.getText().toString();
 		String password_againStr = password_again.getText().toString();
 		if (accountStr.equals("") || passwordStr.equals("")) {
-			Toast.makeText(RegistActivity.this, "用户名密码不能为空", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(RegistActivity.this,
+					Word.REGISTACTIVITY_USERNAMEANDPASSWORDCAN_NOT_EMPTY,
+					Toast.LENGTH_SHORT).show();
 			boo = false;
 			return boo;
 		}
 		if ("".equals(password_againStr)) {
-			Toast.makeText(RegistActivity.this, "请输入第二次密码", Toast.LENGTH_SHORT)
+			Toast.makeText(RegistActivity.this, Word.REGISTACTIVITY_ENTER_SECOND_PASSWORD, Toast.LENGTH_SHORT)
 					.show();
 			boo = false;
 			return boo;
 		}
 		if (!passwordStr.equals(password_againStr)) {
-			Toast.makeText(RegistActivity.this, "两次密码不一致", Toast.LENGTH_SHORT)
+			Toast.makeText(RegistActivity.this, Word.REGISTACTIVITY_PASSWORD_TWICE_INCONSISTENCY, Toast.LENGTH_SHORT)
 					.show();
 			boo = false;
 			return boo;
 		}
 		if (accountStr.length() < 4 || passwordStr.length() < 4) {
-			Toast.makeText(RegistActivity.this, "用户名或密码不能少于4位",
+			Toast.makeText(RegistActivity.this, Word.REGISTACTIVITY_USERNAMEANDPASSWORD_NOT_LESS_4,
 					Toast.LENGTH_SHORT).show();
 			boo = false;
 			return boo;

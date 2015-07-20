@@ -25,10 +25,10 @@ import android.widget.Toast;
 import com.example.student_buy_android.activity.AddFriendActivity;
 import com.example.student_buy_android.activity.FriendsActivity;
 import com.example.student_buy_android.util.Common;
+import com.example.student_buy_android.util.Word;
 
 /**
- * 添加好友
- * HttpPost请求
+ * 添加好友 HttpPost请求
  * */
 public class AddFriendWebservice extends AsyncTask<String, Integer, String> {
 	private AddFriendActivity addFriendActivity;
@@ -49,7 +49,7 @@ public class AddFriendWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		addFriendActivity.beginWaitDialog("正在添加", true);
+		addFriendActivity.beginWaitDialog(Word.Adding, true);
 
 		httpClient = new DefaultHttpClient();
 		post = new HttpPost(WebserviceUtils.HTTPTRANSPORTSE + method);

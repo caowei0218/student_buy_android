@@ -21,10 +21,10 @@ import android.widget.Toast;
 
 import com.example.student_buy_android.activity.FriendInfoActivity;
 import com.example.student_buy_android.util.Common;
+import com.example.student_buy_android.util.Word;
 
 /**
- * 删除好友
- * HttpDelete请求
+ * 删除好友 HttpDelete请求
  * */
 public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 	private FriendInfoActivity friendInfoActivity;
@@ -45,7 +45,7 @@ public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		friendInfoActivity.beginWaitDialog("正在删除", true);
+		friendInfoActivity.beginWaitDialog(Word.DELETEDING, true);
 
 		httpClient = new DefaultHttpClient();
 		delete = new HttpDelete(WebserviceUtils.HTTPTRANSPORTSE + method);
@@ -57,7 +57,8 @@ public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 	protected String doInBackground(String... params) {
 		String result = null;
 		try {
-//			delete.setEntity(new UrlEncodedFormEntity(this.params, HTTP.UTF_8));
+			// delete.setEntity(new UrlEncodedFormEntity(this.params,
+			// HTTP.UTF_8));
 			// 带上session发请求
 			if (null != Common.SESSIONID) {
 				delete.setHeader("Cookie", "connect.sid=" + Common.SESSIONID);
@@ -85,7 +86,7 @@ public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
 
-				Toast.makeText(context, "删除成功",Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, Word.SUCCESSFULLY_DELETED, Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(context, jsonObject.getString("errors"),
 						Toast.LENGTH_SHORT).show();

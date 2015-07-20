@@ -20,7 +20,7 @@ import com.example.student_buy_android.util.SysApplication;
  * Æô¶¯Activity
  * */
 public class SplashActivity extends BaseActivity {
-	private static final String SHAREDPREFERENCES_NAME = "first_pref";
+	private static final String SHAREDPREFERENCES_NAME = "FIRST_PREF";
 	private boolean isFirstIn = false;
 	private Handler mHandler = new Handler();
 

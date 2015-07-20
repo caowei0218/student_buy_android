@@ -23,10 +23,10 @@ import android.widget.Toast;
 
 import com.example.student_buy_android.activity.RegistActivity;
 import com.example.student_buy_android.bean.UserBean;
+import com.example.student_buy_android.util.Word;
 
 /**
- * 注册
- * HttpPost请求
+ * 注册 HttpPost请求
  * */
 public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 
@@ -48,15 +48,16 @@ public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		registActivity.beginWaitDialog("����ע�ᣬ��ȴ�", true);
+		registActivity.beginWaitDialog(Word.REGISTERING, true);
 
 		httpClient = new DefaultHttpClient();
 		post = new HttpPost(WebserviceUtils.HTTPTRANSPORTSE + method);
-		// ���ݲ������Ƚ϶�Ļ����ԶԴ��ݵĲ�����з�װ
+		// 如果传递参数个数比较多的话可以对传递的参数进行封装
 		params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("username", userBean.getAccount()));
 		params.add(new BasicNameValuePair("password", userBean.getPassword()));
-		params.add(new BasicNameValuePair("repassword", userBean.getRepassword()));
+		params.add(new BasicNameValuePair("repassword", userBean
+				.getRepassword()));
 		params.add(new BasicNameValuePair("nickname", userBean.getNickname()));
 		params.add(new BasicNameValuePair("email", userBean.getEmail()));
 
@@ -65,12 +66,12 @@ public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 	protected String doInBackground(String... params) {
 		String returnStr = null;
 
-		// �����������
+		// 设置请求参数
 		try {
 			post.setEntity(new UrlEncodedFormEntity(this.params, HTTP.UTF_8));
-			// ����POST����
+			// 发送POST请求
 			HttpResponse response = httpClient.execute(post);
-			// ���������ɹ��ط�����Ӧ
+			// 如果服务器成功地返回响应
 			if (response.getStatusLine().getStatusCode() == 200) {
 				HttpEntity entity = response.getEntity();
 				returnStr = new String(EntityUtils.toByteArray(entity), "UTF-8");
@@ -86,15 +87,15 @@ public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
 		registActivity.endWaitDialog(true);
-		
+
 		try {
 			JSONTokener jsonParser = new JSONTokener(result);
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
-				Toast.makeText(context, "ע��ɹ�", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, Word.REGISTER_SUCCESS, Toast.LENGTH_SHORT).show();
 				registActivity.finish();
 			} else {
-				Toast.makeText(context, "ע��ʧ��", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, Word.REGISTER_FAIL, Toast.LENGTH_SHORT).show();
 				System.out.println(jsonObject.getString("errors"));
 				System.out.println(jsonObject.getString("errfor"));
 			}

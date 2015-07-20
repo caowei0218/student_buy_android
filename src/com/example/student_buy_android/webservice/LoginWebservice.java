@@ -35,10 +35,10 @@ import com.example.student_buy_android.activity.LoginActivity;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.ChatUtil;
 import com.example.student_buy_android.util.Common;
+import com.example.student_buy_android.util.Word;
 
 /**
- * 登陆
- * HttpPost请求
+ * 登陆 HttpPost请求
  * */
 public class LoginWebservice extends AsyncTask<String, Integer, String> {
 	private LoginActivity loginActivity;
@@ -59,7 +59,7 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		loginActivity.beginWaitDialog("正在登陆", true);
+		loginActivity.beginWaitDialog(Word.LANDING, true);
 
 		httpClient = new DefaultHttpClient();
 		post = new HttpPost(WebserviceUtils.HTTPTRANSPORTSE + method);
@@ -117,7 +117,8 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 						new IMqttActionListener() {
 							@Override
 							public void onSuccess(IMqttToken asyncActionToken) {
-								ChatUtil.showToast("登录成功", loginActivity);
+								ChatUtil.showToast(Word.LOGIN_SUCCESSFUL,
+										loginActivity);
 							}
 
 							@Override
@@ -136,7 +137,8 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 				context.startActivity(intent);
 				loginActivity.finish();
 			} else {
-				Toast.makeText(context, "登陆失败", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, Word.LOGIN_FAIL, Toast.LENGTH_SHORT)
+						.show();
 			}
 
 		} catch (JSONException e) {
