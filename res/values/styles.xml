@@ -1,0 +1,15 @@
+<resources>
+
+    <style name="AppBaseTheme" parent="android:style/Theme.Light.NoTitleBar"></style>
+
+    <style name="AppTheme" parent="android:style/Theme.Light.NoTitleBar"></style>
+
+    <style name="login_tv_et_shape">
+        <item name="android:background">@drawable/login_tv_et_shape</item>
+    </style>
+
+    <style name="add_btn_shape">
+        <item name="android:background">@drawable/add_btn_shape</item>
+    </style>
+
+</resources>
