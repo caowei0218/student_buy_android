@@ -91,7 +91,7 @@ public class SplashActivity extends BaseActivity {
 		SharedPreferences sp = this.getSharedPreferences("user",
 				Context.MODE_PRIVATE);
 		String email = sp.getString("email", "");
-		String cellphone = sp.getString("cellphone", "");
+		String phoneNumber = sp.getString("phoneNumber", "");
 		String nickName = sp.getString("nickName", "");
 		String gender = sp.getString("gender", "");
 		String age = sp.getString("age_group", "");
@@ -105,7 +105,7 @@ public class SplashActivity extends BaseActivity {
 			userBean.setPassword(password);
 			userBean.setUser_id(id);
 			userBean.setEmail(email);
-			userBean.setCellphone(cellphone);
+			userBean.setPhoneNumber(phoneNumber);
 			userBean.setNickname(nickName);
 			userBean.setGender(gender);
 			userBean.setAge(age);

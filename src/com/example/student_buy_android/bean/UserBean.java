@@ -9,14 +9,49 @@ public class UserBean implements Serializable {
 	private String account;
 	private String password;
 	private String repassword;
+	private String description;
 	private String nickname;
 	private String age;
 	private String gender;// 男0，女1
-	private String cellphone;
+	private String phoneNumber;
 	private String email;
 	private String registe_date;
 	private String is_valid = "1";
 	private String token;
+	private String address;
+	private String city;
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public String getRepassword() {
 		return repassword;
@@ -72,14 +107,6 @@ public class UserBean implements Serializable {
 
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public String getCellphone() {
-		return cellphone;
-	}
-
-	public void setCellphone(String cellphone) {
-		this.cellphone = cellphone;
 	}
 
 	public String getEmail() {

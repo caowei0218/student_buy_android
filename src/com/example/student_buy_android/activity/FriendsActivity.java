@@ -20,7 +20,7 @@ import com.example.student_buy_android.webservice.GetFriendListWebservice;
 public class FriendsActivity extends BaseActivity implements OnClickListener {
 
 	private ListView friends_list;
-	private Button btn_add;
+	private Button btn_add, btn_my;
 	private FriendsAdapter friendsAdapter;
 	private List<FriendBean> friendBeans;
 
@@ -71,16 +71,22 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 			intent = new Intent(FriendsActivity.this, AddFriendActivity.class);
 			startActivity(intent);
 			break;
+		case R.id.btn_my:
+			intent = new Intent(FriendsActivity.this, MyActivity.class);
+			startActivity(intent);
+			break;
 		}
 	}
 
 	private void setOnClickListener() {
 		btn_add.setOnClickListener(this);
+		btn_my.setOnClickListener(this);
 	}
 
 	private void findViewById() {
 		friends_list = (ListView) findViewById(R.id.friends_list);
 		btn_add = (Button) findViewById(R.id.btn_add);
+		btn_my = (Button) findViewById(R.id.btn_my);
 	}
 
 }

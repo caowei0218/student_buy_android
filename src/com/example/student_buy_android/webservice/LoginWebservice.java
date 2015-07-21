@@ -157,7 +157,7 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 		editor.putString("password", password);
 		editor.putString("id", id);
 		editor.putString("email", userBean.getEmail());
-		editor.putString("cellphone", userBean.getCellphone());
+		editor.putString("phoneNumber", userBean.getPhoneNumber());
 		editor.putString("nickName", userBean.getNickname());
 		editor.putString("gender", userBean.getGender());
 		editor.putString("age_group", userBean.getAge());
