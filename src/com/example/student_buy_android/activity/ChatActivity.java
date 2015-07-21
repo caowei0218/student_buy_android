@@ -2,10 +2,12 @@ package com.example.student_buy_android.activity;
 
 import io.yunba.android.manager.YunBaManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
 import org.eclipse.paho.client.mqttv3.IMqttToken;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,23 +19,28 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.adapter.ChatMessageAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.Message;
+import com.example.student_buy_android.bean.Message.Type;
 import com.example.student_buy_android.util.JsonBinder;
 import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.util.Word;
 
 public class ChatActivity extends BaseActivity implements OnClickListener {
-	private TextView jilu;
-	private EditText message;
+	private TextView tv_name;
+	private EditText et_message;
 	private Button send;
-	private ScrollView scroll;
 	private FriendBean friendBean;
+	private ChatMessageAdapter chatMessageAdapter;
+	private ListView lv_chat;
+	private Message message;
+	private List<Message> messages = new ArrayList<Message>();
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,6 +51,9 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 
 		init();
 		setOnClickListener();
+
+		chatMessageAdapter = new ChatMessageAdapter(this, messages);
+		lv_chat.setAdapter(chatMessageAdapter);
 
 		registerBoradcastReceiver();
 	}
@@ -62,46 +72,23 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
 		SharedPreferences preference = getSharedPreferences("user",
 				Context.MODE_PRIVATE);
-		Message message = new Message();
+		message = new Message();
 		message.setUid(preference.getString("account", ""));// 如果取不到值就取值后面的参数
 		message.setMsg(msg);
+		message.setType(Type.OUTPUT);
+		updateChatView(message);
 
 		YunBaManager.publishToAlias(getApplicationContext(), alias,
 				jsonBinder.toJson(message), new IMqttActionListener() {
 					public void onSuccess(IMqttToken asyncActionToken) {
 
-						StringBuilder showMsg = new StringBuilder();
-						showMsg.append(msg);
-						setCostomMsg(showMsg.toString());
 					}
 
 					@Override
 					public void onFailure(IMqttToken asyncActionToken,
 							Throwable exception) {
-						String msg = Word.CHATACTIVITY_SENDTO + alias
-								+ " 失败 : " + exception.getMessage();
-						setCostomMsg(msg);
 					}
 				});
-	}
-
-	private void setCostomMsg(final String msg) {
-		setCostomMsg(this, msg);
-	}
-
-	public void setCostomMsg(Activity context, final String msg) {
-		if (null != jilu) {
-			context.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					jilu.append(msg + "\r\n");
-					if (null != jilu) {
-						scroll.fullScroll(View.FOCUS_DOWN);
-					}
-				}
-			});
-		}
-
 	}
 
 	/**
@@ -120,25 +107,29 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	public class MyBroadcastReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			String topic = intent.getStringExtra("send");
-			String msg = intent.getStringExtra("msg");
-			updateChatView(topic, msg);
+			Message message = (Message) intent.getExtras().get("message");
+			message.setType(Type.INPUT);
+			updateChatView(message);
 		}
 	}
 
 	/**
 	 * 更新聊天窗口
 	 * */
-	public void updateChatView(String topic, String msg) {
-		String str = "\"" + topic + "\"" + Word.CHATACTIVITY_SENTMESSAGE + msg;
-		setCostomMsg(str);
+	public void updateChatView(Message message) {
+		messages.add(message);
+		chatMessageAdapter.notifyDataSetChanged();
+		lv_chat.setSelection(messages.size() - 1);
 	}
 
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.send:
-			handlePublishAlias(this.message.getText().toString().trim(),
-					friendBean.getUsername());
+			if (!"".equals(et_message.getText().toString().trim())) {
+				handlePublishAlias(this.et_message.getText().toString().trim(),
+						friendBean.getUsername());
+				et_message.setText("");
+			}
 			// YunBaManager.publish(getApplicationContext(),
 			// MyApplication.TOPIC, "r", null);
 			break;
@@ -148,10 +139,12 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void init() {
-		jilu = (TextView) findViewById(R.id.jilu);
-		message = (EditText) findViewById(R.id.message);
+		tv_name = (TextView) findViewById(R.id.tv_name);
+		et_message = (EditText) findViewById(R.id.et_message);
 		send = (Button) findViewById(R.id.send);
-		scroll = (ScrollView) findViewById(R.id.scroller);
+		lv_chat = (ListView) findViewById(R.id.lv_chat);
+
+		tv_name.setText(friendBean.getNickname());
 	}
 
 	private void setOnClickListener() {

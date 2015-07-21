@@ -18,19 +18,21 @@ public class ChatReceiver extends BroadcastReceiver {
 
 			JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
 			Message message = jsonBinder.jsonToObj(msg, Message.class);
-			processCustomMessage(context, message.getUid(), message.getMsg());
+			processCustomMessage(context, message);
 		}
 	}
 
 	/**
 	 * 发送消息到MainActivity(广播)
-	 * @param send 发送人
-	 * @param send 发送的消息
+	 * 
+	 * @param send
+	 *            发送人
+	 * @param send
+	 *            发送的消息
 	 * */
-	private void processCustomMessage(Context context, String send, String msg) {
+	private void processCustomMessage(Context context, Message message) {
 		Intent intent = new Intent("message_received_action");
-		intent.putExtra("send", send);
-		intent.putExtra("msg", msg);
+		intent.putExtra("message", message);
 		context.sendBroadcast(intent);
 	}
 
