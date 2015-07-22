@@ -101,7 +101,7 @@ public class SplashActivity extends BaseActivity {
 			SplashActivity.this.finish();
 		} else if (account != null && !"".equals(account)) {
 			UserBean userBean = new UserBean();
-			userBean.setAccount(account);
+			userBean.setUsername(account);
 			userBean.setPassword(password);
 			userBean.setUser_id(id);
 			userBean.setEmail(email);
@@ -128,7 +128,7 @@ public class SplashActivity extends BaseActivity {
 		String account = null;
 		SharedPreferences sp = this.getSharedPreferences("user",
 				Context.MODE_PRIVATE);
-		account = sp.getString("account", "");
+		account = sp.getString("username", "");
 		return account;
 	}
 

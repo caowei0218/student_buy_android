@@ -91,23 +91,23 @@ public class LoginActivity extends BaseActivity {
 		});
 		btn_login.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				String account = login_et_account.getText().toString();
+				String userName = login_et_account.getText().toString();
 				String password = login_et_password.getText().toString();
-				if ("".equals(account) || "".equals(password)) {
+				if ("".equals(userName) || "".equals(password)) {
 					Toast.makeText(
 							LoginActivity.this,
 							Word.LOGINACTIVITY_USERNAMEANDPASSWORDCAN_NOT_EMPTY,
 							Toast.LENGTH_SHORT).show();
 				} else {
-					login(account, password);
+					login(userName, password);
 				}
 			}
 		});
 	}
 
-	private void login(String account, String password) {
+	private void login(String userName, String password) {
 		UserBean userBean = new UserBean();
-		userBean.setAccount(account);
+		userBean.setUsername(userName);
 		userBean.setPassword(MD5Util.str2MD5(password));// º”√‹
 		// userBean.setPassword(password);// º”√‹
 		LoginWebservice loginWebservice = new LoginWebservice(

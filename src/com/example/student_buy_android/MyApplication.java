@@ -12,8 +12,16 @@ public class MyApplication extends Application {
 
 	private final static String TAG = "MyApplication";
 
+	private static MyApplication instance;
+
+	public static MyApplication getInstance() {
+		return instance;
+	}
+
 	public void onCreate() {
 		super.onCreate();
+
+		instance = this;
 
 		startBlackService();
 
@@ -40,26 +48,27 @@ public class MyApplication extends Application {
 					}
 				});
 
-//		// 向用户别名发送消息, 用于实现点对点的消息发送。
-//		YunBaManager.publishToAlias(getApplicationContext(), "account",
-//				"message", new IMqttActionListener() {
-//					@Override
-//					public void onSuccess(IMqttToken asyncActionToken) {
-//						String topic = DemoUtil.join(asyncActionToken.getTopics(), ", ");
-//						String msgLog = "publish to alias succeed : " + topic;
-//						DemoUtil.showToast(msgLog, getApplicationContext());
-//					}
-//
-//					@Override
-//					public void onFailure(IMqttToken asyncActionToken,
-//							Throwable exception) {
-//						if (exception instanceof MqttException) {
-//							MqttException ex = (MqttException) exception;
-//							String msg = "publishToAlias failed with error code : " + ex.getReasonCode();
-//							DemoUtil.showToast(msg, getApplicationContext());
-//						}
-//					}
-//				});
+		// // 向用户别名发送消息, 用于实现点对点的消息发送。
+		// YunBaManager.publishToAlias(getApplicationContext(), "account",
+		// "message", new IMqttActionListener() {
+		// @Override
+		// public void onSuccess(IMqttToken asyncActionToken) {
+		// String topic = DemoUtil.join(asyncActionToken.getTopics(), ", ");
+		// String msgLog = "publish to alias succeed : " + topic;
+		// DemoUtil.showToast(msgLog, getApplicationContext());
+		// }
+		//
+		// @Override
+		// public void onFailure(IMqttToken asyncActionToken,
+		// Throwable exception) {
+		// if (exception instanceof MqttException) {
+		// MqttException ex = (MqttException) exception;
+		// String msg = "publishToAlias failed with error code : " +
+		// ex.getReasonCode();
+		// DemoUtil.showToast(msg, getApplicationContext());
+		// }
+		// }
+		// });
 	}
 
 }

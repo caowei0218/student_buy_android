@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class UserBean implements Serializable {
 
 	private String user_id;
-	private String account;
+	private String username;
 	private String password;
 	private String repassword;
 	private String description;
@@ -69,12 +69,12 @@ public class UserBean implements Serializable {
 		this.user_id = user_id;
 	}
 
-	public String getAccount() {
-		return account;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {

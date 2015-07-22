@@ -65,7 +65,7 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 		post = new HttpPost(WebserviceUtils.HTTPTRANSPORTSE + method);
 		// 如果传递参数个数比较多的话可以对传递的参数进行封装
 		params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("username", userBean.getAccount()));
+		params.add(new BasicNameValuePair("username", userBean.getUsername()));
 		params.add(new BasicNameValuePair("password", userBean.getPassword()));
 	}
 
@@ -84,6 +84,10 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 			if (response.getStatusLine().getStatusCode() == 200) {
 				HttpEntity entity = response.getEntity();
 				result = new String(EntityUtils.toByteArray(entity), "UTF-8");
+
+				// 发送短信 Android要写在线程中
+				// SDKTestSendTemplateSMS.sendSMS("15998638304", "1",
+				// new String[] { "6666", "5" });
 
 				// 获得session
 				CookieStore cookieStore = httpClient.getCookieStore();
@@ -109,11 +113,11 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 			JSONTokener jsonParser = new JSONTokener(result);
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
-				saveLoginUserName(userBean.getAccount(),
+				saveLoginUserName(userBean.getUsername(),
 						userBean.getPassword(), userBean.getUser_id());
 
 				// 登录云巴
-				YunBaManager.setAlias(loginActivity, userBean.getAccount(),
+				YunBaManager.setAlias(loginActivity, userBean.getUsername(),
 						new IMqttActionListener() {
 							@Override
 							public void onSuccess(IMqttToken asyncActionToken) {
@@ -149,11 +153,11 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 	/**
 	 * 将用户名保存在SharedPreferences中
 	 * */
-	private void saveLoginUserName(String account, String password, String id) {
+	private void saveLoginUserName(String username, String password, String id) {
 		SharedPreferences prefereces = context.getSharedPreferences("user",
 				Context.MODE_PRIVATE);
 		Editor editor = prefereces.edit();
-		editor.putString("account", account);
+		editor.putString("username", username);
 		editor.putString("password", password);
 		editor.putString("id", id);
 		editor.putString("email", userBean.getEmail());

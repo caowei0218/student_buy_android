@@ -1,12 +1,13 @@
 package com.example.student_buy_android.receiver;
 
-import com.example.student_buy_android.bean.Message;
-import com.example.student_buy_android.util.JsonBinder;
-
 import io.yunba.android.manager.YunBaManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.example.student_buy_android.bean.Message;
+import com.example.student_buy_android.db.MessageDao;
+import com.example.student_buy_android.util.JsonBinder;
 
 public class ChatReceiver extends BroadcastReceiver {
 
@@ -34,6 +35,8 @@ public class ChatReceiver extends BroadcastReceiver {
 		Intent intent = new Intent("message_received_action");
 		intent.putExtra("message", message);
 		context.sendBroadcast(intent);
-	}
 
+		MessageDao messageDao = new MessageDao();
+		messageDao.saveMessage(message);
+	}
 }

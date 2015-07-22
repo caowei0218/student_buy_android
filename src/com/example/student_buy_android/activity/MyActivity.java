@@ -12,8 +12,8 @@ import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
 public class MyActivity extends BaseActivity implements OnClickListener {
 
-	private TextView id, nikename, email, description, address, city, gender,
-			phoneNumber;
+	private TextView username, nikename, email, description, address, city,
+			gender, phoneNumber;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +41,7 @@ public class MyActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void findViewById() {
-		id = (TextView) findViewById(R.id.id);
+		username = (TextView) findViewById(R.id.id);
 		nikename = (TextView) findViewById(R.id.nikename);
 		email = (TextView) findViewById(R.id.email);
 		description = (TextView) findViewById(R.id.description);
@@ -57,20 +57,41 @@ public class MyActivity extends BaseActivity implements OnClickListener {
 
 		switch (v.getId()) {
 		case R.id.nikename:
-			intent = new Intent(MyActivity.this, MyActivity.class);
+			intent = new Intent(MyActivity.this, UpdateInfoActivity.class);
+			intent.putExtra("nikename", nikename.getText().toString().trim());
 			startActivity(intent);
 			break;
 		case R.id.email:
+			intent = new Intent(MyActivity.this, UpdateInfoActivity.class);
+			intent.putExtra("email", email.getText().toString().trim());
+			startActivity(intent);
 			break;
 		case R.id.description:
+			intent = new Intent(MyActivity.this, UpdateInfoActivity.class);
+			intent.putExtra("description", description.getText().toString()
+					.trim());
+			startActivity(intent);
 			break;
 		case R.id.address:
+			intent = new Intent(MyActivity.this, UpdateInfoActivity.class);
+			intent.putExtra("address", address.getText().toString().trim());
+			startActivity(intent);
 			break;
 		case R.id.city:
+			intent = new Intent(MyActivity.this, UpdateInfoActivity.class);
+			intent.putExtra("city", city.getText().toString().trim());
+			startActivity(intent);
 			break;
 		case R.id.gender:
+			intent = new Intent(MyActivity.this, UpdateInfoActivity.class);
+			intent.putExtra("gender", gender.getText().toString().trim());
+			startActivity(intent);
 			break;
 		case R.id.phoneNumber:
+			intent = new Intent(MyActivity.this, UpdateInfoActivity.class);
+			intent.putExtra("phoneNumber", phoneNumber.getText().toString()
+					.trim());
+			startActivity(intent);
 			break;
 		}
 	}
@@ -79,7 +100,7 @@ public class MyActivity extends BaseActivity implements OnClickListener {
 	 * 修改页面数据
 	 * */
 	public void updateData(UserBean userBean) {
-		id.setText(userBean.getAccount());
+		username.setText(userBean.getUsername());
 		nikename.setText(userBean.getNickname());
 		email.setText(userBean.getEmail());
 		description.setText(userBean.getDescription());

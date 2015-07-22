@@ -28,11 +28,13 @@ import com.example.student_buy_android.adapter.ChatMessageAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.Message;
 import com.example.student_buy_android.bean.Message.Type;
+import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.util.JsonBinder;
 import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.util.Word;
 
 public class ChatActivity extends BaseActivity implements OnClickListener {
+	private SharedPreferences preference;
 	private TextView tv_name;
 	private EditText et_message;
 	private Button send;
@@ -46,13 +48,19 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.chat_layout);
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去
+		preference = getSharedPreferences("user", Context.MODE_PRIVATE);
 
 		friendBean = (FriendBean) getIntent().getExtras().get("friendBean");
+
+		MessageDao messageDao = new MessageDao();
+		messages = messageDao.getMessage(preference.getString("username", ""),
+				friendBean.getUsername());
 
 		init();
 		setOnClickListener();
 
 		chatMessageAdapter = new ChatMessageAdapter(this, messages);
+		lv_chat.setSelection(messages.size() - 1);
 		lv_chat.setAdapter(chatMessageAdapter);
 
 		registerBoradcastReceiver();
@@ -70,13 +78,15 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 
 		// 将发送者id和msg进行josn封装
 		JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
-		SharedPreferences preference = getSharedPreferences("user",
-				Context.MODE_PRIVATE);
 		message = new Message();
-		message.setUid(preference.getString("account", ""));// 如果取不到值就取值后面的参数
+		message.setSender(preference.getString("username", ""));// 如果取不到值就取值后面的参数
 		message.setMsg(msg);
+		message.setReceiver(alias);
 		message.setType(Type.OUTPUT);
 		updateChatView(message);
+		// 将聊天记录添加到本地数据库中
+		MessageDao messageDao = new MessageDao();
+		messageDao.saveMessage(message);
 
 		YunBaManager.publishToAlias(getApplicationContext(), alias,
 				jsonBinder.toJson(message), new IMqttActionListener() {

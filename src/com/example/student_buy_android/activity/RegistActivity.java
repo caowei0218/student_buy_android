@@ -29,7 +29,7 @@ public class RegistActivity extends BaseActivity {
 	private LayoutParams para;
 	private ImageButton back;
 	private Button btn_regist;
-	private EditText account, email, password, password_again;
+	private EditText userName, email, password, password_again;
 	private LinearLayout regist_ll_info;
 	private UserBean userBean;
 
@@ -88,7 +88,7 @@ public class RegistActivity extends BaseActivity {
 
 	private boolean success2Login() {
 		boolean boo = true;
-		String accountStr = account.getText().toString();
+		String accountStr = userName.getText().toString();
 		String passwordStr = password.getText().toString();
 		String password_againStr = password_again.getText().toString();
 		if (accountStr.equals("") || passwordStr.equals("")) {
@@ -99,19 +99,22 @@ public class RegistActivity extends BaseActivity {
 			return boo;
 		}
 		if ("".equals(password_againStr)) {
-			Toast.makeText(RegistActivity.this, Word.REGISTACTIVITY_ENTER_SECOND_PASSWORD, Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(RegistActivity.this,
+					Word.REGISTACTIVITY_ENTER_SECOND_PASSWORD,
+					Toast.LENGTH_SHORT).show();
 			boo = false;
 			return boo;
 		}
 		if (!passwordStr.equals(password_againStr)) {
-			Toast.makeText(RegistActivity.this, Word.REGISTACTIVITY_PASSWORD_TWICE_INCONSISTENCY, Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(RegistActivity.this,
+					Word.REGISTACTIVITY_PASSWORD_TWICE_INCONSISTENCY,
+					Toast.LENGTH_SHORT).show();
 			boo = false;
 			return boo;
 		}
 		if (accountStr.length() < 4 || passwordStr.length() < 4) {
-			Toast.makeText(RegistActivity.this, Word.REGISTACTIVITY_USERNAMEANDPASSWORD_NOT_LESS_4,
+			Toast.makeText(RegistActivity.this,
+					Word.REGISTACTIVITY_USERNAMEANDPASSWORD_NOT_LESS_4,
 					Toast.LENGTH_SHORT).show();
 			boo = false;
 			return boo;
@@ -137,10 +140,10 @@ public class RegistActivity extends BaseActivity {
 
 	private void initUserBean() {
 		userBean = new UserBean();
-		userBean.setAccount(account.getText().toString());
+		userBean.setUsername(userName.getText().toString());
 		userBean.setPassword(MD5Util.str2MD5(password.getText().toString()));
 		userBean.setRepassword(MD5Util.str2MD5(password.getText().toString()));
-		userBean.setNickname(account.getText().toString());
+		userBean.setNickname(userName.getText().toString());
 		userBean.setEmail(email.getText().toString());
 	}
 
@@ -151,7 +154,7 @@ public class RegistActivity extends BaseActivity {
 	@SuppressLint("CutPasteId")
 	private void initView() {
 		back = (ImageButton) findViewById(R.id.regist_ib_return);
-		account = (EditText) findViewById(R.id.regist_et_account);
+		userName = (EditText) findViewById(R.id.regist_et_account);
 		email = (EditText) findViewById(R.id.regist_et_email);
 		password = (EditText) findViewById(R.id.regist_et_password);
 		password_again = (EditText) findViewById(R.id.regist_et_password_again);

@@ -28,7 +28,7 @@ import com.example.student_buy_android.util.Word;
 /**
  * 注册 HttpPost请求
  * */
-public class RegisterWebservice extends AsyncTask<String, Integer, String> {
+public class UpdateInfoWebservice extends AsyncTask<String, Integer, String> {
 
 	private RegistActivity registActivity;
 	private Context context = null;
@@ -39,7 +39,7 @@ public class RegisterWebservice extends AsyncTask<String, Integer, String> {
 	private List<NameValuePair> params;
 	private HttpPost post;
 
-	public RegisterWebservice(RegistActivity registActivity, Context context,
+	public UpdateInfoWebservice(RegistActivity registActivity, Context context,
 			UserBean userBean) {
 		this.registActivity = registActivity;
 		this.context = context;
