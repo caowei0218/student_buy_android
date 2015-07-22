@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -89,4 +90,16 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 		btn_my = (Button) findViewById(R.id.btn_my);
 	}
 
+	/**
+	 * 返回键后台运行
+	 * */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			moveTaskToBack(false);
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 }
