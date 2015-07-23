@@ -93,8 +93,8 @@
                 android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="12dp"
-                android:text="@string/login_btn_regist"
-                android:textSize="20sp" />
+                android:hint="@string/login_btn_regist"
+                android:textColorHint="@color/white" />
 
             <Button
                 android:id="@+id/login_btn_login"
@@ -103,8 +103,8 @@
                 android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/login_btn_regist"
-                android:text="@string/login_btn_login"
-                android:textSize="20sp" />
+                android:hint="@string/login_btn_login"
+                android:textColorHint="@color/white" />
         </RelativeLayout>
     </LinearLayout>
 

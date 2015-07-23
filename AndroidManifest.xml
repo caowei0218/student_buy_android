@@ -31,6 +31,7 @@
         <activity android:name=".activity.AddFriendActivity" />
         <activity android:name=".activity.FriendInfoActivity" />
         <activity android:name=".activity.MyActivity" />
+        <activity android:name=".activity.ShowActivity" />
 
         <!-- 云巴start -->
         <meta-data
