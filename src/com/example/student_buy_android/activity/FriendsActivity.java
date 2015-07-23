@@ -4,13 +4,16 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.adapter.FriendsAdapter;
@@ -19,7 +22,11 @@ import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.webservice.GetFriendListWebservice;
 
 public class FriendsActivity extends BaseActivity implements OnClickListener {
-
+	private DisplayMetrics displayMetrics;
+	private LayoutParams para;
+	private RelativeLayout rl_title;
+	private int window_width;
+	private int window_height;
 	private ListView friends_list;
 	private Button btn_add, btn_my;
 	private FriendsAdapter friendsAdapter;
@@ -52,7 +59,20 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 
 	private void init() {
 		findViewById();
+		adaptation();
 		setOnClickListener();
+	}
+
+	private void adaptation() {
+		displayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		window_height = displayMetrics.heightPixels;
+		window_width = displayMetrics.widthPixels;
+
+		para = rl_title.getLayoutParams();
+		para.height = (int) (window_height * (88.0 / 1334));
+		para.width = (int) window_width;
+		rl_title.setLayoutParams(para);
 	}
 
 	/**
@@ -88,6 +108,7 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 		friends_list = (ListView) findViewById(R.id.friends_list);
 		btn_add = (Button) findViewById(R.id.btn_add);
 		btn_my = (Button) findViewById(R.id.btn_my);
+		rl_title = (RelativeLayout) findViewById(R.id.rl_title);
 	}
 
 	/**

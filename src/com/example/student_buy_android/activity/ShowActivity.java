@@ -67,7 +67,6 @@ public class ShowActivity extends BaseActivity implements OnClickListener {
 		para.height = (int) (window_height * (88.0 / 1334));
 		para.width = (int) window_width;
 		rl_title.setLayoutParams(para);
-
 	}
 
 	private void setOnClickListener() {
