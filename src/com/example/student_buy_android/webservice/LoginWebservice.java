@@ -30,8 +30,8 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.student_buy_android.activity.FriendsActivity;
 import com.example.student_buy_android.activity.LoginActivity;
+import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.activity.ShowActivity;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.ChatUtil;
@@ -139,7 +139,8 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 						});
 
 				// Intent intent = new Intent(context, FriendsActivity.class);
-				Intent intent = new Intent(context, ShowActivity.class);
+				// Intent intent = new Intent(context, ShowActivity.class);
+				Intent intent = new Intent(context, MainActivity.class);
 				context.startActivity(intent);
 				loginActivity.finish();
 			} else {

@@ -18,19 +18,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.student_buy_android.activity.FriendsActivity;
+import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
-import com.example.student_buy_android.util.Word;
 
 /**
  * 获得好友列表
- * HttpGet请求
  * */
 public class GetFriendListWebservice extends AsyncTask<String, Integer, String> {
 	private JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
-	private FriendsActivity friendsActivity;
+	private MainActivity mainActivity;
 	private Context context;
 	private String method = "account/friend/list/";
 
@@ -40,15 +38,13 @@ public class GetFriendListWebservice extends AsyncTask<String, Integer, String> 
 
 	List<FriendBean> friendBeans;
 
-	public GetFriendListWebservice(FriendsActivity friendsActivity,
-			Context context) {
-		this.friendsActivity = friendsActivity;
+	public GetFriendListWebservice(MainActivity mainActivity, Context context) {
+		this.mainActivity = mainActivity;
 		this.context = context;
 	}
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		friendsActivity.beginWaitDialog(Word.GETFRIENDLISTING, true);
 		httpClient = new DefaultHttpClient();
 		get = new HttpGet(WebserviceUtils.HTTPTRANSPORTSE + method);
 	}
@@ -56,14 +52,11 @@ public class GetFriendListWebservice extends AsyncTask<String, Integer, String> 
 	protected String doInBackground(String... params) {
 		String result = null;
 		try {
-			// 带上session发请求
 			if (null != Common.SESSIONID) {
 				get.setHeader("Cookie", "connect.sid=" + Common.SESSIONID);
 			}
-			// 发起GET请求
 			httpResponse = httpClient.execute(get);
 			httpResponse.getStatusLine().getStatusCode();
-			// 如果服务器成功地返回响应
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				result = EntityUtils
 						.toString(httpResponse.getEntity(), "utf-8");
@@ -77,19 +70,17 @@ public class GetFriendListWebservice extends AsyncTask<String, Integer, String> 
 
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		friendsActivity.endWaitDialog(true);
 
 		try {
 			JSONTokener jsonParser = new JSONTokener(result);
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
 
-				// 解析获得的好友josn字符串
 				try {
 					friendBeans = jsonBinder.stringToList(
 							jsonObject.getString("friendList"),
 							FriendBean.class);
-					friendsActivity.setAdapter(friendBeans);
+					mainActivity.setFriendsListAdapter(friendBeans);
 
 				} catch (JsonParseException e) {
 					e.printStackTrace();
@@ -98,7 +89,7 @@ public class GetFriendListWebservice extends AsyncTask<String, Integer, String> 
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
+
 			} else {
 				Toast.makeText(context, jsonObject.getString("errors"),
 						Toast.LENGTH_SHORT).show();

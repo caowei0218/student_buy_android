@@ -23,7 +23,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.student_buy_android.activity.AddFriendActivity;
-import com.example.student_buy_android.activity.FriendsActivity;
+import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.Word;
 
@@ -89,7 +89,7 @@ public class AddFriendWebservice extends AsyncTask<String, Integer, String> {
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
 
-				Intent intent = new Intent(context, FriendsActivity.class);
+				Intent intent = new Intent(context, MainActivity.class);
 				context.startActivity(intent);
 				addFriendActivity.finish();
 			} else {

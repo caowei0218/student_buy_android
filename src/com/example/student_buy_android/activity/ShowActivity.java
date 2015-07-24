@@ -6,6 +6,7 @@ import java.util.HashMap;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -79,7 +80,7 @@ public class ShowActivity extends BaseActivity implements OnClickListener {
 		Intent intent;
 		switch (v.getId()) {
 		case R.id.btn_add:
-			intent = new Intent(ShowActivity.this, FriendsActivity.class);
+			intent = new Intent(ShowActivity.this, ShowActivity.class);
 			startActivity(intent);
 			break;
 		}
@@ -105,18 +106,19 @@ public class ShowActivity extends BaseActivity implements OnClickListener {
 			}
 			arrayLists.add(arrayListForEveryGridView);
 		}
-
 	}
-	/**
-	 * 返回键不退出程序 后台运行
-	 * */
-	// @Override
-	// public boolean onKeyDown(int keyCode, KeyEvent event) {
-	// if (keyCode == KeyEvent.KEYCODE_BACK) {
-	// moveTaskToBack(false);
-	// return true;
-	// }
-	// return super.onKeyDown(keyCode, event);
-	// }
+
+//	/**
+//	 * 返回键后台运行
+//	 * */
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		if (keyCode == KeyEvent.KEYCODE_BACK
+//				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+//			moveTaskToBack(false);
+//			return true;
+//		}
+//		return super.onKeyDown(keyCode, event);
+//	}
 
 }

@@ -14,7 +14,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.student_buy_android.activity.MyActivity;
+import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
@@ -25,21 +25,21 @@ import com.example.student_buy_android.util.Word;
  * */
 public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 	private JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
-	private MyActivity myActivity;
+	private MainActivity mainActivity;
 	private Context context;
 	private UserBean userBean;
 	private String method = "account/info/";
 	private HttpClient httpClient;
 	private HttpGet get;
 
-	public GetMyInfoWebservice(MyActivity myActivity, Context context) {
-		this.myActivity = myActivity;
+	public GetMyInfoWebservice(MainActivity mainActivity, Context context) {
+		this.mainActivity = mainActivity;
 		this.context = context;
 	}
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		myActivity.beginWaitDialog(Word.Adding, true);
+//		mainActivity.beginWaitDialog(Word.Adding, true);
 
 		httpClient = new DefaultHttpClient();
 		get = new HttpGet(WebserviceUtils.HTTPTRANSPORTSE + method);
@@ -68,7 +68,7 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		myActivity.endWaitDialog(true);
+//		mainActivity.endWaitDialog(true);
 
 		try {
 			JSONTokener jsonParser = new JSONTokener(result);
@@ -76,7 +76,7 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 			if ("true".equals(jsonObject.getString("success"))) {
 				userBean = jsonBinder.jsonToObj(
 						jsonObject.getString("userinfo"), UserBean.class);
-				myActivity.updateData(userBean);
+				mainActivity.updateData(userBean);
 			} else {
 				Toast.makeText(context, jsonObject.getString("errors"),
 						Toast.LENGTH_SHORT).show();

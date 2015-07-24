@@ -82,7 +82,6 @@ public class ShowAdapter extends BaseAdapter {
 	}
 
 	private class ViewHolder {
-		// ImageView imageView;
 		NoScrollGridView gridView;
 	}
 
