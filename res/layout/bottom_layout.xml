@@ -5,30 +5,51 @@
     android:background="@drawable/bottom_bar"
     android:orientation="horizontal" >
 
-    <LinearLayout
-        android:id="@+id/id_tab_weixin"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <!-- android:clickable="false" 是为了防止ImageButton截取了触摸事件 ，这里事件要给它的上一级linearlayout -->
-
-        <ImageButton
-            android:id="@+id/id_tab_weixin_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="#00000000"
-            android:clickable="false"
-            android:src="@drawable/tab_weixin_pressed" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="聊"
-            android:textColor="#FFFFFF" />
-    </LinearLayout>
+    <FrameLayout
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:layout_weight="1"
+		android:background="@null" >
+	    <LinearLayout
+	        android:id="@+id/id_tab_weixin"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:gravity="center"
+	        android:orientation="vertical" >
+	
+	        <ImageButton
+	            android:id="@+id/id_tab_weixin_img"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="#00000000"
+	            android:clickable="false"
+	            android:src="@drawable/tab_weixin_pressed" />
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="聊"
+	            android:textColor="#FFFFFF" />
+	    </LinearLayout>
+	    <LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:gravity="top|right|center"
+			android:paddingLeft="10dp" >
+			<TextView
+			    android:id="@+id/main_tab_unread_tv"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:background="@drawable/tab_unread_bg"
+			    android:gravity="center"
+			    android:layout_marginRight="20dp"
+			    android:text="22"
+			    android:textColor="@android:color/white"
+			    android:textSize="12sp"
+			    android:visibility="visible" />
+		</LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/id_tab_address"

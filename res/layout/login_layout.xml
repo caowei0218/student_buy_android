@@ -88,7 +88,7 @@
 
             <Button
                 android:id="@+id/login_btn_regist"
-                style="@style/add_btn_shape"
+                style="@style/login_btn_regist"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_alignParentTop="true"
@@ -98,7 +98,7 @@
 
             <Button
                 android:id="@+id/login_btn_login"
-                style="@style/add_btn_shape"
+                style="@style/login_btn_login"
                 android:layout_width="120dp"
                 android:layout_height="40dp"
                 android:layout_alignParentTop="true"

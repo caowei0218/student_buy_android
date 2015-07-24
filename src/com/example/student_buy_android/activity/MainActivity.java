@@ -290,6 +290,8 @@ public class MainActivity extends BaseActivity implements
 				FriendBean friendBean = friendBeans.get(position);
 				intent.putExtra("friendBean", friendBean);
 				startActivity(intent);
+				overridePendingTransition(android.R.anim.slide_in_left,
+						android.R.anim.slide_out_right);// 由左向右滑入的效果
 			}
 		});
 	}

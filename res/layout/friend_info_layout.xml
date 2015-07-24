@@ -229,14 +229,17 @@
         android:id="@+id/btn_send"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#4dff51"
-        android:text="发送消息" />
+        android:layout_margin="10dp"
+        style="@style/send_btn_shape"
+        android:text="发消息" />
 
     <Button
         android:id="@+id/btn_del"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#fa5050"
-        android:text="删除" />
+        android:layout_marginLeft="10dp"
+        style="@style/del_btn_shape"
+        android:layout_marginRight="10dp"
+        android:text="删除好友" />
 
 </LinearLayout>
