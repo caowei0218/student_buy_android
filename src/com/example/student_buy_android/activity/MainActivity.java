@@ -214,6 +214,7 @@ public class MainActivity extends BaseActivity implements
 		case R.id.top_add:
 			intent = new Intent(MainActivity.this, AddFriendActivity.class);
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		case R.id.top_search:
 			Toast.makeText(MainActivity.this, "待开发", Toast.LENGTH_SHORT).show();
@@ -222,38 +223,45 @@ public class MainActivity extends BaseActivity implements
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("nikename", nikename.getText().toString().trim());
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		case R.id.email:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("email", email.getText().toString().trim());
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		case R.id.description:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("description", description.getText().toString()
 					.trim());
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		case R.id.address:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("address", address.getText().toString().trim());
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		case R.id.city:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("city", city.getText().toString().trim());
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		case R.id.gender:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("gender", gender.getText().toString().trim());
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		case R.id.phoneNumber:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("phoneNumber", phoneNumber.getText().toString()
 					.trim());
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		default:
 			break;
@@ -290,8 +298,7 @@ public class MainActivity extends BaseActivity implements
 				FriendBean friendBean = friendBeans.get(position);
 				intent.putExtra("friendBean", friendBean);
 				startActivity(intent);
-				overridePendingTransition(android.R.anim.slide_in_left,
-						android.R.anim.slide_out_right);// 由左向右滑入的效果
+				overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			}
 		});
 	}

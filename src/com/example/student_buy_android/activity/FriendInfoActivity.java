@@ -2,6 +2,7 @@ package com.example.student_buy_android.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -71,6 +72,7 @@ public class FriendInfoActivity extends BaseActivity implements OnClickListener 
 			intent = new Intent(FriendInfoActivity.this, ChatActivity.class);
 			intent.putExtra("friendBean", friendBean);
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			break;
 		case R.id.btn_del:
 			DelFriendWebservice delFriendWebservice = new DelFriendWebservice(
@@ -78,5 +80,20 @@ public class FriendInfoActivity extends BaseActivity implements OnClickListener 
 			delFriendWebservice.execute();
 			break;
 		}
+	}
+	
+	/**
+	 * 返回
+	 * */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			moveTaskToBack(false);
+			finish();
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }
