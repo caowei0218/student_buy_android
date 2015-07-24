@@ -71,6 +71,29 @@ public class MessageDao {
 		}
 		return list;
 	}
+	
+	/**
+	 * 获取最近联系人
+	 */
+	public List<ContactLast> get_communication_last() {
+		List<ContactLast> list = new ArrayList<ContactLast>();
+		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
+		SQLiteDatabase db = db_helper.getWritableDatabase();
+		Cursor cursor = null;
+		String sql = "select user_id,user_name from contact_last where who_am_i =? union select user_id,user_name from contact_last where user_id='service_provider'";
+		String[] args = { username };
+		cursor = db.rawQuery(sql, args);
+		while (cursor.moveToNext()) {
+			ContactLast contact_last = new ContactLast();
+			String user_id = cursor.getString(0);
+			int unread_message_count = get_unread_message_count_one(user_id);// 未读消息个数
+			contact_last.setUser_id(cursor.getString(0));
+			contact_last.setUser_name(cursor.getString(1));
+			contact_last.setUnread_message_count(unread_message_count);
+			list.add(contact_last);
+		}
+		return list;
+	}
 
 	/**
 	 * 获取与该用户最后一条聊天内容
@@ -168,29 +191,6 @@ public class MessageDao {
 			db.close();
 		}
 		return i;
-	}
-
-	/**
-	 * 获取最近联系人
-	 */
-	public List<ContactLast> get_communication_last() {
-		List<ContactLast> list = new ArrayList<ContactLast>();
-		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
-		SQLiteDatabase db = db_helper.getWritableDatabase();
-		Cursor cursor = null;
-		String sql = "select user_id,user_name from contact_last where who_am_i =? union select user_id,user_name from contact_last where user_id='service_provider'";
-		String[] args = { username };
-		cursor = db.rawQuery(sql, args);
-		while (cursor.moveToNext()) {
-			ContactLast contact_last = new ContactLast();
-			String user_id = cursor.getString(0);
-			int unread_message_count = get_unread_message_count_one(user_id);// 未读消息个数
-			contact_last.setUser_id(cursor.getString(0));
-			contact_last.setUser_name(cursor.getString(1));
-			contact_last.setUnread_message_count(unread_message_count);
-			list.add(contact_last);
-		}
-		return list;
 	}
 
 	/**

@@ -4,26 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#f74275"
-        android:gravity="center_vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="详细资料"
-            android:textColor="#ffffff"
-            android:textSize="20sp" />
-    </RelativeLayout>
+    <include layout="@layout/top_layout" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title" >
+        android:layout_height="wrap_content" >
 
         <RelativeLayout
             android:id="@+id/rl_id"
