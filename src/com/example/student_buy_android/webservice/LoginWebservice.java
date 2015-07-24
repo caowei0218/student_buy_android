@@ -138,6 +138,7 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 						});
 				Intent intent = new Intent(context, MainActivity.class);
 				context.startActivity(intent);
+				loginActivity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 				loginActivity.finish();
 			} else {
 				Toast.makeText(context, Word.LOGIN_FAIL, Toast.LENGTH_SHORT)

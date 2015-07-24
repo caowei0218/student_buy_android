@@ -117,6 +117,7 @@ public class SplashActivity extends BaseActivity {
 
 			Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
 			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			SplashActivity.this.finish();
 		}
 	}
