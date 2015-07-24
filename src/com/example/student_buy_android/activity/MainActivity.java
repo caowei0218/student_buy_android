@@ -1,6 +1,7 @@
 package com.example.student_buy_android.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.adapter.FriendsAdapter;
+import com.example.student_buy_android.adapter.ShowAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.webservice.GetFriendListWebservice;
@@ -42,6 +44,9 @@ public class MainActivity extends BaseActivity implements
 	private ImageButton mWeiXinImg, mAddressImg, mFrdImg, mSettingImg;
 
 	private ListView friends_list;
+	private ListView lv_show;
+	private ShowAdapter showAdapter;
+	private ArrayList<ArrayList<HashMap<String, Object>>> arrayLists;// 用来存放衣酷展示内容
 	private ImageButton top_add, top_search;
 	private TextView username, nikename, email, description, address, city,
 			gender, phoneNumber;
@@ -82,6 +87,7 @@ public class MainActivity extends BaseActivity implements
 							.setImageResource(R.drawable.tab_address_pressed);
 					break;
 				case 2:
+					getExcoo();
 					resetImg();
 					mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
 					break;
@@ -138,7 +144,7 @@ public class MainActivity extends BaseActivity implements
 		LayoutInflater mLayoutInflater = LayoutInflater.from(this);
 		View tab01 = mLayoutInflater.inflate(R.layout.tab_recently, null);
 		View tab_friends = mLayoutInflater.inflate(R.layout.tab_friends, null);
-		View tab03 = mLayoutInflater.inflate(R.layout.tab03, null);
+		View tab03 = mLayoutInflater.inflate(R.layout.tab_show, null);
 		View tab_my = mLayoutInflater.inflate(R.layout.tab_my, null);
 
 		mViews.add(tab01);
@@ -194,6 +200,7 @@ public class MainActivity extends BaseActivity implements
 			mAddressImg.setImageResource(R.drawable.tab_address_pressed);
 			break;
 		case R.id.id_tab_frd:
+			getExcoo();
 			mViewPager.setCurrentItem(2);
 			resetImg();
 			mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
@@ -264,15 +271,6 @@ public class MainActivity extends BaseActivity implements
 	}
 
 	/**
-	 * 好友集合 绑定Adapter
-	 * */
-	public void setFriendsListAdapter(List<FriendBean> friendBeans) {
-		this.friendBeans = friendBeans;
-		friendsAdapter = new FriendsAdapter(friendBeans, MainActivity.this);
-		friends_list.setAdapter(friendsAdapter);
-	}
-
-	/**
 	 * 获得好友
 	 * */
 	private void getFriends() {
@@ -294,6 +292,42 @@ public class MainActivity extends BaseActivity implements
 				startActivity(intent);
 			}
 		});
+	}
+
+	/**
+	 * 好友集合 绑定Adapter
+	 * */
+	public void setFriendsListAdapter(List<FriendBean> friendBeans) {
+		this.friendBeans = friendBeans;
+		friendsAdapter = new FriendsAdapter(friendBeans, MainActivity.this);
+		friends_list.setAdapter(friendsAdapter);
+	}
+
+	private void getExcoo() {
+		initData();
+		lv_show = (ListView) mViews.get(2).findViewById(R.id.lv_show);
+
+		showAdapter = new ShowAdapter(arrayLists, MainActivity.this);
+		lv_show.setAdapter(showAdapter);
+	}
+
+	/**
+	 * 衣酷数据源
+	 * */
+	private void initData() {
+		arrayLists = new ArrayList<ArrayList<HashMap<String, Object>>>();
+		HashMap<String, Object> hashMap = null;
+		ArrayList<HashMap<String, Object>> arrayListForEveryGridView;
+
+		for (int i = 0; i < 10; i++) {
+			arrayListForEveryGridView = new ArrayList<HashMap<String, Object>>();
+			for (int j = 0; j < 3; j++) {
+				hashMap = new HashMap<String, Object>();
+				hashMap.put("content", "i=" + i + " ,j=" + j);
+				arrayListForEveryGridView.add(hashMap);
+			}
+			arrayLists.add(arrayListForEveryGridView);
+		}
 	}
 
 	/**
