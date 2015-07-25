@@ -20,7 +20,7 @@
                 android:id="@+id/chat_from_icon"
                 android:layout_width="49dp"
                 android:layout_height="49dp"
-                android:src="@drawable/icon" />
+                android:src="@drawable/empty_photo" />
         </LinearLayout>
 
         <TextView

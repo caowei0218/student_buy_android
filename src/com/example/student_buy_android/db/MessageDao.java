@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.example.student_buy_android.MyApplication;
-import com.example.student_buy_android.bean.ContactLast;
-import com.example.student_buy_android.bean.Message;
-import com.example.student_buy_android.bean.Message.Type;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.student_buy_android.MyApplication;
+import com.example.student_buy_android.bean.ContactLast;
+import com.example.student_buy_android.bean.FriendBean;
+import com.example.student_buy_android.bean.Message;
+import com.example.student_buy_android.bean.Message.Type;
 
 public class MessageDao {
 	private String username = MyApplication.getInstance()
@@ -71,21 +72,23 @@ public class MessageDao {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * 获取最近联系人
 	 */
-	public List<String> get_communication_last() {
-		List<String> list = new ArrayList<String>();
+	public List<FriendBean> get_communication_last() {
+		List<FriendBean> list = new ArrayList<FriendBean>();
+		FriendBean friendBean;
 		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		Cursor cursor = null;
-		String sql = "SELECT sender FROM message WHERE sender <> ? UNION SELECT receiver FROM message WHERE receiver <> ?";
-		String[] args = { username };
+		String sql = "SELECT sender FROM chat_content WHERE sender<>? UNION SELECT receiver FROM chat_content WHERE receiver<>?";
+		String[] args = { username, username };
 		cursor = db.rawQuery(sql, args);
 		while (cursor.moveToNext()) {
-			String user_id = cursor.getString(0);
-			list.add(user_id);
+			friendBean = new FriendBean();
+			friendBean.setUsername(cursor.getString(0));
+			list.add(friendBean);
 		}
 		return list;
 	}

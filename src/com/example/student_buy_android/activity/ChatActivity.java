@@ -155,13 +155,13 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		send = (Button) findViewById(R.id.send);
 		lv_chat = (ListView) findViewById(R.id.lv_chat);
 
-		tv_name.setText(friendBean.getNickname());
+		tv_name.setText(friendBean.getUsername());
 	}
 
 	private void setOnClickListener() {
 		send.setOnClickListener(this);
 	}
-	
+
 	/**
 	 * 返回
 	 * */
@@ -171,7 +171,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 				&& event.getAction() == KeyEvent.ACTION_DOWN) {
 			moveTaskToBack(false);
 			finish();
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

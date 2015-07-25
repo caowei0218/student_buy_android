@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.adapter.FriendsAdapter;
+import com.example.student_buy_android.adapter.LatestContactsAdapter;
 import com.example.student_buy_android.adapter.ShowAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.UserBean;
@@ -44,7 +45,7 @@ public class MainActivity extends BaseActivity implements
 	// 四个按钮
 	private ImageButton mWeiXinImg, mAddressImg, mFrdImg, mSettingImg;
 
-	private ListView friends_list;
+	private ListView lv_friends;
 	private ListView lv_show;
 	private ShowAdapter showAdapter;
 	private ArrayList<ArrayList<HashMap<String, Object>>> arrayLists;// 用来存放衣酷展示内容
@@ -53,6 +54,9 @@ public class MainActivity extends BaseActivity implements
 			gender, phoneNumber;
 	private List<FriendBean> friendBeans;// 用来存放好友列表
 	private FriendsAdapter friendsAdapter;
+	private List<FriendBean> latestContactLsit;// 用来存放最近联系人
+	private ListView lv_latest_contact;
+	private LatestContactsAdapter latestContactsAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class MainActivity extends BaseActivity implements
 		initView();
 		initViewPage();
 		initEvent();
+		initLatestContacts();
 	}
 
 	private void initEvent() {
@@ -78,6 +83,7 @@ public class MainActivity extends BaseActivity implements
 				int currentItem = mViewPager.getCurrentItem();
 				switch (currentItem) {
 				case 0:
+					initLatestContacts();
 					resetImg();
 					mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
 					break;
@@ -190,7 +196,7 @@ public class MainActivity extends BaseActivity implements
 		Intent intent;
 		switch (arg0.getId()) {
 		case R.id.id_tab_weixin:
-			getLatestContacts();
+			initLatestContacts();
 			mViewPager.setCurrentItem(0);
 			resetImg();
 			mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
@@ -216,7 +222,8 @@ public class MainActivity extends BaseActivity implements
 		case R.id.top_add:
 			intent = new Intent(MainActivity.this, AddFriendActivity.class);
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.top_search:
 			Toast.makeText(MainActivity.this, "待开发", Toast.LENGTH_SHORT).show();
@@ -225,45 +232,52 @@ public class MainActivity extends BaseActivity implements
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("nikename", nikename.getText().toString().trim());
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.email:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("email", email.getText().toString().trim());
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.description:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("description", description.getText().toString()
 					.trim());
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.address:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("address", address.getText().toString().trim());
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.city:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("city", city.getText().toString().trim());
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.gender:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("gender", gender.getText().toString().trim());
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.phoneNumber:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
 			intent.putExtra("phoneNumber", phoneNumber.getText().toString()
 					.trim());
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		default:
 			break;
@@ -281,25 +295,65 @@ public class MainActivity extends BaseActivity implements
 	}
 
 	/**
+	 * 初始化最近联系人
+	 * */
+	private void initLatestContacts(){
+		latestContactLsit = getLatestContacts();
+		setOnItemClickListener();
+		setLatestContactsAdapter();
+	}
+	
+	/**
 	 * 获得最近联系人
 	 * */
-	private List<String> getLatestContacts(){
+	private List<FriendBean> getLatestContacts() {
 		MessageDao messageDao = new MessageDao();
 		return messageDao.get_communication_last();
 	}
-	
+
+	/**
+	 * ListView item点击事件
+	 * */
+	private void setOnItemClickListener() {
+		lv_latest_contact = (ListView) mViews.get(0).findViewById(
+				R.id.lv_latest_contact);
+		
+		lv_latest_contact.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// 跳转好友详情页面
+				Intent intent = new Intent(MainActivity.this,
+						ChatActivity.class);
+				FriendBean friendBean = latestContactLsit.get(position);
+				intent.putExtra("friendBean", friendBean);
+				startActivity(intent);
+				overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
+			}
+		});
+	}
+
+	/**
+	 * 最近联系人 绑定Adapter
+	 * */
+	private void setLatestContactsAdapter() {
+		latestContactsAdapter = new LatestContactsAdapter(latestContactLsit,
+				this);
+		lv_latest_contact.setAdapter(latestContactsAdapter);
+	}
+
 	/**
 	 * 获得好友
 	 * */
 	private void getFriends() {
-		friends_list = (ListView) mViews.get(1).findViewById(R.id.friends_list);
+		lv_friends = (ListView) mViews.get(1).findViewById(R.id.friends_list);
 
 		GetFriendListWebservice getFriendListWebservice = new GetFriendListWebservice(
 				MainActivity.this, this);
 		getFriendListWebservice.execute();
 
 		// ListView item点击事件
-		friends_list.setOnItemClickListener(new OnItemClickListener() {
+		lv_friends.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// 跳转好友详情页面
@@ -308,7 +362,8 @@ public class MainActivity extends BaseActivity implements
 				FriendBean friendBean = friendBeans.get(position);
 				intent.putExtra("friendBean", friendBean);
 				startActivity(intent);
-				overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+				overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
 			}
 		});
 	}
@@ -319,7 +374,7 @@ public class MainActivity extends BaseActivity implements
 	public void setFriendsListAdapter(List<FriendBean> friendBeans) {
 		this.friendBeans = friendBeans;
 		friendsAdapter = new FriendsAdapter(friendBeans, MainActivity.this);
-		friends_list.setAdapter(friendsAdapter);
+		lv_friends.setAdapter(friendsAdapter);
 	}
 
 	private void getExcoo() {
