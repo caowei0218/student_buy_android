@@ -28,6 +28,7 @@ import com.example.student_buy_android.adapter.FriendsAdapter;
 import com.example.student_buy_android.adapter.ShowAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.UserBean;
+import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.webservice.GetFriendListWebservice;
 import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
@@ -189,6 +190,7 @@ public class MainActivity extends BaseActivity implements
 		Intent intent;
 		switch (arg0.getId()) {
 		case R.id.id_tab_weixin:
+			getLatestContacts();
 			mViewPager.setCurrentItem(0);
 			resetImg();
 			mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
@@ -278,6 +280,14 @@ public class MainActivity extends BaseActivity implements
 		mSettingImg.setImageResource(R.drawable.tab_settings_normal);
 	}
 
+	/**
+	 * 获得最近联系人
+	 * */
+	private List<String> getLatestContacts(){
+		MessageDao messageDao = new MessageDao();
+		return messageDao.get_communication_last();
+	}
+	
 	/**
 	 * 获得好友
 	 * */
