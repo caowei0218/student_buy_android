@@ -10,394 +10,392 @@
 	    android:layout_height="fill_parent"
 	    android:orientation="vertical" >
 
-    <include layout="@layout/top_layout" />
-    
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="64dp"
-		android:layout_marginBottom="18dp"
-		android:layout_marginTop="16dp" >
-
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/empty_photo" />
-
-        <LinearLayout
-            android:id="@+id/ll_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/nikename"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="曹溦"
-                android:textColor="#353535"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/iv_sex"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="8dp"
-                android:src="@drawable/ic_sex_male" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_fxid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:text="帐号:"
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
-        
-        <TextView
-            android:id="@+id/id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@id/tv_fxid"
-            android:text="account"
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
-    </RelativeLayout>
-    
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:background="#ffffff"
-		android:paddingLeft="12dp"
-		android:paddingRight="12dp" >
-
-		<TextView
-		    android:id="@+id/email_tittle"
-		    android:layout_width="96dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:paddingLeft="8dp"
-		    android:text="邮箱"
-		    android:textColor="#353535"
-		    android:textSize="16sp" />
-
-		<TextView
-		    android:id="@+id/email"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@+id/email_tittle"
-		    android:text="123456789@qq.com"
-		    android:textColor="#AAAAAA"
-		    android:textSize="14sp" />
-
-		<View
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_alignParentBottom="true"
-		    android:background="#DBDBDB" />
-	</RelativeLayout>
+	    <include layout="@layout/top_layout" />
+	    
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="64dp"
+			android:layout_marginBottom="18dp"
+			android:layout_marginTop="16dp" >
 	
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:background="#ffffff"
-		android:paddingLeft="12dp"
-		android:paddingRight="12dp" >
-
-		<TextView
-		    android:id="@+id/description_tittle"
-		    android:layout_width="96dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:paddingLeft="8dp"
-		    android:text="个性签名"
-		    android:textColor="#353535"
-		    android:textSize="16sp" />
-
-		<TextView
-		    android:id="@+id/description"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@+id/description_tittle"
-		    android:text="志存高远，脚踏实地"
-		    android:textColor="#AAAAAA"
-		    android:textSize="14sp" />
-
-		<View
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_alignParentBottom="true"
-		    android:background="#DBDBDB" />
-	</RelativeLayout>
+	        <ImageView
+	            android:id="@+id/iv_avatar"
+	            android:layout_width="64dp"
+	            android:layout_height="64dp"
+	            android:layout_marginLeft="15dp"
+	            android:src="@drawable/empty_photo" />
 	
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="76dp"
-		android:background="#ffffff"
-		android:paddingLeft="12dp"
-		android:paddingRight="12dp" >
-
-		<TextView
-		    android:id="@+id/tv_xiangce_temp"
-		    android:layout_width="96dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:paddingLeft="8dp"
-		    android:text="个人相册"
-		    android:textColor="#353535"
-		    android:textSize="16sp" />
+	        <LinearLayout
+	            android:id="@+id/ll_name"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="16dp"
+	            android:layout_marginTop="12dp"
+	            android:layout_toRightOf="@id/iv_avatar"
+	            android:orientation="horizontal" >
+	
+	            <TextView
+	                android:id="@+id/nikename"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="曹溦"
+	                android:textColor="#353535"
+	                android:textSize="16sp" />
+	
+	            <ImageView
+	                android:id="@+id/iv_sex"
+	                android:layout_width="20dp"
+	                android:layout_height="20dp"
+	                android:layout_marginLeft="8dp"
+	                android:src="@drawable/ic_sex_male" />
+	        </LinearLayout>
+	
+	        <TextView
+	            android:id="@+id/tv_fxid"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true"
+	            android:layout_marginBottom="10dp"
+	            android:layout_marginLeft="16dp"
+	            android:layout_toRightOf="@id/iv_avatar"
+	            android:text="帐号:"
+	            android:textColor="#AAAAAA"
+	            android:textSize="14sp" />
+	        
+	        <TextView
+	            android:id="@+id/id"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true"
+	            android:layout_marginBottom="10dp"
+	            android:layout_marginLeft="16dp"
+	            android:layout_toRightOf="@id/tv_fxid"
+	            android:text="account"
+	            android:textColor="#AAAAAA"
+	            android:textSize="14sp" />
+	    </RelativeLayout>
+	    
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:background="#ffffff"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp" >
+	
+			<TextView
+			    android:id="@+id/email_tittle"
+			    android:layout_width="96dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:paddingLeft="8dp"
+			    android:text="邮箱"
+			    android:textColor="#353535"
+			    android:textSize="16sp" />
+	
+			<TextView
+			    android:id="@+id/email"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@+id/email_tittle"
+			    android:text="123456789@qq.com"
+			    android:textColor="#AAAAAA"
+			    android:textSize="14sp" />
+	
+			<View
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:layout_alignParentBottom="true"
+			    android:background="#DBDBDB" />
+		</RelativeLayout>
 		
-		<ImageView
-		    android:id="@+id/iv_image1"
-		    android:layout_width="60dp"
-		    android:layout_height="60dp"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@id/tv_xiangce_temp"
-		    android:src="@drawable/empty_photo" />
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:background="#ffffff"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp" >
+	
+			<TextView
+			    android:id="@+id/description_tittle"
+			    android:layout_width="96dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:paddingLeft="8dp"
+			    android:text="个性签名"
+			    android:textColor="#353535"
+			    android:textSize="16sp" />
+	
+			<TextView
+			    android:id="@+id/description"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@+id/description_tittle"
+			    android:text="志存高远，脚踏实地"
+			    android:textColor="#AAAAAA"
+			    android:textSize="14sp" />
+	
+			<View
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:layout_alignParentBottom="true"
+			    android:background="#DBDBDB" />
+		</RelativeLayout>
 		
-		<ImageView
-		    android:layout_marginLeft="8dp"
-		    android:id="@+id/iv_image2"
-		    android:layout_width="60dp"
-		    android:layout_height="60dp"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@id/iv_image1"
-		    android:src="@drawable/empty_photo" />
-		<ImageView
-			android:layout_marginLeft="8dp"
-			android:id="@+id/iv_image3"
-			android:layout_width="60dp"
-			android:layout_height="60dp"
-			android:layout_centerVertical="true"
-			android:layout_toRightOf="@id/iv_image2"
-			android:src="@drawable/empty_photo" />
-              
-		<View
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_alignParentBottom="true"
-		    android:background="#DBDBDB" />
-	</RelativeLayout>
-
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:background="#ffffff"
-		android:paddingLeft="12dp"
-		android:paddingRight="12dp" >
-
-		<TextView
-		    android:id="@+id/address_tittle"
-		    android:layout_width="96dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:paddingLeft="8dp"
-		    android:text="地址"
-		    android:textColor="#353535"
-		    android:textSize="16sp" />
-
-		<TextView
-		    android:id="@+id/address"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@+id/address_tittle"
-		    android:text="辽宁大连"
-		    android:textColor="#AAAAAA"
-		    android:textSize="14sp" />
-
-		<View
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_alignParentBottom="true"
-		    android:background="#DBDBDB" />
-	</RelativeLayout>
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="76dp"
+			android:background="#ffffff"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp" >
 	
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:background="#ffffff"
-		android:paddingLeft="12dp"
-		android:paddingRight="12dp" >
-
-		<TextView
-		    android:id="@+id/city_tittle"
-		    android:layout_width="96dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:paddingLeft="8dp"
-		    android:text="城市"
-		    android:textColor="#353535"
-		    android:textSize="16sp" />
-
-		<TextView
-		    android:id="@+id/city"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@+id/city_tittle"
-		    android:text="辽宁大连"
-		    android:textColor="#AAAAAA"
-		    android:textSize="14sp" />
-
-		<View
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_alignParentBottom="true"
-		    android:background="#DBDBDB" />
-	</RelativeLayout>
+			<TextView
+			    android:id="@+id/tv_xiangce_temp"
+			    android:layout_width="96dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:paddingLeft="8dp"
+			    android:text="个人相册"
+			    android:textColor="#353535"
+			    android:textSize="16sp" />
+			
+			<ImageView
+			    android:id="@+id/iv_image1"
+			    android:layout_width="60dp"
+			    android:layout_height="60dp"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@id/tv_xiangce_temp"
+			    android:src="@drawable/empty_photo" />
+			
+			<ImageView
+			    android:layout_marginLeft="8dp"
+			    android:id="@+id/iv_image2"
+			    android:layout_width="60dp"
+			    android:layout_height="60dp"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@id/iv_image1"
+			    android:src="@drawable/empty_photo" />
+			<ImageView
+				android:layout_marginLeft="8dp"
+				android:id="@+id/iv_image3"
+				android:layout_width="60dp"
+				android:layout_height="60dp"
+				android:layout_centerVertical="true"
+				android:layout_toRightOf="@id/iv_image2"
+				android:src="@drawable/empty_photo" />
+	              
+			<View
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:layout_alignParentBottom="true"
+			    android:background="#DBDBDB" />
+		</RelativeLayout>
 	
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:background="#ffffff"
-		android:paddingLeft="12dp"
-		android:paddingRight="12dp" >
-
-		<TextView
-		    android:id="@+id/gender_tittle"
-		    android:layout_width="96dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:paddingLeft="8dp"
-		    android:text="性别"
-		    android:textColor="#353535"
-		    android:textSize="16sp" />
-
-		<TextView
-		    android:id="@+id/gender"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@+id/gender_tittle"
-		    android:text="男"
-		    android:textColor="#AAAAAA"
-		    android:textSize="14sp" />
-
-		<View
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_alignParentBottom="true"
-		    android:background="#DBDBDB" />
-	</RelativeLayout>
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:background="#ffffff"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp" >
 	
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:background="#ffffff"
-		android:paddingLeft="12dp"
-		android:paddingRight="12dp" >
-
-		<TextView
-		    android:id="@+id/phoneNumber_tittle"
-		    android:layout_width="96dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:paddingLeft="8dp"
-		    android:text="电话"
-		    android:textColor="#353535"
-		    android:textSize="16sp" />
-
-		<TextView
-		    android:id="@+id/phoneNumber"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@+id/phoneNumber_tittle"
-		    android:text="13888888888"
-		    android:textColor="#AAAAAA"
-		    android:textSize="14sp" />
-
-		<View
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_alignParentBottom="true"
-		    android:background="#DBDBDB" />
-	</RelativeLayout>
+			<TextView
+			    android:id="@+id/address_tittle"
+			    android:layout_width="96dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:paddingLeft="8dp"
+			    android:text="地址"
+			    android:textColor="#353535"
+			    android:textSize="16sp" />
 	
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:background="#ffffff"
-		android:paddingLeft="12dp"
-		android:paddingRight="12dp" >
-
-		<TextView
-		    android:id="@+id/alias_tittle"
-		    android:layout_width="96dp"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentLeft="true"
-		    android:layout_centerVertical="true"
-		    android:paddingLeft="8dp"
-		    android:text="备注"
-		    android:textColor="#353535"
-		    android:textSize="16sp" />
-
-		<TextView
-		    android:id="@+id/alias"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_centerVertical="true"
-		    android:layout_toRightOf="@+id/alias_tittle"
-		    android:text="帅哥"
-		    android:textColor="#AAAAAA"
-		    android:textSize="14sp" />
-
-		<View
-		    android:layout_width="match_parent"
-		    android:layout_height="0.1dp"
-		    android:layout_alignParentBottom="true"
-		    android:background="#DBDBDB" />
-	</RelativeLayout>
+			<TextView
+			    android:id="@+id/address"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@+id/address_tittle"
+			    android:text="辽宁大连"
+			    android:textColor="#AAAAAA"
+			    android:textSize="14sp" />
 	
-	<Button
-		android:id="@+id/btn_send"
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:layout_marginLeft="12dp"
-		android:layout_marginRight="12dp"
-		android:layout_marginTop="32dp"
-		style="@style/send_btn_shape"
-		android:paddingBottom="7dp"
-		android:paddingTop="7dp"
-		android:text="发消息"
-		android:textColor="@android:color/white"
-		android:textSize="18sp" />
+			<View
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:layout_alignParentBottom="true"
+			    android:background="#DBDBDB" />
+		</RelativeLayout>
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:background="#ffffff"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp" >
 	
-	<Button
-		android:id="@+id/btn_del"
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:layout_marginLeft="12dp"
-		android:layout_marginRight="12dp"
-		android:layout_marginTop="10dp"
-		style="@style/del_btn_shape"
-		android:paddingBottom="7dp"
-		android:paddingTop="7dp"
-		android:text="删除好友"
-		android:textColor="@android:color/white"
-		android:textSize="18sp" />
+			<TextView
+			    android:id="@+id/city_tittle"
+			    android:layout_width="96dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:paddingLeft="8dp"
+			    android:text="城市"
+			    android:textColor="#353535"
+			    android:textSize="16sp" />
 	
-    
+			<TextView
+			    android:id="@+id/city"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@+id/city_tittle"
+			    android:text="辽宁大连"
+			    android:textColor="#AAAAAA"
+			    android:textSize="14sp" />
+	
+			<View
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:layout_alignParentBottom="true"
+			    android:background="#DBDBDB" />
+		</RelativeLayout>
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:background="#ffffff"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp" >
+	
+			<TextView
+			    android:id="@+id/gender_tittle"
+			    android:layout_width="96dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:paddingLeft="8dp"
+			    android:text="性别"
+			    android:textColor="#353535"
+			    android:textSize="16sp" />
+	
+			<TextView
+			    android:id="@+id/gender"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@+id/gender_tittle"
+			    android:text="男"
+			    android:textColor="#AAAAAA"
+			    android:textSize="14sp" />
+	
+			<View
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:layout_alignParentBottom="true"
+			    android:background="#DBDBDB" />
+		</RelativeLayout>
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:background="#ffffff"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp" >
+	
+			<TextView
+			    android:id="@+id/phoneNumber_tittle"
+			    android:layout_width="96dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:paddingLeft="8dp"
+			    android:text="电话"
+			    android:textColor="#353535"
+			    android:textSize="16sp" />
+	
+			<TextView
+			    android:id="@+id/phoneNumber"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@+id/phoneNumber_tittle"
+			    android:text="13888888888"
+			    android:textColor="#AAAAAA"
+			    android:textSize="14sp" />
+	
+			<View
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:layout_alignParentBottom="true"
+			    android:background="#DBDBDB" />
+		</RelativeLayout>
+		
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:background="#ffffff"
+			android:paddingLeft="12dp"
+			android:paddingRight="12dp" >
+	
+			<TextView
+			    android:id="@+id/alias_tittle"
+			    android:layout_width="96dp"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentLeft="true"
+			    android:layout_centerVertical="true"
+			    android:paddingLeft="8dp"
+			    android:text="备注"
+			    android:textColor="#353535"
+			    android:textSize="16sp" />
+	
+			<TextView
+			    android:id="@+id/alias"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_centerVertical="true"
+			    android:layout_toRightOf="@+id/alias_tittle"
+			    android:text="帅哥"
+			    android:textColor="#AAAAAA"
+			    android:textSize="14sp" />
+	
+			<View
+			    android:layout_width="match_parent"
+			    android:layout_height="0.1dp"
+			    android:layout_alignParentBottom="true"
+			    android:background="#DBDBDB" />
+		</RelativeLayout>
+		
+		<Button
+			android:id="@+id/btn_send"
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:layout_marginTop="32dp"
+			style="@style/send_btn_shape"
+			android:paddingBottom="7dp"
+			android:paddingTop="7dp"
+			android:text="发消息"
+			android:textColor="@android:color/white"
+			android:textSize="18sp" />
+		
+		<Button
+			android:id="@+id/btn_del"
+			android:layout_width="match_parent"
+			android:layout_height="48dp"
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:layout_marginTop="10dp"
+			style="@style/del_btn_shape"
+			android:paddingBottom="7dp"
+			android:paddingTop="7dp"
+			android:text="删除好友"
+			android:textColor="@android:color/white"
+			android:textSize="18sp" />
 	</LinearLayout>
 </ScrollView>

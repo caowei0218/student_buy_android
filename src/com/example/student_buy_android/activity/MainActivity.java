@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity implements
 	private ListView lv_show;
 	private ShowAdapter showAdapter;
 	private ArrayList<ArrayList<HashMap<String, Object>>> arrayLists;// 用来存放衣酷展示内容
-	private ImageButton top_add, top_search;
+	private ImageButton top_add;
 	private TextView username, nikename, email, description, address, city,
 			gender, phoneNumber;
 	private List<FriendBean> friendBeans;// 用来存放好友列表
@@ -75,7 +75,6 @@ public class MainActivity extends BaseActivity implements
 		mTabFrd.setOnClickListener(this);
 		mTabSetting.setOnClickListener(this);
 		top_add.setOnClickListener(this);
-		top_search.setOnClickListener(this);
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			// ViewPage左右滑动时
 			@Override
@@ -138,7 +137,6 @@ public class MainActivity extends BaseActivity implements
 		mSettingImg = (ImageButton) findViewById(R.id.id_tab_settings_img);
 
 		top_add = (ImageButton) findViewById(R.id.top_add);
-		top_search = (ImageButton) findViewById(R.id.top_search);
 
 	}
 
@@ -224,9 +222,6 @@ public class MainActivity extends BaseActivity implements
 			startActivity(intent);
 			overridePendingTransition(android.R.anim.fade_in,
 					android.R.anim.fade_out);// 实现淡入浅出的效果
-			break;
-		case R.id.top_search:
-			Toast.makeText(MainActivity.this, "待开发", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.nikename:
 			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
