@@ -1,15 +1,15 @@
 - name: yue_app_release_list
   path: https://github.com/caowei0218/student_buy_android/blob/master/release/
   files:
-    - name: yue_v1.0.4.apk
-      version: 104
-      type: release
     - name: yue_v1.0.5.apk
-      version: 105
+      version: 1.0.5
       type: release
     - name: yue_v1.0.6.apk
-      version: 106
+      version: 1.0.6
       type: release
     - name: yue_v1.0.7.apk
-      version: 107
+      version: 1.0.7
+      type: release
+    - name: yue_v1.0.8.apk
+      version: 1.0.8
       type: release
