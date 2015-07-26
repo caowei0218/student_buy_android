@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical"
+    android:background="#ebebeb">
+    
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical" >
 
     <include layout="@layout/top_layout" />
     
@@ -67,195 +73,331 @@
             android:text="account"
             android:textColor="#AAAAAA"
             android:textSize="14sp" />
-      </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <RelativeLayout
-            android:id="@+id/rl_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp" >
-
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:hint="邮箱"
-                android:textSize="20sp" >
-            </TextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/email"
-                android:layout_marginTop="2dp"
-                android:background="#33000000" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_email"
-            android:layout_marginTop="5dp" >
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:hint="描述"
-                android:textSize="20sp" >
-            </TextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/description"
-                android:layout_marginTop="2dp"
-                android:background="#33000000" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_description"
-            android:layout_marginTop="5dp" >
-
-            <TextView
-                android:id="@+id/address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:hint="地址"
-                android:textSize="20sp" >
-            </TextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/address"
-                android:layout_marginTop="2dp"
-                android:background="#33000000" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_address"
-            android:layout_marginTop="5dp" >
-
-            <TextView
-                android:id="@+id/city"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:hint="城市"
-                android:textSize="20sp" >
-            </TextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/city"
-                android:layout_marginTop="2dp"
-                android:background="#33000000" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_city"
-            android:layout_marginTop="5dp" >
-
-            <TextView
-                android:id="@+id/gender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:hint="性别"
-                android:textSize="20sp" >
-            </TextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/gender"
-                android:layout_marginTop="2dp"
-                android:background="#33000000" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_phoneNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_gender"
-            android:layout_marginTop="5dp" >
-
-            <TextView
-                android:id="@+id/phoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:hint="电话"
-                android:textSize="20sp" >
-            </TextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/phoneNumber"
-                android:layout_marginTop="2dp"
-                android:background="#33000000" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_alias"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/rl_phoneNumber"
-            android:layout_marginTop="5dp" >
-
-            <TextView
-                android:id="@+id/alias"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:hint="备注"
-                android:textSize="20sp" >
-            </TextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/alias"
-                android:layout_marginTop="2dp"
-                android:background="#33000000" />
-        </RelativeLayout>
     </RelativeLayout>
+    
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#ffffff"
+		android:paddingLeft="12dp"
+		android:paddingRight="12dp" >
 
-    <Button
-        android:id="@+id/btn_send"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="10dp"
-        style="@style/send_btn_shape"
-        android:text="发消息" />
+		<TextView
+		    android:id="@+id/email_tittle"
+		    android:layout_width="96dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:paddingLeft="8dp"
+		    android:text="邮箱"
+		    android:textColor="#353535"
+		    android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/btn_del"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        style="@style/del_btn_shape"
-        android:layout_marginRight="10dp"
-        android:text="删除好友" />
+		<TextView
+		    android:id="@+id/email"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@+id/email_tittle"
+		    android:text="123456789@qq.com"
+		    android:textColor="#AAAAAA"
+		    android:textSize="14sp" />
 
-</LinearLayout>
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="0.1dp"
+		    android:layout_alignParentBottom="true"
+		    android:background="#DBDBDB" />
+	</RelativeLayout>
+	
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#ffffff"
+		android:paddingLeft="12dp"
+		android:paddingRight="12dp" >
+
+		<TextView
+		    android:id="@+id/description_tittle"
+		    android:layout_width="96dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:paddingLeft="8dp"
+		    android:text="个性签名"
+		    android:textColor="#353535"
+		    android:textSize="16sp" />
+
+		<TextView
+		    android:id="@+id/description"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@+id/description_tittle"
+		    android:text="志存高远，脚踏实地"
+		    android:textColor="#AAAAAA"
+		    android:textSize="14sp" />
+
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="0.1dp"
+		    android:layout_alignParentBottom="true"
+		    android:background="#DBDBDB" />
+	</RelativeLayout>
+	
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="76dp"
+		android:background="#ffffff"
+		android:paddingLeft="12dp"
+		android:paddingRight="12dp" >
+
+		<TextView
+		    android:id="@+id/tv_xiangce_temp"
+		    android:layout_width="96dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:paddingLeft="8dp"
+		    android:text="个人相册"
+		    android:textColor="#353535"
+		    android:textSize="16sp" />
+		
+		<ImageView
+		    android:id="@+id/iv_image1"
+		    android:layout_width="60dp"
+		    android:layout_height="60dp"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@id/tv_xiangce_temp"
+		    android:src="@drawable/empty_photo" />
+		
+		<ImageView
+		    android:layout_marginLeft="8dp"
+		    android:id="@+id/iv_image2"
+		    android:layout_width="60dp"
+		    android:layout_height="60dp"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@id/iv_image1"
+		    android:src="@drawable/empty_photo" />
+		<ImageView
+			android:layout_marginLeft="8dp"
+			android:id="@+id/iv_image3"
+			android:layout_width="60dp"
+			android:layout_height="60dp"
+			android:layout_centerVertical="true"
+			android:layout_toRightOf="@id/iv_image2"
+			android:src="@drawable/empty_photo" />
+              
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="0.1dp"
+		    android:layout_alignParentBottom="true"
+		    android:background="#DBDBDB" />
+	</RelativeLayout>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#ffffff"
+		android:paddingLeft="12dp"
+		android:paddingRight="12dp" >
+
+		<TextView
+		    android:id="@+id/address_tittle"
+		    android:layout_width="96dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:paddingLeft="8dp"
+		    android:text="地址"
+		    android:textColor="#353535"
+		    android:textSize="16sp" />
+
+		<TextView
+		    android:id="@+id/address"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@+id/address_tittle"
+		    android:text="辽宁大连"
+		    android:textColor="#AAAAAA"
+		    android:textSize="14sp" />
+
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="0.1dp"
+		    android:layout_alignParentBottom="true"
+		    android:background="#DBDBDB" />
+	</RelativeLayout>
+	
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#ffffff"
+		android:paddingLeft="12dp"
+		android:paddingRight="12dp" >
+
+		<TextView
+		    android:id="@+id/city_tittle"
+		    android:layout_width="96dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:paddingLeft="8dp"
+		    android:text="城市"
+		    android:textColor="#353535"
+		    android:textSize="16sp" />
+
+		<TextView
+		    android:id="@+id/city"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@+id/city_tittle"
+		    android:text="辽宁大连"
+		    android:textColor="#AAAAAA"
+		    android:textSize="14sp" />
+
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="0.1dp"
+		    android:layout_alignParentBottom="true"
+		    android:background="#DBDBDB" />
+	</RelativeLayout>
+	
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#ffffff"
+		android:paddingLeft="12dp"
+		android:paddingRight="12dp" >
+
+		<TextView
+		    android:id="@+id/gender_tittle"
+		    android:layout_width="96dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:paddingLeft="8dp"
+		    android:text="性别"
+		    android:textColor="#353535"
+		    android:textSize="16sp" />
+
+		<TextView
+		    android:id="@+id/gender"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@+id/gender_tittle"
+		    android:text="男"
+		    android:textColor="#AAAAAA"
+		    android:textSize="14sp" />
+
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="0.1dp"
+		    android:layout_alignParentBottom="true"
+		    android:background="#DBDBDB" />
+	</RelativeLayout>
+	
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#ffffff"
+		android:paddingLeft="12dp"
+		android:paddingRight="12dp" >
+
+		<TextView
+		    android:id="@+id/phoneNumber_tittle"
+		    android:layout_width="96dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:paddingLeft="8dp"
+		    android:text="电话"
+		    android:textColor="#353535"
+		    android:textSize="16sp" />
+
+		<TextView
+		    android:id="@+id/phoneNumber"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@+id/phoneNumber_tittle"
+		    android:text="13888888888"
+		    android:textColor="#AAAAAA"
+		    android:textSize="14sp" />
+
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="0.1dp"
+		    android:layout_alignParentBottom="true"
+		    android:background="#DBDBDB" />
+	</RelativeLayout>
+	
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:background="#ffffff"
+		android:paddingLeft="12dp"
+		android:paddingRight="12dp" >
+
+		<TextView
+		    android:id="@+id/alias_tittle"
+		    android:layout_width="96dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:paddingLeft="8dp"
+		    android:text="备注"
+		    android:textColor="#353535"
+		    android:textSize="16sp" />
+
+		<TextView
+		    android:id="@+id/alias"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_toRightOf="@+id/alias_tittle"
+		    android:text="帅哥"
+		    android:textColor="#AAAAAA"
+		    android:textSize="14sp" />
+
+		<View
+		    android:layout_width="match_parent"
+		    android:layout_height="0.1dp"
+		    android:layout_alignParentBottom="true"
+		    android:background="#DBDBDB" />
+	</RelativeLayout>
+	
+	<Button
+		android:id="@+id/btn_send"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"
+		android:layout_marginTop="32dp"
+		style="@style/send_btn_shape"
+		android:paddingBottom="7dp"
+		android:paddingTop="7dp"
+		android:text="发消息"
+		android:textColor="@android:color/white"
+		android:textSize="18sp" />
+	
+	<Button
+		android:id="@+id/btn_del"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_marginLeft="12dp"
+		android:layout_marginRight="12dp"
+		android:layout_marginTop="10dp"
+		style="@style/del_btn_shape"
+		android:paddingBottom="7dp"
+		android:paddingTop="7dp"
+		android:text="删除好友"
+		android:textColor="@android:color/white"
+		android:textSize="18sp" />
+	
+    
+	</LinearLayout>
+</ScrollView>
