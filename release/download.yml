@@ -1,0 +1,6 @@
+- name: yue_app_release_list
+  path: https://raw.githubusercontent.com/caowei0218/student_buy_android/tree/master/release
+  files:
+    - name: yue_v1.0.6.apk
+      version: 106
+      type: release
