@@ -10,6 +10,6 @@
     - name: yue_v1.0.6.apk
       version: 106
       type: release
-	- name: yue_v1.0.7.apk
+    - name: yue_v1.0.7.apk
       version: 107
       type: release
