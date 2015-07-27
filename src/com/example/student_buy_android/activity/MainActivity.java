@@ -14,6 +14,7 @@ import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -73,6 +74,11 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private AtomicInteger what = new AtomicInteger(0);
 	private boolean isContinue = true;
 	private List<View> advPics;
+	private DisplayMetrics displayMetrics;
+	private int window_width;
+	private int window_height;
+	private LayoutParams para;
+	private ImageView seasons, coat, footwear, other;
 	// Œ“µƒ
 	private TextView username, nikename, email, description, address, city,
 			gender, phoneNumber;
@@ -436,13 +442,54 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	 * */
 	private void getExcoo() {
 		initData();
+
+		displayMetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+		window_width = displayMetrics.widthPixels;
+		window_height = displayMetrics.heightPixels;
+
 		showViewPager = (ViewPager) mViews.get(2).findViewById(R.id.adv_pager);
+		seasons = (ImageView) mViews.get(2).findViewById(R.id.seasons);
+		coat = (ImageView) mViews.get(2).findViewById(R.id.coat);
+		footwear = (ImageView) mViews.get(2).findViewById(R.id.footwear);
+		other = (ImageView) mViews.get(2).findViewById(R.id.other);
 		lv_show = (ListView) mViews.get(2).findViewById(R.id.lv_show);
+		
+		adaptation();
 
 		initViewPager();
 
 		showAdapter = new ShowAdapter(arrayLists, MainActivity.this);
 		lv_show.setAdapter(showAdapter);
+	}
+
+	/**
+	 * ∆¡ƒª±»¿˝  ≈‰
+	 * */
+	private void adaptation() {
+		para = seasons.getLayoutParams();
+		para.height = (int) (window_height * (120.0 / 1334));
+		para.width = (int) (window_width * (120.0 / 750));
+		seasons.setLayoutParams(para);
+
+		para = coat.getLayoutParams();
+		para.height = (int) (window_height * (120.0 / 1334));
+		para.width = (int) (window_width * (120.0 / 750));
+		coat.setLayoutParams(para);
+
+		para = footwear.getLayoutParams();
+		para.height = (int) (window_height * (120.0 / 1334));
+		para.width = (int) (window_width * (120.0 / 750));
+		footwear.setLayoutParams(para);
+
+		para = other.getLayoutParams();
+		para.height = (int) (window_height * (120.0 / 1334));
+		para.width = (int) (window_width * (120.0 / 750));
+		other.setLayoutParams(para);
+
+		para = showViewPager.getLayoutParams();
+		para.height = (int) (window_height * (200.0 / 1334));
+		showViewPager.setLayoutParams(para);
 	}
 
 	/**
@@ -641,6 +688,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		
+
 	}
 }
