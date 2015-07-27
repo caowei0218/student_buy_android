@@ -3,25 +3,34 @@ package com.example.student_buy_android.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.adapter.FriendsAdapter;
@@ -33,9 +42,9 @@ import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.webservice.GetFriendListWebservice;
 import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
-@SuppressLint("InflateParams")
-public class MainActivity extends BaseActivity implements
-		android.view.View.OnClickListener {
+@SuppressLint({ "InflateParams", "HandlerLeak" })
+public class MainActivity extends BaseActivity implements OnClickListener,
+		OnItemClickListener, OnItemLongClickListener {
 
 	private ViewPager mViewPager;// 用来放置界面切换
 	private PagerAdapter mPagerAdapter;// 初始化View适配器
@@ -44,19 +53,29 @@ public class MainActivity extends BaseActivity implements
 	private LinearLayout mTabWeiXin, mTabAddress, mTabFrd, mTabSetting;
 	// 四个按钮
 	private ImageButton mWeiXinImg, mAddressImg, mFrdImg, mSettingImg;
+	private ImageButton top_add;
 
+	// 聊天
+	private ListView lv_latest_contact;
+	private List<FriendBean> latestContactLsit;// 用来存放最近联系人
+	private LatestContactsAdapter latestContactsAdapter;
+	// 好友列表
 	private ListView lv_friends;
+	private List<FriendBean> friendBeans;// 用来存放好友列表
+	private FriendsAdapter friendsAdapter;
+	// 衣酷
 	private ListView lv_show;
 	private ShowAdapter showAdapter;
 	private ArrayList<ArrayList<HashMap<String, Object>>> arrayLists;// 用来存放衣酷展示内容
-	private ImageButton top_add;
+	private ViewPager showViewPager;
+	private ImageView[] imageViews;
+	private ImageView imageView;
+	private AtomicInteger what = new AtomicInteger(0);
+	private boolean isContinue = true;
+	private List<View> advPics;
+	// 我的
 	private TextView username, nikename, email, description, address, city,
 			gender, phoneNumber;
-	private List<FriendBean> friendBeans;// 用来存放好友列表
-	private FriendsAdapter friendsAdapter;
-	private List<FriendBean> latestContactLsit;// 用来存放最近联系人
-	private ListView lv_latest_contact;
-	private LatestContactsAdapter latestContactsAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -292,12 +311,12 @@ public class MainActivity extends BaseActivity implements
 	/**
 	 * 初始化最近联系人
 	 * */
-	private void initLatestContacts(){
+	private void initLatestContacts() {
 		latestContactLsit = getLatestContacts();
 		setOnItemClickListener();
 		setLatestContactsAdapter();
 	}
-	
+
 	/**
 	 * 获得最近联系人
 	 * */
@@ -312,7 +331,7 @@ public class MainActivity extends BaseActivity implements
 	private void setOnItemClickListener() {
 		lv_latest_contact = (ListView) mViews.get(0).findViewById(
 				R.id.lv_latest_contact);
-		
+
 		lv_latest_contact.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -372,33 +391,6 @@ public class MainActivity extends BaseActivity implements
 		lv_friends.setAdapter(friendsAdapter);
 	}
 
-	private void getExcoo() {
-		initData();
-		lv_show = (ListView) mViews.get(2).findViewById(R.id.lv_show);
-
-		showAdapter = new ShowAdapter(arrayLists, MainActivity.this);
-		lv_show.setAdapter(showAdapter);
-	}
-
-	/**
-	 * 衣酷数据源
-	 * */
-	private void initData() {
-		arrayLists = new ArrayList<ArrayList<HashMap<String, Object>>>();
-		HashMap<String, Object> hashMap = null;
-		ArrayList<HashMap<String, Object>> arrayListForEveryGridView;
-
-		for (int i = 0; i < 10; i++) {
-			arrayListForEveryGridView = new ArrayList<HashMap<String, Object>>();
-			for (int j = 0; j < 3; j++) {
-				hashMap = new HashMap<String, Object>();
-				hashMap.put("content", "i=" + i + " ,j=" + j);
-				arrayListForEveryGridView.add(hashMap);
-			}
-			arrayLists.add(arrayListForEveryGridView);
-		}
-	}
-
 	/**
 	 * 获得我的个人信息
 	 * */
@@ -440,6 +432,194 @@ public class MainActivity extends BaseActivity implements
 	}
 
 	/**
+	 * 衣酷
+	 * */
+	private void getExcoo() {
+		initData();
+		showViewPager = (ViewPager) mViews.get(2).findViewById(R.id.adv_pager);
+		lv_show = (ListView) mViews.get(2).findViewById(R.id.lv_show);
+
+		initViewPager();
+
+		showAdapter = new ShowAdapter(arrayLists, MainActivity.this);
+		lv_show.setAdapter(showAdapter);
+	}
+
+	/**
+	 * 广告位
+	 * */
+	private void initViewPager() {
+		ViewGroup viewGroup = (ViewGroup) mViews.get(2).findViewById(
+				R.id.viewGroup);
+
+		if (imageViews == null) {
+			advPics = new ArrayList<View>();
+			ImageView img1 = new ImageView(this);
+			img1.setBackgroundResource(R.drawable.advertising1);// 广告位图片
+			advPics.add(img1);
+			ImageView img2 = new ImageView(this);
+			img2.setBackgroundResource(R.drawable.advertising2);
+			advPics.add(img2);
+			ImageView img3 = new ImageView(this);
+			img3.setBackgroundResource(R.drawable.advertising3);
+			advPics.add(img3);
+			// ImageView img4 = new ImageView(this);
+			// img4.setBackgroundResource(R.drawable.advertising4);
+			// advPics.add(img4);
+			imageViews = new ImageView[advPics.size()];
+
+			for (int i = 0; i < imageViews.length; i++) {
+				imageView = new ImageView(this);
+				imageView.setLayoutParams(new LayoutParams(20, 20));
+				imageView.setPadding(5, 5, 5, 5);
+				imageViews[i] = imageView;
+				if (i == 0) {
+					imageViews[i]
+							.setBackgroundResource(R.drawable.banner_dian_focus);// 广告位小点点（亮）
+				} else {
+					imageViews[i]
+							.setBackgroundResource(R.drawable.banner_dian_blur);// 广告位小点点（暗）
+				}
+				viewGroup.addView(imageViews[i]);
+			}
+		}
+
+		showViewPager.setAdapter(new AdvAdapter(advPics));
+		showViewPager.setOnPageChangeListener(new GuidePageChangeListener());
+		showViewPager.setOnTouchListener(new OnTouchListener() {
+
+			@SuppressLint("ClickableViewAccessibility")
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+				case MotionEvent.ACTION_MOVE:
+					isContinue = false;
+					break;
+				case MotionEvent.ACTION_UP:
+					isContinue = true;
+					break;
+				default:
+					isContinue = true;
+					break;
+				}
+				return false;
+			}
+		});
+		new Thread(new Runnable() {
+			public void run() {
+				while (true) {
+					if (isContinue) {
+						viewHandler.sendEmptyMessage(what.get());
+						whatOption();
+					}
+				}
+			}
+		}).start();
+	}
+
+	private void whatOption() {
+		what.incrementAndGet();
+		if (what.get() > imageViews.length - 1) {
+			what.getAndAdd(-4);
+		}
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+
+		}
+	}
+
+	/**
+	 * 衣酷数据源
+	 * */
+	private void initData() {
+		arrayLists = new ArrayList<ArrayList<HashMap<String, Object>>>();
+		HashMap<String, Object> hashMap = null;
+		ArrayList<HashMap<String, Object>> arrayListForEveryGridView;
+
+		for (int i = 0; i < 10; i++) {
+			arrayListForEveryGridView = new ArrayList<HashMap<String, Object>>();
+			for (int j = 0; j < 3; j++) {
+				hashMap = new HashMap<String, Object>();
+				hashMap.put("content", "i=" + i + " ,j=" + j);
+				arrayListForEveryGridView.add(hashMap);
+			}
+			arrayLists.add(arrayListForEveryGridView);
+		}
+	}
+
+	/**
+	 * 广告位适配器
+	 * */
+	private final class AdvAdapter extends PagerAdapter {
+		private List<View> views = null;
+
+		public AdvAdapter(List<View> views) {
+			this.views = views;
+		}
+
+		public void destroyItem(View arg0, int arg1, Object arg2) {
+			((ViewPager) arg0).removeView(views.get(arg1));
+		}
+
+		public void finishUpdate(View arg0) {
+		}
+
+		public int getCount() {
+			return views.size();
+		}
+
+		public Object instantiateItem(View arg0, int arg1) {
+			((ViewPager) arg0).addView(views.get(arg1), 0);
+			return views.get(arg1);
+		}
+
+		public boolean isViewFromObject(View arg0, Object arg1) {
+			return arg0 == arg1;
+		}
+
+		public void restoreState(Parcelable arg0, ClassLoader arg1) {
+		}
+
+		public Parcelable saveState() {
+			return null;
+		}
+
+		public void startUpdate(View arg0) {
+		}
+	}
+
+	private final class GuidePageChangeListener implements OnPageChangeListener {
+
+		public void onPageScrollStateChanged(int arg0) {
+		}
+
+		public void onPageScrolled(int arg0, float arg1, int arg2) {
+		}
+
+		public void onPageSelected(int arg0) {
+			what.getAndSet(arg0);
+			for (int i = 0; i < imageViews.length; i++) {
+				imageViews[arg0]
+						.setBackgroundResource(R.drawable.banner_dian_focus);
+				if (arg0 != i) {
+					imageViews[i]
+							.setBackgroundResource(R.drawable.banner_dian_blur);
+				}
+			}
+		}
+	}
+
+	private final Handler viewHandler = new Handler() {
+
+		@SuppressLint("HandlerLeak")
+		public void handleMessage(Message msg) {
+			showViewPager.setCurrentItem(msg.what);
+			super.handleMessage(msg);
+		}
+	};
+
+	/**
 	 * 返回键后台运行
 	 * */
 	@Override
@@ -450,5 +630,17 @@ public class MainActivity extends BaseActivity implements
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, View view,
+			int position, long id) {
+		return false;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		
 	}
 }
