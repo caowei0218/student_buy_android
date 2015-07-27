@@ -25,7 +25,6 @@ public class MessageDao {
 	 * 将消息存到数据库
 	 */
 	public void saveMessage(Message message) {
-		System.out.println("保存数据");
 		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		ContentValues content_value = new ContentValues();
@@ -41,7 +40,6 @@ public class MessageDao {
 		if (db != null) {
 			db.close();
 		}
-		System.out.println("保存数据成功");
 	}
 
 	/**
