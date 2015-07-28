@@ -18,7 +18,6 @@ import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
-import com.example.student_buy_android.util.Word;
 
 /**
  * 获得用户自己的信息 HttpGet请求
@@ -39,7 +38,7 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-//		mainActivity.beginWaitDialog(Word.Adding, true);
+		// mainActivity.beginWaitDialog(Word.Adding, true);
 
 		httpClient = new DefaultHttpClient();
 		get = new HttpGet(WebserviceUtils.HTTPTRANSPORTSE + method);
@@ -68,7 +67,7 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-//		mainActivity.endWaitDialog(true);
+		// mainActivity.endWaitDialog(true);
 
 		try {
 			JSONTokener jsonParser = new JSONTokener(result);
@@ -76,6 +75,7 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 			if ("true".equals(jsonObject.getString("success"))) {
 				userBean = jsonBinder.jsonToObj(
 						jsonObject.getString("userinfo"), UserBean.class);
+				Common.userBean = userBean;
 				mainActivity.updateData(userBean);
 			} else {
 				Toast.makeText(context, jsonObject.getString("errors"),

@@ -25,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="个人信息"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 
@@ -48,7 +47,6 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="20dip"
-        android:hint="昵称"
         android:paddingLeft="15dip"
         android:singleLine="true"
         android:textColorHint="#AAAAAA"

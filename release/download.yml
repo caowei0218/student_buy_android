@@ -13,3 +13,6 @@
     - name: yue_v1.0.8.apk
       version: 1.0.8
       type: release
+    - name: yue_v1.0.9.apk
+      version: 1.0.9
+      type: release

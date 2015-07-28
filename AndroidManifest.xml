@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.student_buy_android"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.9" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -29,9 +29,10 @@
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.AddFriendActivity" />
         <activity android:name=".activity.FriendInfoActivity" />
-        <activity android:name=".activity.ShowActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.UpdateInfoActivity" />
+        <activity android:name=".activity.MyInfoActivity" />
+        <activity android:name=".activity.SetInfoActivity" />
 
         <!-- 云巴start -->
         <meta-data

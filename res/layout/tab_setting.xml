@@ -11,7 +11,7 @@
         android:orientation="vertical" >
 
         <RelativeLayout
-            android:id="@+id/re_avatar"
+            android:id="@+id/rl_info"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="15dp"

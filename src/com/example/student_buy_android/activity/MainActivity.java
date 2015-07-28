@@ -31,7 +31,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.adapter.FriendsAdapter;
@@ -80,8 +82,8 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private LayoutParams para;
 	private ImageView seasons, coat, footwear, other;
 	// 我的
-	private TextView username, nikename, email, description, address, city,
-			gender, phoneNumber;
+	private TextView tv_nickname, tv_username;
+	private RelativeLayout rl_info, rl_gallery, rl_setting;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -171,16 +173,16 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private void initViewPage() {
 
 		// 初妈化四个布局
-		LayoutInflater mLayoutInflater = LayoutInflater.from(this);
-		View tab01 = mLayoutInflater.inflate(R.layout.tab_recently, null);
-		View tab_friends = mLayoutInflater.inflate(R.layout.tab_friends, null);
-		View tab03 = mLayoutInflater.inflate(R.layout.tab_show, null);
-		View tab_my = mLayoutInflater.inflate(R.layout.tab_my, null);
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		View tab_recently = layoutInflater.inflate(R.layout.tab_recently, null);
+		View tab_friends = layoutInflater.inflate(R.layout.tab_friends, null);
+		View tab_show = layoutInflater.inflate(R.layout.tab_show, null);
+		View tab_setting = layoutInflater.inflate(R.layout.tab_setting, null);
 
-		mViews.add(tab01);
+		mViews.add(tab_recently);
 		mViews.add(tab_friends);
-		mViews.add(tab03);
-		mViews.add(tab_my);
+		mViews.add(tab_show);
+		mViews.add(tab_setting);
 
 		// 适配器初始化并设置
 		mPagerAdapter = new PagerAdapter() {
@@ -248,53 +250,17 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			overridePendingTransition(android.R.anim.fade_in,
 					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
-		case R.id.nikename:
-			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
-			intent.putExtra("nikename", nikename.getText().toString().trim());
+		case R.id.rl_info:
+			intent = new Intent(MainActivity.this, MyInfoActivity.class);
 			startActivity(intent);
 			overridePendingTransition(android.R.anim.fade_in,
 					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
-		case R.id.email:
-			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
-			intent.putExtra("email", email.getText().toString().trim());
-			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);// 实现淡入浅出的效果
+		case R.id.rl_gallery:
+			Toast.makeText(this, "待开发", Toast.LENGTH_SHORT).show();
 			break;
-		case R.id.description:
-			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
-			intent.putExtra("description", description.getText().toString()
-					.trim());
-			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);// 实现淡入浅出的效果
-			break;
-		case R.id.address:
-			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
-			intent.putExtra("address", address.getText().toString().trim());
-			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);// 实现淡入浅出的效果
-			break;
-		case R.id.city:
-			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
-			intent.putExtra("city", city.getText().toString().trim());
-			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);// 实现淡入浅出的效果
-			break;
-		case R.id.gender:
-			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
-			intent.putExtra("gender", gender.getText().toString().trim());
-			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);// 实现淡入浅出的效果
-			break;
-		case R.id.phoneNumber:
-			intent = new Intent(MainActivity.this, UpdateInfoActivity.class);
-			intent.putExtra("phoneNumber", phoneNumber.getText().toString()
-					.trim());
+		case R.id.rl_setting:
+			intent = new Intent(MainActivity.this, SetInfoActivity.class);
 			startActivity(intent);
 			overridePendingTransition(android.R.anim.fade_in,
 					android.R.anim.fade_out);// 实现淡入浅出的效果
@@ -401,22 +367,17 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	 * 获得我的个人信息
 	 * */
 	private void getMyInfo() {
-		username = (TextView) mViews.get(3).findViewById(R.id.id);
-		nikename = (TextView) mViews.get(3).findViewById(R.id.nikename);
-		email = (TextView) mViews.get(3).findViewById(R.id.email);
-		description = (TextView) mViews.get(3).findViewById(R.id.description);
-		address = (TextView) mViews.get(3).findViewById(R.id.address);
-		city = (TextView) mViews.get(3).findViewById(R.id.city);
-		gender = (TextView) mViews.get(3).findViewById(R.id.gender);
-		phoneNumber = (TextView) mViews.get(3).findViewById(R.id.phoneNumber);
+		rl_info = (RelativeLayout) mViews.get(3).findViewById(R.id.rl_info);
+		rl_gallery = (RelativeLayout) mViews.get(3).findViewById(
+				R.id.rl_gallery);
+		rl_setting = (RelativeLayout) mViews.get(3).findViewById(
+				R.id.rl_setting);
+		tv_nickname = (TextView) mViews.get(3).findViewById(R.id.tv_nickname);
+		tv_username = (TextView) mViews.get(3).findViewById(R.id.tv_username);
 
-		nikename.setOnClickListener(this);
-		email.setOnClickListener(this);
-		description.setOnClickListener(this);
-		address.setOnClickListener(this);
-		city.setOnClickListener(this);
-		gender.setOnClickListener(this);
-		phoneNumber.setOnClickListener(this);
+		rl_info.setOnClickListener(this);
+		rl_gallery.setOnClickListener(this);
+		rl_setting.setOnClickListener(this);
 
 		GetMyInfoWebservice getMyInfoWebservice = new GetMyInfoWebservice(
 				MainActivity.this, this);
@@ -427,14 +388,8 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	 * 修改页面数据
 	 * */
 	public void updateData(UserBean userBean) {
-		username.setText(userBean.getUsername());
-		nikename.setText(userBean.getNickname());
-		email.setText(userBean.getEmail());
-		description.setText(userBean.getDescription());
-		address.setText(userBean.getAddress());
-		city.setText(userBean.getCity());
-		gender.setText(userBean.getGender());
-		phoneNumber.setText(userBean.getPhoneNumber());
+		tv_username.setText(userBean.getUsername());
+		tv_nickname.setText(userBean.getNickname());
 	}
 
 	/**
@@ -454,7 +409,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		footwear = (ImageView) mViews.get(2).findViewById(R.id.footwear);
 		other = (ImageView) mViews.get(2).findViewById(R.id.other);
 		lv_show = (ListView) mViews.get(2).findViewById(R.id.lv_show);
-		
+
 		adaptation();
 
 		initViewPager();

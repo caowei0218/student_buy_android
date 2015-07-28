@@ -110,6 +110,7 @@ public class LoginActivity extends BaseActivity {
 		userBean.setUsername(userName);
 		userBean.setPassword(MD5Util.str2MD5(password));// º”√‹
 		// userBean.setPassword(password);// º”√‹
+		System.out.println(MD5Util.str2MD5(password));
 		LoginWebservice loginWebservice = new LoginWebservice(
 				LoginActivity.this, this, userBean);
 		loginWebservice.execute();

@@ -109,7 +109,7 @@ public class SplashActivity extends BaseActivity {
 			userBean.setNickname(nickName);
 			userBean.setGender(gender);
 			userBean.setAge(age);
-			Common.userCommon = userBean;
+			Common.userBean = userBean;
 			// 登陆异步处理
 			// LoginAgainWebservice loginWebservice = new LoginAgainWebservice(
 			// SplashActivity.this, this, userBean);
@@ -117,7 +117,8 @@ public class SplashActivity extends BaseActivity {
 
 			Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			SplashActivity.this.finish();
 		}
 	}
