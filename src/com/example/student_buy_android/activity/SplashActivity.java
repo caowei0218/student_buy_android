@@ -27,8 +27,9 @@ public class SplashActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// app启动界面
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
+		
+		// app启动界面
 		View view = View.inflate(this, R.layout.start_layout, null);
 		setContentView(view);
 

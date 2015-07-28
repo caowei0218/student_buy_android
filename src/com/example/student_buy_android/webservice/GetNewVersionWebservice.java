@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.student_buy_android.activity.SetInfoActivity;
-import com.example.student_buy_android.util.Common;
 
 public class GetNewVersionWebservice extends AsyncTask<String, Integer, String> {
 
@@ -43,9 +42,6 @@ public class GetNewVersionWebservice extends AsyncTask<String, Integer, String> 
 	protected String doInBackground(String... params) {
 		String result = null;
 		try {
-			if (null != Common.SESSIONID) {
-				get.setHeader("Cookie", "connect.sid=" + Common.SESSIONID);
-			}
 			httpResponse = httpClient.execute(get);
 			httpResponse.getStatusLine().getStatusCode();
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {

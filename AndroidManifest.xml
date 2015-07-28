@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.student_buy_android"
     android:versionCode="1"
-    android:versionName="1.0.9" >
+    android:versionName="1.0.10" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -33,6 +33,8 @@
         <activity android:name=".activity.UpdateInfoActivity" />
         <activity android:name=".activity.MyInfoActivity" />
         <activity android:name=".activity.SetInfoActivity" />
+        <activity android:name=".activity.AboutActivity" />
+        <activity android:name=".activity.QRCodeActivity" />
 
         <!-- 云巴start -->
         <meta-data

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.webservice.AddFriendWebservice;
 
 public class AddFriendActivity extends BaseActivity implements OnClickListener{
@@ -19,6 +20,7 @@ public class AddFriendActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.addfriend_layout);
+		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
 		
 		init();
 	}

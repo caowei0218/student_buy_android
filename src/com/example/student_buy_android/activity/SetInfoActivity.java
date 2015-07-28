@@ -1,13 +1,16 @@
 package com.example.student_buy_android.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.util.AppInfo;
+import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.util.UpdateManager;
 import com.example.student_buy_android.webservice.GetNewVersionWebservice;
 
@@ -19,6 +22,7 @@ public class SetInfoActivity extends BaseActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.set_info_layout);
+		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
 
 		init();
 	}
@@ -37,8 +41,10 @@ public class SetInfoActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		Intent intent;
 		switch (v.getId()) {
 		case R.id.rl_account_security:
+			Toast.makeText(this, "待开发", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.rl_versionName:
 			// 检查版本更新
@@ -47,8 +53,13 @@ public class SetInfoActivity extends BaseActivity implements OnClickListener {
 			getVersion.execute();
 			break;
 		case R.id.rl_about:
+			intent = new Intent(SetInfoActivity.this, AboutActivity.class);
+			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.rl_exit:
+			Toast.makeText(this, "待开发", Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			break;

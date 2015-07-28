@@ -42,6 +42,7 @@ import com.example.student_buy_android.adapter.ShowAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.db.MessageDao;
+import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.webservice.GetFriendListWebservice;
 import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
@@ -90,6 +91,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main_layout);
+		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
 		initView();
 		initViewPage();
 		initEvent();
