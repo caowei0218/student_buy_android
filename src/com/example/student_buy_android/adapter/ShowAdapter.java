@@ -30,7 +30,7 @@ public class ShowAdapter extends BaseAdapter {
 		if (arrayLists == null) {
 			return 0;
 		} else {
-			return this.arrayLists.size();
+			return arrayLists.size();
 		}
 	}
 
@@ -39,7 +39,7 @@ public class ShowAdapter extends BaseAdapter {
 		if (arrayLists == null) {
 			return null;
 		} else {
-			return this.arrayLists.get(position);
+			return arrayLists.get(position);
 		}
 	}
 
@@ -53,7 +53,7 @@ public class ShowAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = LayoutInflater.from(this.mContext).inflate(
+			convertView = LayoutInflater.from(mContext).inflate(
 					R.layout.show_listview_item, null, false);
 			// holder.imageView = (ImageView) convertView
 			// .findViewById(R.id.listview_item_imageview);
@@ -65,7 +65,7 @@ public class ShowAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		if (this.arrayLists != null) {
+		if (arrayLists != null) {
 			// if (holder.imageView != null) {
 			// holder.imageView.setImageDrawable(mContext.getResources()
 			// .getDrawable(R.drawable.ic_launcher));

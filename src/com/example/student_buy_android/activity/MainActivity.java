@@ -84,7 +84,8 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private ImageView seasons, coat, footwear, other;
 	// 我的
 	private TextView tv_nickname, tv_username;
-	private RelativeLayout rl_info, rl_gallery, rl_setting;
+	private RelativeLayout rl_info, rl_friends, rl_publish, rl_sell, rl_buy,
+			rl_collect, rl_setting;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		initView();
 		initViewPage();
 		initEvent();
-		initLatestContacts();
+		getExcoo();
 	}
 
 	private void initEvent() {
@@ -111,9 +112,9 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 				int currentItem = mViewPager.getCurrentItem();
 				switch (currentItem) {
 				case 0:
-					initLatestContacts();
+					getExcoo();
 					resetImg();
-					mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
+					mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
 					break;
 				case 1:
 					getFriends();
@@ -122,9 +123,9 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 							.setImageResource(R.drawable.tab_address_pressed);
 					break;
 				case 2:
-					getExcoo();
+					initLatestContacts();
 					resetImg();
-					mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
+					mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
 					break;
 				case 3:
 					getMyInfo();
@@ -174,16 +175,16 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	 */
 	private void initViewPage() {
 
-		// 初妈化四个布局
+		// 初始化四个布局
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
-		View tab_recently = layoutInflater.inflate(R.layout.tab_recently, null);
-		View tab_friends = layoutInflater.inflate(R.layout.tab_friends, null);
 		View tab_show = layoutInflater.inflate(R.layout.tab_show, null);
+		View tab_friends = layoutInflater.inflate(R.layout.tab_friends, null);
+		View tab_recently = layoutInflater.inflate(R.layout.tab_recently, null);
 		View tab_setting = layoutInflater.inflate(R.layout.tab_setting, null);
 
-		mViews.add(tab_recently);
-		mViews.add(tab_friends);
 		mViews.add(tab_show);
+		mViews.add(tab_friends);
+		mViews.add(tab_recently);
 		mViews.add(tab_setting);
 
 		// 适配器初始化并设置
@@ -222,11 +223,11 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	public void onClick(View arg0) {
 		Intent intent;
 		switch (arg0.getId()) {
-		case R.id.id_tab_weixin:
-			initLatestContacts();
+		case R.id.id_tab_frd:
+			getExcoo();
 			mViewPager.setCurrentItem(0);
 			resetImg();
-			mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
+			mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
 			break;
 		case R.id.id_tab_address:
 			getFriends();
@@ -234,11 +235,11 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			resetImg();
 			mAddressImg.setImageResource(R.drawable.tab_address_pressed);
 			break;
-		case R.id.id_tab_frd:
-			getExcoo();
+		case R.id.id_tab_weixin:
+			initLatestContacts();
 			mViewPager.setCurrentItem(2);
 			resetImg();
-			mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
+			mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
 			break;
 		case R.id.id_tab_settings:
 			getMyInfo();
@@ -258,7 +259,25 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			overridePendingTransition(android.R.anim.fade_in,
 					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
-		case R.id.rl_gallery:
+		case R.id.rl_friends:
+			intent = new Intent(MainActivity.this, FriendsActivity.class);
+			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
+			break;
+		case R.id.rl_publish:
+			intent = new Intent(MainActivity.this, PublishActivity.class);
+			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
+			break;
+		case R.id.rl_sell:
+			Toast.makeText(this, "待开发", Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.rl_buy:
+			Toast.makeText(this, "待开发", Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.rl_collect:
 			Toast.makeText(this, "待开发", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.rl_setting:
@@ -280,54 +299,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		mAddressImg.setImageResource(R.drawable.tab_address_normal);
 		mFrdImg.setImageResource(R.drawable.tab_find_frd_normal);
 		mSettingImg.setImageResource(R.drawable.tab_settings_normal);
-	}
-
-	/**
-	 * 初始化最近联系人
-	 * */
-	private void initLatestContacts() {
-		latestContactLsit = getLatestContacts();
-		setOnItemClickListener();
-		setLatestContactsAdapter();
-	}
-
-	/**
-	 * 获得最近联系人
-	 * */
-	private List<FriendBean> getLatestContacts() {
-		MessageDao messageDao = new MessageDao();
-		return messageDao.get_communication_last();
-	}
-
-	/**
-	 * ListView item点击事件
-	 * */
-	private void setOnItemClickListener() {
-		lv_latest_contact = (ListView) mViews.get(0).findViewById(
-				R.id.lv_latest_contact);
-
-		lv_latest_contact.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// 跳转好友详情页面
-				Intent intent = new Intent(MainActivity.this,
-						ChatActivity.class);
-				FriendBean friendBean = latestContactLsit.get(position);
-				intent.putExtra("friendBean", friendBean);
-				startActivity(intent);
-				overridePendingTransition(android.R.anim.fade_in,
-						android.R.anim.fade_out);// 实现淡入浅出的效果
-			}
-		});
-	}
-
-	/**
-	 * 最近联系人 绑定Adapter
-	 * */
-	private void setLatestContactsAdapter() {
-		latestContactsAdapter = new LatestContactsAdapter(latestContactLsit,
-				this);
-		lv_latest_contact.setAdapter(latestContactsAdapter);
 	}
 
 	/**
@@ -366,19 +337,77 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	}
 
 	/**
+	 * 初始化最近联系人
+	 * */
+	private void initLatestContacts() {
+		latestContactLsit = getLatestContacts();
+		setOnItemClickListener();
+		setLatestContactsAdapter();
+	}
+
+	/**
+	 * 获得最近联系人
+	 * */
+	private List<FriendBean> getLatestContacts() {
+		MessageDao messageDao = new MessageDao();
+		return messageDao.get_communication_last();
+	}
+
+	/**
+	 * ListView item点击事件
+	 * */
+	private void setOnItemClickListener() {
+		lv_latest_contact = (ListView) mViews.get(2).findViewById(
+				R.id.lv_latest_contact);
+
+		lv_latest_contact.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// 跳转好友详情页面
+				Intent intent = new Intent(MainActivity.this,
+						ChatActivity.class);
+				FriendBean friendBean = latestContactLsit.get(position);
+				intent.putExtra("friendBean", friendBean);
+				startActivity(intent);
+				overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
+			}
+		});
+	}
+
+	/**
+	 * 最近联系人 绑定Adapter
+	 * */
+	private void setLatestContactsAdapter() {
+		latestContactsAdapter = new LatestContactsAdapter(latestContactLsit,
+				this);
+		lv_latest_contact.setAdapter(latestContactsAdapter);
+	}
+
+	/**
 	 * 获得我的个人信息
 	 * */
 	private void getMyInfo() {
 		rl_info = (RelativeLayout) mViews.get(3).findViewById(R.id.rl_info);
-		rl_gallery = (RelativeLayout) mViews.get(3).findViewById(
-				R.id.rl_gallery);
+		rl_friends = (RelativeLayout) mViews.get(3).findViewById(
+				R.id.rl_friends);
+		rl_publish = (RelativeLayout) mViews.get(3).findViewById(
+				R.id.rl_publish);
+		rl_sell = (RelativeLayout) mViews.get(3).findViewById(R.id.rl_sell);
+		rl_buy = (RelativeLayout) mViews.get(3).findViewById(R.id.rl_buy);
+		rl_collect = (RelativeLayout) mViews.get(3).findViewById(
+				R.id.rl_collect);
 		rl_setting = (RelativeLayout) mViews.get(3).findViewById(
 				R.id.rl_setting);
 		tv_nickname = (TextView) mViews.get(3).findViewById(R.id.tv_nickname);
 		tv_username = (TextView) mViews.get(3).findViewById(R.id.tv_username);
 
 		rl_info.setOnClickListener(this);
-		rl_gallery.setOnClickListener(this);
+		rl_friends.setOnClickListener(this);
+		rl_publish.setOnClickListener(this);
+		rl_sell.setOnClickListener(this);
+		rl_buy.setOnClickListener(this);
+		rl_collect.setOnClickListener(this);
 		rl_setting.setOnClickListener(this);
 
 		GetMyInfoWebservice getMyInfoWebservice = new GetMyInfoWebservice(
@@ -405,12 +434,12 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		window_width = displayMetrics.widthPixels;
 		window_height = displayMetrics.heightPixels;
 
-		showViewPager = (ViewPager) mViews.get(2).findViewById(R.id.adv_pager);
-		seasons = (ImageView) mViews.get(2).findViewById(R.id.seasons);
-		coat = (ImageView) mViews.get(2).findViewById(R.id.coat);
-		footwear = (ImageView) mViews.get(2).findViewById(R.id.footwear);
-		other = (ImageView) mViews.get(2).findViewById(R.id.other);
-		lv_show = (ListView) mViews.get(2).findViewById(R.id.lv_show);
+		showViewPager = (ViewPager) mViews.get(0).findViewById(R.id.adv_pager);
+		seasons = (ImageView) mViews.get(0).findViewById(R.id.seasons);
+		coat = (ImageView) mViews.get(0).findViewById(R.id.coat);
+		footwear = (ImageView) mViews.get(0).findViewById(R.id.footwear);
+		other = (ImageView) mViews.get(0).findViewById(R.id.other);
+		lv_show = (ListView) mViews.get(0).findViewById(R.id.lv_show);
 
 		adaptation();
 
@@ -453,7 +482,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	 * 广告位
 	 * */
 	private void initViewPager() {
-		ViewGroup viewGroup = (ViewGroup) mViews.get(2).findViewById(
+		ViewGroup viewGroup = (ViewGroup) mViews.get(0).findViewById(
 				R.id.viewGroup);
 
 		if (imageViews == null) {
