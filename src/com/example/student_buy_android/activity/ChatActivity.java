@@ -25,13 +25,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.adapter.ChatMessageAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.Message;
 import com.example.student_buy_android.bean.Message.Type;
 import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.util.JsonBinder;
-import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.util.Word;
 
 public class ChatActivity extends BaseActivity implements OnClickListener {

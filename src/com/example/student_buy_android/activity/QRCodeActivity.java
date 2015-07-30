@@ -6,9 +6,9 @@ import android.view.KeyEvent;
 import android.widget.ImageView;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.QRCode;
-import com.example.student_buy_android.util.SysApplication;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 

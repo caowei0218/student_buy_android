@@ -10,8 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.util.Common;
-import com.example.student_buy_android.util.SysApplication;
 
 public class MyInfoActivity extends BaseActivity implements OnClickListener {
 

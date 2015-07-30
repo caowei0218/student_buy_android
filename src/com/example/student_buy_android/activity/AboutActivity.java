@@ -5,8 +5,8 @@ import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.util.AppInfo;
-import com.example.student_buy_android.util.SysApplication;
 
 public class AboutActivity extends BaseActivity {
 

@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.student_buy_android.R;
-import com.example.student_buy_android.util.SysApplication;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.webservice.AddFriendWebservice;
 
 public class AddFriendActivity extends BaseActivity implements OnClickListener{

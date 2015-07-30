@@ -12,9 +12,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.adapter.FriendsAdapter;
 import com.example.student_buy_android.bean.FriendBean;
-import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.webservice.GetFriendsWebservice;
 
 public class FriendsActivity extends BaseActivity implements OnClickListener {

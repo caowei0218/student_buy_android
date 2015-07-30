@@ -38,8 +38,6 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		// mainActivity.beginWaitDialog(Word.Adding, true);
-
 		httpClient = new DefaultHttpClient();
 		get = new HttpGet(WebserviceUtils.HTTPTRANSPORTSE + method);
 	}
@@ -67,14 +65,22 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		// mainActivity.endWaitDialog(true);
-
 		try {
 			JSONTokener jsonParser = new JSONTokener(result);
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
 				userBean = jsonBinder.jsonToObj(
 						jsonObject.getString("userinfo"), UserBean.class);
+
+				if ("GENDER_NONE".equals(userBean.getGender())) {
+					userBean.setGender("");
+				} else if ("GENDER_MALE".equals(userBean.getGender())) {
+					userBean.setGender("男");
+				} else if ("GENDER_FEMALE".equals(userBean.getGender())) {
+					userBean.setGender("女");
+				} else if ("GENDER_UNKNOW".equals(userBean.getGender())) {
+					userBean.setGender("中性");
+				}
 				Common.userBean = userBean;
 				mainActivity.updateData(userBean);
 			} else {

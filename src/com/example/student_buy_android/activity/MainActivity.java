@@ -36,12 +36,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.adapter.LatestContactsAdapter;
 import com.example.student_buy_android.adapter.ShowAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.db.MessageDao;
-import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
 @SuppressLint({ "InflateParams", "HandlerLeak" })

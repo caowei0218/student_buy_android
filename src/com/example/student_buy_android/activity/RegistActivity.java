@@ -15,8 +15,8 @@ import android.widget.Toast;
 
 import com.android.util.MD5Util;
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.bean.UserBean;
-import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.util.Word;
 import com.example.student_buy_android.webservice.RegisterWebservice;
 

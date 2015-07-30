@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.student_buy_android.R;
-import com.example.student_buy_android.util.SysApplication;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.webservice.UpdateInfoWebservice;
 
 public class UpdateInfoActivity extends BaseActivity implements OnClickListener {

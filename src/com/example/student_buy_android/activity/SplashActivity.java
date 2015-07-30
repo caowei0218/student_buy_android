@@ -12,9 +12,10 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.Common;
-import com.example.student_buy_android.util.SysApplication;
+import com.example.student_buy_android.webservice.Login2Webservice;
 
 /**
  * 启动Activity
@@ -28,7 +29,7 @@ public class SplashActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
-		
+
 		// app启动界面
 		View view = View.inflate(this, R.layout.start_layout, null);
 		setContentView(view);
@@ -112,15 +113,9 @@ public class SplashActivity extends BaseActivity {
 			userBean.setAge(age);
 			Common.userBean = userBean;
 			// 登陆异步处理
-			// LoginAgainWebservice loginWebservice = new LoginAgainWebservice(
-			// SplashActivity.this, this, userBean);
-			// loginWebservice.execute();
-
-			Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);// 实现淡入浅出的效果
-			SplashActivity.this.finish();
+			Login2Webservice login2Webservice = new Login2Webservice(
+					SplashActivity.this, this, userBean);
+			login2Webservice.execute();
 		}
 	}
 

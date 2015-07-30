@@ -9,8 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.bean.FriendBean;
-import com.example.student_buy_android.util.SysApplication;
 import com.example.student_buy_android.webservice.DelFriendWebservice;
 
 public class FriendInfoActivity extends BaseActivity implements OnClickListener {
@@ -53,6 +53,16 @@ public class FriendInfoActivity extends BaseActivity implements OnClickListener 
 		btn_del = (Button) findViewById(R.id.btn_del);
 
 		friendBean = (FriendBean) getIntent().getExtras().get("friendBean");
+		if ("GENDER_NONE".equals(friendBean.getGender())) {
+			friendBean.setGender("");
+		} else if ("GENDER_MALE".equals(friendBean.getGender())) {
+			friendBean.setGender("ÄÐ");
+		} else if ("GENDER_FEMALE".equals(friendBean.getGender())) {
+			friendBean.setGender("Å®");
+		} else if ("GENDER_UNKNOW".equals(friendBean.getGender())) {
+			friendBean.setGender("ÖÐÐÔ");
+		}
+
 		id.setText(friendBean.getUsername());
 		nikename.setText(friendBean.getNickname());
 		email.setText(friendBean.getEmail());

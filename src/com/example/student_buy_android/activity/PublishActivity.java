@@ -10,8 +10,8 @@ import android.view.View.OnClickListener;
 import android.widget.ListView;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.adapter.PublishAdapter;
-import com.example.student_buy_android.util.SysApplication;
 
 public class PublishActivity extends BaseActivity implements OnClickListener {
 
