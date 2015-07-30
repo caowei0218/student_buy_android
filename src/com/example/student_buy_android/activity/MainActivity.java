@@ -55,7 +55,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private LinearLayout mTabWeiXin, mTabAddress, mTabFrd, mTabSetting;
 	// 四个按钮
 	private ImageButton mWeiXinImg, mAddressImg, mFrdImg, mSettingImg;
-	private ImageButton top_add;
+	private ImageButton btn_top_add;
 
 	// 聊天
 	private ListView lv_latest_contact;
@@ -99,7 +99,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		mTabAddress.setOnClickListener(this);
 		mTabFrd.setOnClickListener(this);
 		mTabSetting.setOnClickListener(this);
-		top_add.setOnClickListener(this);
+		btn_top_add.setOnClickListener(this);
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 			// ViewPage左右滑动时
 			@Override
@@ -160,7 +160,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		mFrdImg = (ImageButton) findViewById(R.id.id_tab_frd_img);
 		mSettingImg = (ImageButton) findViewById(R.id.id_tab_settings_img);
 
-		top_add = (ImageButton) findViewById(R.id.top_add);
+		btn_top_add = (ImageButton) findViewById(R.id.btn_top_add);
 
 	}
 
@@ -241,7 +241,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			resetImg();
 			mSettingImg.setImageResource(R.drawable.tab_settings_pressed);
 			break;
-		case R.id.top_add:
+		case R.id.btn_top_add:
 			intent = new Intent(MainActivity.this, AddFriendActivity.class);
 			startActivity(intent);
 			overridePendingTransition(android.R.anim.fade_in,
