@@ -18,84 +18,97 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.student_buy_android.activity.RegistActivity;
+import com.example.student_buy_android.activity.MyInfoActivity;
+import com.example.student_buy_android.activity.UpdateInfoActivity;
 import com.example.student_buy_android.bean.UserBean;
+import com.example.student_buy_android.util.Common;
+import com.example.student_buy_android.util.JsonBinder;
 import com.example.student_buy_android.util.Word;
 
 /**
- * 注册 HttpPost请求
+ * 修改个人信息 HttpPost请求
  * */
 public class UpdateInfoWebservice extends AsyncTask<String, Integer, String> {
-
-	private RegistActivity registActivity;
+	private JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
+	private UpdateInfoActivity updateInfoActivity;
 	private Context context = null;
-	private UserBean userBean = null;
-	private String method = "signup";
+	private String updateObject = null;
+	private String updateContents = null;
+	private UserBean userBean;
+	private String method = "account/info/";
 
 	private HttpClient httpClient;
 	private List<NameValuePair> params;
 	private HttpPost post;
 
-	public UpdateInfoWebservice(RegistActivity registActivity, Context context,
-			UserBean userBean) {
-		this.registActivity = registActivity;
+	public UpdateInfoWebservice(UpdateInfoActivity updateInfoActivity,
+			Context context, String updateObject, String updateContents) {
+		this.updateInfoActivity = updateInfoActivity;
 		this.context = context;
-		this.userBean = userBean;
+		this.updateObject = updateObject;
+		this.updateContents = updateContents;
 	}
 
 	protected void onPreExecute() {
 		super.onPreExecute();
-		registActivity.beginWaitDialog(Word.REGISTERING, true);
+		updateInfoActivity.beginWaitDialog(Word.UPDATE_SUCCESS, true);
 
 		httpClient = new DefaultHttpClient();
 		post = new HttpPost(WebserviceUtils.HTTPTRANSPORTSE + method);
 
 		params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("username", userBean.getUsername()));
-		params.add(new BasicNameValuePair("password", userBean.getPassword()));
-		params.add(new BasicNameValuePair("repassword", userBean
-				.getRepassword()));
-		params.add(new BasicNameValuePair("nickname", userBean.getNickname()));
-		params.add(new BasicNameValuePair("email", userBean.getEmail()));
-
+		// 如果传递参数个数比较多的话可以对传递的参数进行封装
+		params.add(new BasicNameValuePair(updateObject, updateContents));
 	}
 
 	protected String doInBackground(String... params) {
 		String returnStr = null;
-
 		try {
 			post.setEntity(new UrlEncodedFormEntity(this.params, HTTP.UTF_8));
-
+			// 带上session发请求
+			if (null != Common.SESSIONID) {
+				post.setHeader("Cookie", "connect.sid=" + Common.SESSIONID);
+			}
+			// 发送POST请求
 			HttpResponse response = httpClient.execute(post);
-
+			// 如果服务器成功地返回响应
 			if (response.getStatusLine().getStatusCode() == 200) {
 				HttpEntity entity = response.getEntity();
 				returnStr = new String(EntityUtils.toByteArray(entity), "UTF-8");
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return returnStr;
 	}
 
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
-		registActivity.endWaitDialog(true);
+		updateInfoActivity.endWaitDialog(true);
 
 		try {
 			JSONTokener jsonParser = new JSONTokener(result);
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
-				Toast.makeText(context, Word.REGISTER_SUCCESS,
-						Toast.LENGTH_SHORT).show();
-				registActivity.finish();
+				userBean = jsonBinder.jsonToObj(
+						jsonObject.getString("userinfo"), UserBean.class);
+				Common.userBean = userBean;
+				Toast.makeText(context, Word.UPDATE_SUCCESS, Toast.LENGTH_SHORT)
+						.show();
+				
+				Intent intent = new Intent(updateInfoActivity,
+						MyInfoActivity.class);
+				context.startActivity(intent);
+				updateInfoActivity.finish();
+				updateInfoActivity.overridePendingTransition(
+						android.R.anim.fade_in, android.R.anim.fade_out);// 实现淡入浅出的效果
+				
 			} else {
-				Toast.makeText(context, Word.REGISTER_FAIL, Toast.LENGTH_SHORT)
+				Toast.makeText(context, Word.UPDATE_FAIL, Toast.LENGTH_SHORT)
 						.show();
 			}
 

@@ -25,7 +25,7 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tab_friends);
+		setContentView(R.layout.friends_layout);
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
 
 		init();
@@ -57,6 +57,7 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 				startActivity(intent);
 				overridePendingTransition(android.R.anim.fade_in,
 						android.R.anim.fade_out);// 实现淡入浅出的效果
+				finish();
 			}
 		});
 	}

@@ -80,7 +80,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/nikename"
+                    android:id="@+id/tv_nikename"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -130,7 +130,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/id"
+                    android:id="@+id/tv_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -215,7 +215,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/address"
+                    android:id="@+id/tv_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -258,7 +258,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/gender"
+                    android:id="@+id/tv_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -308,7 +308,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/city"
+                    android:id="@+id/tv_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -358,7 +358,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/description"
+                    android:id="@+id/tv_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -408,7 +408,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/email"
+                    android:id="@+id/tv_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -458,7 +458,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/phoneNumber"
+                    android:id="@+id/tv_phoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

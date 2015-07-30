@@ -24,5 +24,7 @@ public class Word {
 	public static final String REGISTERING = "正在注册";
 	public static final String REGISTER_SUCCESS = "注册成功";
 	public static final String REGISTER_FAIL = "注册失败";
+	public static final String UPDATE_SUCCESS = "修改成功";
+	public static final String UPDATE_FAIL = "修改失败";
 
 }

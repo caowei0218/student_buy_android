@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.student_buy_android.activity.AddFriendActivity;
+import com.example.student_buy_android.activity.FriendsActivity;
 import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.Word;
@@ -89,9 +90,9 @@ public class AddFriendWebservice extends AsyncTask<String, Integer, String> {
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
 			if ("true".equals(jsonObject.getString("success"))) {
 
-				Intent intent = new Intent(context, MainActivity.class);
-				context.startActivity(intent);
 				addFriendActivity.finish();
+				addFriendActivity.overridePendingTransition(
+						android.R.anim.fade_in, android.R.anim.fade_out);// 实现淡入浅出的效果
 			} else {
 				Toast.makeText(context, jsonObject.getString("errors"),
 						Toast.LENGTH_SHORT).show();

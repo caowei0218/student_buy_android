@@ -36,14 +36,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student_buy_android.R;
-import com.example.student_buy_android.adapter.FriendsAdapter;
 import com.example.student_buy_android.adapter.LatestContactsAdapter;
 import com.example.student_buy_android.adapter.ShowAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.util.SysApplication;
-import com.example.student_buy_android.webservice.GetFriendListWebservice;
 import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
 @SuppressLint({ "InflateParams", "HandlerLeak" })
@@ -63,10 +61,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private ListView lv_latest_contact;
 	private List<FriendBean> latestContactLsit;// 用来存放最近联系人
 	private LatestContactsAdapter latestContactsAdapter;
-	// 好友列表
-	private ListView lv_friends;
-	private List<FriendBean> friendBeans;// 用来存放好友列表
-	private FriendsAdapter friendsAdapter;
+	// 同校
 	// 衣酷
 	private ListView lv_show;
 	private ShowAdapter showAdapter;
@@ -83,7 +78,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private LayoutParams para;
 	private ImageView seasons, coat, footwear, other;
 	// 我的
-	private TextView tv_nickname, tv_username;
+	private TextView tv_nickname, tv_username, tv_publish_number;
 	private RelativeLayout rl_info, rl_friends, rl_publish, rl_sell, rl_buy,
 			rl_collect, rl_setting;
 
@@ -117,7 +112,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 					mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
 					break;
 				case 1:
-					getFriends();
 					resetImg();
 					mAddressImg
 							.setImageResource(R.drawable.tab_address_pressed);
@@ -178,7 +172,8 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		// 初始化四个布局
 		LayoutInflater layoutInflater = LayoutInflater.from(this);
 		View tab_show = layoutInflater.inflate(R.layout.tab_show, null);
-		View tab_friends = layoutInflater.inflate(R.layout.tab_friends, null);
+		View tab_friends = layoutInflater.inflate(R.layout.tab_same_school,
+				null);
 		View tab_recently = layoutInflater.inflate(R.layout.tab_recently, null);
 		View tab_setting = layoutInflater.inflate(R.layout.tab_setting, null);
 
@@ -230,7 +225,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
 			break;
 		case R.id.id_tab_address:
-			getFriends();
 			mViewPager.setCurrentItem(1);
 			resetImg();
 			mAddressImg.setImageResource(R.drawable.tab_address_pressed);
@@ -302,41 +296,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	}
 
 	/**
-	 * 获得好友
-	 * */
-	private void getFriends() {
-		lv_friends = (ListView) mViews.get(1).findViewById(R.id.friends_list);
-
-		GetFriendListWebservice getFriendListWebservice = new GetFriendListWebservice(
-				MainActivity.this, this);
-		getFriendListWebservice.execute();
-
-		// ListView item点击事件
-		lv_friends.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// 跳转好友详情页面
-				Intent intent = new Intent(MainActivity.this,
-						FriendInfoActivity.class);
-				FriendBean friendBean = friendBeans.get(position);
-				intent.putExtra("friendBean", friendBean);
-				startActivity(intent);
-				overridePendingTransition(android.R.anim.fade_in,
-						android.R.anim.fade_out);// 实现淡入浅出的效果
-			}
-		});
-	}
-
-	/**
-	 * 好友集合 绑定Adapter
-	 * */
-	public void setFriendsListAdapter(List<FriendBean> friendBeans) {
-		this.friendBeans = friendBeans;
-		friendsAdapter = new FriendsAdapter(friendBeans, MainActivity.this);
-		lv_friends.setAdapter(friendsAdapter);
-	}
-
-	/**
 	 * 初始化最近联系人
 	 * */
 	private void initLatestContacts() {
@@ -401,6 +360,8 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 				R.id.rl_setting);
 		tv_nickname = (TextView) mViews.get(3).findViewById(R.id.tv_nickname);
 		tv_username = (TextView) mViews.get(3).findViewById(R.id.tv_username);
+		tv_publish_number = (TextView) mViews.get(3).findViewById(
+				R.id.tv_publish_number);
 
 		rl_info.setOnClickListener(this);
 		rl_friends.setOnClickListener(this);
@@ -413,6 +374,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		GetMyInfoWebservice getMyInfoWebservice = new GetMyInfoWebservice(
 				MainActivity.this, this);
 		getMyInfoWebservice.execute();
+
 	}
 
 	/**
@@ -496,9 +458,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			ImageView img3 = new ImageView(this);
 			img3.setBackgroundResource(R.drawable.advertising3);
 			advPics.add(img3);
-			// ImageView img4 = new ImageView(this);
-			// img4.setBackgroundResource(R.drawable.advertising4);
-			// advPics.add(img4);
 			imageViews = new ImageView[advPics.size()];
 
 			for (int i = 0; i < imageViews.length; i++) {
@@ -674,6 +633,5 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-
 	}
 }

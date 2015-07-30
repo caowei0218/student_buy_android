@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.util.SysApplication;
+import com.example.student_buy_android.webservice.UpdateInfoWebservice;
 
 public class UpdateInfoActivity extends BaseActivity implements OnClickListener {
 
@@ -32,7 +33,7 @@ public class UpdateInfoActivity extends BaseActivity implements OnClickListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.update_personal_info_layout);
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
-		
+
 		init();
 	}
 
@@ -77,7 +78,7 @@ public class UpdateInfoActivity extends BaseActivity implements OnClickListener 
 			et_content.setText(gender);
 		}
 		if (phoneNumber != null) {
-			tv_title.setText("性别");
+			tv_title.setText("电话");
 			et_content.setText(phoneNumber);
 		}
 	}
@@ -96,21 +97,60 @@ public class UpdateInfoActivity extends BaseActivity implements OnClickListener 
 
 	@Override
 	public void onClick(View v) {
-		// Intent intent;
+
+		UpdateInfoWebservice updateInfoWebservice;
 
 		switch (v.getId()) {
 		case R.id.tv_update:
 			if (nikename != null) {
-				// 更新昵称接口
+				updateInfoWebservice = new UpdateInfoWebservice(
+						UpdateInfoActivity.this, this, "nickname", et_content
+								.getText().toString().trim());
+				updateInfoWebservice.execute();
 			}
-			finish();
+			if (description != null) {
+				updateInfoWebservice = new UpdateInfoWebservice(
+						UpdateInfoActivity.this, this, "description",
+						et_content.getText().toString().trim());
+				updateInfoWebservice.execute();
+			}
+			if (email != null) {
+				updateInfoWebservice = new UpdateInfoWebservice(
+						UpdateInfoActivity.this, this, "email", et_content
+								.getText().toString().trim());
+				updateInfoWebservice.execute();
+			}
+			if (address != null) {
+				updateInfoWebservice = new UpdateInfoWebservice(
+						UpdateInfoActivity.this, this, "address", et_content
+								.getText().toString().trim());
+				updateInfoWebservice.execute();
+			}
+			if (city != null) {
+				updateInfoWebservice = new UpdateInfoWebservice(
+						UpdateInfoActivity.this, this, "city", et_content
+								.getText().toString().trim());
+				updateInfoWebservice.execute();
+			}
+			if (gender != null) {
+				updateInfoWebservice = new UpdateInfoWebservice(
+						UpdateInfoActivity.this, this, "gender", et_content
+								.getText().toString().trim());
+				updateInfoWebservice.execute();
+			}
+			if (phoneNumber != null) {
+				updateInfoWebservice = new UpdateInfoWebservice(
+						UpdateInfoActivity.this, this, "phoneNumber", et_content
+								.getText().toString().trim());
+				updateInfoWebservice.execute();
+			}
 			break;
 		case R.id.btn_back:
 			finish();
 			break;
 		}
 	}
-	
+
 	/**
 	 * 返回
 	 * */
@@ -120,7 +160,8 @@ public class UpdateInfoActivity extends BaseActivity implements OnClickListener 
 				&& event.getAction() == KeyEvent.ACTION_DOWN) {
 			moveTaskToBack(false);
 			finish();
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

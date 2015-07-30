@@ -72,7 +72,8 @@ public class FriendInfoActivity extends BaseActivity implements OnClickListener 
 			intent = new Intent(FriendInfoActivity.this, ChatActivity.class);
 			intent.putExtra("friendBean", friendBean);
 			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.btn_del:
 			DelFriendWebservice delFriendWebservice = new DelFriendWebservice(
@@ -81,7 +82,7 @@ public class FriendInfoActivity extends BaseActivity implements OnClickListener 
 			break;
 		}
 	}
-	
+
 	/**
 	 * 返回
 	 * */
@@ -90,8 +91,12 @@ public class FriendInfoActivity extends BaseActivity implements OnClickListener 
 		if (keyCode == KeyEvent.KEYCODE_BACK
 				&& event.getAction() == KeyEvent.ACTION_DOWN) {
 			moveTaskToBack(false);
+			Intent intent = new Intent(FriendInfoActivity.this,
+					FriendsActivity.class);
+			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			finish();
-			overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
