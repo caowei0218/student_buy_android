@@ -30,6 +30,7 @@ public class FriendsActivity extends BaseActivity implements OnClickListener {
 
 		init();
 		getFriends();
+
 	}
 
 	private void init() {

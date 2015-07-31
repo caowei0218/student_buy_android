@@ -13,7 +13,7 @@ import com.example.student_buy_android.R;
 import com.example.student_buy_android.dialog.CustomProgressDialog;
 
 public class BaseActivity extends Activity {
-
+	
 	private MyHandler handler = new MyHandler();
 	CustomProgressDialog dialog = null;
 

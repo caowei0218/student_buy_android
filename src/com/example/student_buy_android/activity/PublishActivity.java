@@ -1,7 +1,6 @@
 package com.example.student_buy_android.activity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -19,7 +18,7 @@ public class PublishActivity extends BaseActivity implements OnClickListener {
 
 	private PublishAdapter publishAdapter;
 
-	private ArrayList<ArrayList<HashMap<String, Object>>> list;
+	private ArrayList<String> arrayList;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,8 +28,10 @@ public class PublishActivity extends BaseActivity implements OnClickListener {
 		init();
 
 		initData();
-		publishAdapter = new PublishAdapter(list, PublishActivity.this);
+
+		publishAdapter = new PublishAdapter(arrayList, PublishActivity.this);
 		lv_publish.setAdapter(publishAdapter);
+
 	}
 
 	private void init() {
@@ -62,18 +63,10 @@ public class PublishActivity extends BaseActivity implements OnClickListener {
 	 * ÒÂ¿áÊý¾ÝÔ´
 	 * */
 	private void initData() {
-		list = new ArrayList<ArrayList<HashMap<String, Object>>>();
-		HashMap<String, Object> hashMap = null;
-		ArrayList<HashMap<String, Object>> arrayListForEveryGridView;
-
-		for (int i = 0; i < 2; i++) {
-			arrayListForEveryGridView = new ArrayList<HashMap<String, Object>>();
-			for (int j = 0; j < 3; j++) {
-				hashMap = new HashMap<String, Object>();
-				hashMap.put("content", "i=" + i + " ,j=" + j);
-				arrayListForEveryGridView.add(hashMap);
-			}
-			list.add(arrayListForEveryGridView);
+		arrayList = new ArrayList<String>();
+		for (int i = 0; i < 10; i++) {
+			arrayList.add("");
 		}
 	}
+
 }
