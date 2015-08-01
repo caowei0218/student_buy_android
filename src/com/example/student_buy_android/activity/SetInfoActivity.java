@@ -46,7 +46,10 @@ public class SetInfoActivity extends BaseActivity implements OnClickListener {
 		Intent intent;
 		switch (v.getId()) {
 		case R.id.rl_account_security:
-			Toast.makeText(this, "待开发", Toast.LENGTH_SHORT).show();
+			intent = new Intent(SetInfoActivity.this, SafetyActivity.class);
+			startActivity(intent);
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		case R.id.rl_versionName:
 			// 检查版本更新

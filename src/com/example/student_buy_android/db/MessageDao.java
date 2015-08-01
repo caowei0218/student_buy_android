@@ -36,6 +36,7 @@ public class MessageDao {
 					"yyyy-MM-dd HH:mm:ss").format(new Date()));
 		}
 		content_value.put("isread", "no");
+		content_value.put("myaccount", username);
 		db.insert("chat_content", null, content_value);
 		if (db != null) {
 			db.close();
@@ -51,8 +52,8 @@ public class MessageDao {
 		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		Cursor cursor = null;
-		String sql = "select * from (select * from chat_content where sender=? and receiver=? union all select * from chat_content where sender=? and receiver=?)as temp order by temp.id";
-		String[] args = { sender, receiver, receiver, sender };
+		String sql = "select * from (select * from chat_content where sender=? and receiver=? and myaccount=? union all select * from chat_content where sender=? and receiver=? and myaccount=?)as temp order by temp.id";
+		String[] args = { sender, receiver, username, receiver, sender, username };
 		cursor = db.rawQuery(sql, args);
 		while (cursor.moveToNext()) {
 			Message message = new Message();
@@ -80,8 +81,8 @@ public class MessageDao {
 		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		Cursor cursor = null;
-		String sql = "SELECT sender FROM chat_content WHERE sender<>? UNION SELECT receiver FROM chat_content WHERE receiver<>?";
-		String[] args = { username, username };
+		String sql = "SELECT sender FROM chat_content WHERE sender<>? and myaccount=? UNION SELECT receiver FROM chat_content WHERE receiver<>? and myaccount=?";
+		String[] args = { username, username, username, username };
 		cursor = db.rawQuery(sql, args);
 		while (cursor.moveToNext()) {
 			friendBean = new FriendBean();
@@ -112,6 +113,7 @@ public class MessageDao {
 		return message;
 	}
 
+	
 	/**
 	 * 更改发送消息状态
 	 */
