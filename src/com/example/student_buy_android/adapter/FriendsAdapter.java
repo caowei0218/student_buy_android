@@ -63,6 +63,7 @@ public class FriendsAdapter extends BaseAdapter {
 		}
 
 		holder.show_name.setText(friendBeans.get(position).getUsername());
+		System.out.println(friendBeans.get(position).getUsername());
 
 		// Volley¿ò¼Ü Í·Ïñ¼ÓÔØ
 		mQueue = Volley.newRequestQueue(context);

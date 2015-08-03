@@ -1,7 +1,6 @@
 package com.example.student_buy_android.webservice;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -18,7 +17,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.student_buy_android.activity.FriendsActivity;
+import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
@@ -28,7 +27,7 @@ import com.example.student_buy_android.util.JsonBinder;
  * */
 public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 	private JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
-	private FriendsActivity friendsActivity;
+	private MainActivity mainActivity;
 	private Context context;
 	private String method = "account/friend/list/";
 
@@ -36,10 +35,8 @@ public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 	private HttpGet get;
 	private HttpResponse httpResponse;
 
-	List<FriendBean> friendBeans;
-
-	public GetFriendsWebservice(FriendsActivity friendsActivity, Context context) {
-		this.friendsActivity = friendsActivity;
+	public GetFriendsWebservice(MainActivity mainActivity, Context context) {
+		this.mainActivity = mainActivity;
 		this.context = context;
 	}
 
@@ -77,10 +74,10 @@ public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 			if ("true".equals(jsonObject.getString("success"))) {
 
 				try {
-					friendBeans = jsonBinder.stringToList(
+					Common.friendBeans = jsonBinder.stringToList(
 							jsonObject.getString("friendList"),
 							FriendBean.class);
-					friendsActivity.setFriendsListAdapter(friendBeans);
+					mainActivity.setFriendsListAdapter(Common.friendBeans);
 
 				} catch (JsonParseException e) {
 					e.printStackTrace();

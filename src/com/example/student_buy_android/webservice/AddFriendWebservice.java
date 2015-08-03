@@ -18,13 +18,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.student_buy_android.activity.AddFriendActivity;
-import com.example.student_buy_android.activity.FriendsActivity;
-import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.Word;
 

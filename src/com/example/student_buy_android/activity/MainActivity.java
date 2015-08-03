@@ -37,11 +37,14 @@ import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.SysApplication;
+import com.example.student_buy_android.adapter.FriendsAdapter;
 import com.example.student_buy_android.adapter.LatestContactsAdapter;
 import com.example.student_buy_android.adapter.ShowAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.db.MessageDao;
+import com.example.student_buy_android.view.CustomViewPager;
+import com.example.student_buy_android.webservice.GetFriendsWebservice;
 import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
 @SuppressLint({ "InflateParams", "HandlerLeak" })
@@ -58,9 +61,17 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private ImageButton btn_top_add;
 
 	// 聊天
+	private List<View> recently_contact_view;// 用来存放聊天模块界面
+	private PagerAdapter recently_contact_Adapter;// 初始化View适配器
+	private CustomViewPager recently_contact_viewPager;// 用来放置界面切换
+	private LinearLayout latest_contact, friends;// 用来放置界面切换
 	private ListView lv_latest_contact;
 	private List<FriendBean> latestContactLsit;// 用来存放最近联系人
 	private LatestContactsAdapter latestContactsAdapter;
+	private ImageButton id_tab_frd_img, id_tab_address_img;
+	private ListView lv_friends;
+	private List<FriendBean> friendBeans;// 用来存放好友列表
+	private FriendsAdapter friendsAdapter;
 	// 同校
 	// 衣酷
 	private ListView lv_show;
@@ -79,8 +90,8 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private ImageView seasons, coat, footwear, other;
 	// 我的
 	private TextView tv_nickname, tv_username, tv_publish_number;
-	private RelativeLayout rl_info, rl_friends, rl_publish, rl_sell, rl_buy,
-			rl_collect, rl_setting;
+	private RelativeLayout rl_info, rl_publish, rl_sell, rl_buy, rl_collect,
+			rl_setting;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +128,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 							.setImageResource(R.drawable.tab_address_pressed);
 					break;
 				case 2:
-					initLatestContacts();
+					initIM();
 					resetImg();
 					mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
 					break;
@@ -174,7 +185,10 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		View tab_show = layoutInflater.inflate(R.layout.tab_show, null);
 		View tab_friends = layoutInflater.inflate(R.layout.tab_same_school,
 				null);
-		View tab_recently = layoutInflater.inflate(R.layout.tab_recently, null);
+		// View tab_recently = layoutInflater.inflate(R.layout.tab_recently,
+		// null);
+		View tab_recently = layoutInflater.inflate(R.layout.tab_message_layout,
+				null);
 		View tab_setting = layoutInflater.inflate(R.layout.tab_setting, null);
 
 		mViews.add(tab_show);
@@ -230,7 +244,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			mAddressImg.setImageResource(R.drawable.tab_address_pressed);
 			break;
 		case R.id.id_tab_weixin:
-			initLatestContacts();
+			initIM();
 			mViewPager.setCurrentItem(2);
 			resetImg();
 			mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
@@ -241,6 +255,18 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			resetImg();
 			mSettingImg.setImageResource(R.drawable.tab_settings_pressed);
 			break;
+		case R.id.latest_contact:
+			initLatestContacts();
+			recently_contact_viewPager.setCurrentItem(0);
+			resetChatTabImg();
+			id_tab_frd_img.setImageResource(R.drawable.tab_find_frd_pressed);
+			break;
+		case R.id.friends:
+			initFriends();
+			recently_contact_viewPager.setCurrentItem(1);
+			resetChatTabImg();
+			id_tab_address_img.setImageResource(R.drawable.tab_address_pressed);
+			break;
 		case R.id.btn_top_add:
 			intent = new Intent(MainActivity.this, AddFriendActivity.class);
 			startActivity(intent);
@@ -249,12 +275,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			break;
 		case R.id.rl_info:
 			intent = new Intent(MainActivity.this, MyInfoActivity.class);
-			startActivity(intent);
-			overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);// 实现淡入浅出的效果
-			break;
-		case R.id.rl_friends:
-			intent = new Intent(MainActivity.this, FriendsActivity.class);
 			startActivity(intent);
 			overridePendingTransition(android.R.anim.fade_in,
 					android.R.anim.fade_out);// 实现淡入浅出的效果
@@ -296,6 +316,71 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	}
 
 	/**
+	 * 把聊天tab页图片变暗
+	 */
+	private void resetChatTabImg() {
+		id_tab_frd_img.setImageResource(R.drawable.tab_find_frd_normal);
+		id_tab_address_img.setImageResource(R.drawable.tab_address_normal);
+	}
+
+	/**
+	 * 即时通讯模块
+	 * */
+	private void initIM() {
+		recently_contact_viewPager = (CustomViewPager) mViews.get(2)
+				.findViewById(R.id.id_viewpage);
+
+		latest_contact = (LinearLayout) mViews.get(2).findViewById(
+				R.id.latest_contact);
+		friends = (LinearLayout) mViews.get(2).findViewById(R.id.friends);
+		id_tab_frd_img = (ImageButton) mViews.get(2).findViewById(
+				R.id.id_tab_frd_img);
+		id_tab_address_img = (ImageButton) mViews.get(2).findViewById(
+				R.id.id_tab_address_img);
+
+		latest_contact.setOnClickListener(this);
+		friends.setOnClickListener(this);
+
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		View tab_recently = layoutInflater.inflate(R.layout.tab_recently, null);
+		View tab_friends = layoutInflater
+				.inflate(R.layout.friends_layout, null);
+
+		recently_contact_view = new ArrayList<View>();
+		recently_contact_view.add(tab_recently);
+		recently_contact_view.add(tab_friends);
+
+		recently_contact_Adapter = new PagerAdapter() {
+			@Override
+			public void destroyItem(ViewGroup container, int position,
+					Object object) {
+				container.removeView(recently_contact_view.get(position));
+			}
+
+			@Override
+			public Object instantiateItem(ViewGroup container, int position) {
+				View view = recently_contact_view.get(position);
+				container.addView(view);
+				return view;
+			}
+
+			@Override
+			public boolean isViewFromObject(View arg0, Object arg1) {
+				return arg0 == arg1;
+			}
+
+			@Override
+			public int getCount() {
+				return recently_contact_view.size();
+			}
+
+		};
+		recently_contact_viewPager.setAdapter(recently_contact_Adapter);
+
+		initLatestContacts();
+	}
+
+	/**
 	 * 初始化最近联系人
 	 * */
 	private void initLatestContacts() {
@@ -316,8 +401,8 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	 * ListView item点击事件
 	 * */
 	private void setOnItemClickListener() {
-		lv_latest_contact = (ListView) mViews.get(2).findViewById(
-				R.id.lv_latest_contact);
+		lv_latest_contact = (ListView) recently_contact_view.get(0)
+				.findViewById(R.id.lv_latest_contact);
 
 		lv_latest_contact.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -344,12 +429,46 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	}
 
 	/**
+	 * 初始化好友列表
+	 * */
+	private void initFriends() {
+		lv_friends = (ListView) recently_contact_view.get(1).findViewById(
+				R.id.friends_list);
+
+		GetFriendsWebservice getFriendListWebservice = new GetFriendsWebservice(
+				MainActivity.this, this);
+		getFriendListWebservice.execute();
+
+		// ListView item点击事件
+		lv_friends.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// 跳转好友详情页面
+				Intent intent = new Intent(MainActivity.this,
+						FriendInfoActivity.class);
+				FriendBean friendBean = friendBeans.get(position);
+				intent.putExtra("friendBean", friendBean);
+				startActivity(intent);
+				overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
+			}
+		});
+	}
+
+	/**
+	 * 好友集合 绑定Adapter
+	 * */
+	public void setFriendsListAdapter(List<FriendBean> friendBeans) {
+		this.friendBeans = friendBeans;
+		friendsAdapter = new FriendsAdapter(friendBeans, this);
+		lv_friends.setAdapter(friendsAdapter);
+	}
+
+	/**
 	 * 获得我的个人信息
 	 * */
 	private void getMyInfo() {
 		rl_info = (RelativeLayout) mViews.get(3).findViewById(R.id.rl_info);
-		rl_friends = (RelativeLayout) mViews.get(3).findViewById(
-				R.id.rl_friends);
 		rl_publish = (RelativeLayout) mViews.get(3).findViewById(
 				R.id.rl_publish);
 		rl_sell = (RelativeLayout) mViews.get(3).findViewById(R.id.rl_sell);
@@ -364,7 +483,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 				R.id.tv_publish_number);
 
 		rl_info.setOnClickListener(this);
-		rl_friends.setOnClickListener(this);
 		rl_publish.setOnClickListener(this);
 		rl_sell.setOnClickListener(this);
 		rl_buy.setOnClickListener(this);

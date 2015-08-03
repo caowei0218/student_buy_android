@@ -101,12 +101,9 @@ public class FriendInfoActivity extends BaseActivity implements OnClickListener 
 		if (keyCode == KeyEvent.KEYCODE_BACK
 				&& event.getAction() == KeyEvent.ACTION_DOWN) {
 			moveTaskToBack(false);
-			Intent intent = new Intent(FriendInfoActivity.this,
-					FriendsActivity.class);
-			startActivity(intent);
+			finish();
 			overridePendingTransition(android.R.anim.fade_in,
 					android.R.anim.fade_out);// 实现淡入浅出的效果
-			finish();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

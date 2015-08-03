@@ -6,8 +6,6 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <include layout="@layout/top_layout" />
-
     <ListView
         android:id="@+id/friends_list"
         android:layout_width="match_parent"

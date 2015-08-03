@@ -68,6 +68,7 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 		try {
 			JSONTokener jsonParser = new JSONTokener(result);
 			JSONObject jsonObject = (JSONObject) jsonParser.nextValue();
+			System.out.println(jsonObject.toString());
 			if ("true".equals(jsonObject.getString("success"))) {
 				userBean = jsonBinder.jsonToObj(
 						jsonObject.getString("userinfo"), UserBean.class);

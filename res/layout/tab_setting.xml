@@ -72,35 +72,6 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_friends"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/btn_list_item_bg"
-            android:clickable="true" >
-
-            <TextView
-                android:id="@+id/tv_friends"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:text="联系人"
-                android:textColor="#353535"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/iv_friends_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_arrow" />
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/rl_publish"
             android:layout_width="match_parent"
             android:layout_height="48dp"

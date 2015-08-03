@@ -17,12 +17,10 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.student_buy_android.activity.FriendInfoActivity;
-import com.example.student_buy_android.activity.FriendsActivity;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.HttpDeleteWithBody;
 import com.example.student_buy_android.util.Word;
@@ -92,9 +90,6 @@ public class DelFriendWebservice extends AsyncTask<String, Integer, String> {
 				Toast.makeText(context, Word.SUCCESSFULLY_DELETED,
 						Toast.LENGTH_SHORT).show();
 
-				Intent intent = new Intent(friendInfoActivity,
-						FriendsActivity.class);
-				context.startActivity(intent);
 				friendInfoActivity.finish();
 				friendInfoActivity.overridePendingTransition(
 						android.R.anim.fade_in, android.R.anim.fade_out);// 实现淡入浅出的效果
