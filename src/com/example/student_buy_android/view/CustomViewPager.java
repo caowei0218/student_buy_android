@@ -33,18 +33,24 @@ public class CustomViewPager extends ViewPager {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent arg0) {
-		if (scroll)
-			return false;
-		else
-			return super.onTouchEvent(arg0);
+		return false;
+	}
+
+	/**
+	 * 事件分发器，false忽略当前优先级的点击时间
+	 * */
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		return false;
 	}
 
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent arg0) {
-		if (scroll)
+		if (scroll) {
 			return false;
-		else
+		} else {
 			return super.onInterceptTouchEvent(arg0);
+		}
 	}
 
 	@Override

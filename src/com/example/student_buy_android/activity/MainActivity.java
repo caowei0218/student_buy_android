@@ -47,7 +47,7 @@ import com.example.student_buy_android.view.CustomViewPager;
 import com.example.student_buy_android.webservice.GetFriendsWebservice;
 import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
-@SuppressLint({ "InflateParams", "HandlerLeak" })
+@SuppressLint({ "InflateParams", "HandlerLeak", "ResourceAsColor" })
 public class MainActivity extends BaseActivity implements OnClickListener,
 		OnItemClickListener, OnItemLongClickListener {
 
@@ -68,7 +68,6 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private ListView lv_latest_contact;
 	private List<FriendBean> latestContactLsit;// 用来存放最近联系人
 	private LatestContactsAdapter latestContactsAdapter;
-	private ImageButton id_tab_frd_img, id_tab_address_img;
 	private ListView lv_friends;
 	private List<FriendBean> friendBeans;// 用来存放好友列表
 	private FriendsAdapter friendsAdapter;
@@ -130,6 +129,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 				case 2:
 					initIM();
 					resetImg();
+					resetChatColor();
 					mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
 					break;
 				case 3:
@@ -247,6 +247,7 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 			initIM();
 			mViewPager.setCurrentItem(2);
 			resetImg();
+			resetChatColor();
 			mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
 			break;
 		case R.id.id_tab_settings:
@@ -258,14 +259,12 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 		case R.id.latest_contact:
 			initLatestContacts();
 			recently_contact_viewPager.setCurrentItem(0);
-			resetChatTabImg();
-			id_tab_frd_img.setImageResource(R.drawable.tab_find_frd_pressed);
+			resetChatColor();
 			break;
 		case R.id.friends:
 			initFriends();
 			recently_contact_viewPager.setCurrentItem(1);
-			resetChatTabImg();
-			id_tab_address_img.setImageResource(R.drawable.tab_address_pressed);
+			resetFriendsTextColor();
 			break;
 		case R.id.btn_top_add:
 			intent = new Intent(MainActivity.this, AddFriendActivity.class);
@@ -316,11 +315,19 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	}
 
 	/**
-	 * 把聊天tab页图片变暗
+	 * 把聊天tab页文字变暗
 	 */
-	private void resetChatTabImg() {
-		id_tab_frd_img.setImageResource(R.drawable.tab_find_frd_normal);
-		id_tab_address_img.setImageResource(R.drawable.tab_address_normal);
+	private void resetChatColor() {
+		latest_contact.setBackgroundColor(R.color.grey);
+		friends.setBackgroundColor(R.color.red);
+	}
+
+	/**
+	 * 把好友tab页文字变暗
+	 */
+	private void resetFriendsTextColor() {
+		latest_contact.setBackgroundColor(R.color.red);
+		friends.setBackgroundColor(R.color.grey);
 	}
 
 	/**
@@ -329,14 +336,11 @@ public class MainActivity extends BaseActivity implements OnClickListener,
 	private void initIM() {
 		recently_contact_viewPager = (CustomViewPager) mViews.get(2)
 				.findViewById(R.id.id_viewpage);
+		recently_contact_viewPager.setScroll(true);
 
 		latest_contact = (LinearLayout) mViews.get(2).findViewById(
 				R.id.latest_contact);
 		friends = (LinearLayout) mViews.get(2).findViewById(R.id.friends);
-		id_tab_frd_img = (ImageButton) mViews.get(2).findViewById(
-				R.id.id_tab_frd_img);
-		id_tab_address_img = (ImageButton) mViews.get(2).findViewById(
-				R.id.id_tab_address_img);
 
 		latest_contact.setOnClickListener(this);
 		friends.setOnClickListener(this);

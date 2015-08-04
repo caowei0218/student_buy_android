@@ -1,13 +1,9 @@
 package com.example.student_buy_android.activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,19 +15,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.util.MD5Util;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.SysApplication;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.BitmapUtil;
 import com.example.student_buy_android.util.Word;
 import com.example.student_buy_android.webservice.LoginWebservice;
-import com.example.student_buy_android.webservice.WebserviceUtils;
 
 public class LoginActivity extends BaseActivity {
 	private DisplayMetrics displayMetrics;
@@ -144,6 +133,7 @@ public class LoginActivity extends BaseActivity {
 	/**
 	 * 再按一次退出程序
 	 * */
+	@SuppressWarnings("static-access")
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK

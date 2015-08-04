@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.SysApplication;
