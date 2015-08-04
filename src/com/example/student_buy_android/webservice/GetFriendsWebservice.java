@@ -17,8 +17,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.bean.FriendBean;
+import com.example.student_buy_android.fragment.ChatFragment;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
 
@@ -27,7 +27,7 @@ import com.example.student_buy_android.util.JsonBinder;
  * */
 public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 	private JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
-	private MainActivity mainActivity;
+	private ChatFragment chatFragment;
 	private Context context;
 	private String method = "account/friend/list/";
 
@@ -35,8 +35,8 @@ public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 	private HttpGet get;
 	private HttpResponse httpResponse;
 
-	public GetFriendsWebservice(MainActivity mainActivity, Context context) {
-		this.mainActivity = mainActivity;
+	public GetFriendsWebservice(ChatFragment chatFragment, Context context) {
+		this.chatFragment = chatFragment;
 		this.context = context;
 	}
 
@@ -77,7 +77,7 @@ public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 					Common.friendBeans = jsonBinder.stringToList(
 							jsonObject.getString("friendList"),
 							FriendBean.class);
-					mainActivity.setFriendsListAdapter(Common.friendBeans);
+					chatFragment.setFriendsListAdapter(Common.friendBeans);
 
 				} catch (JsonParseException e) {
 					e.printStackTrace();

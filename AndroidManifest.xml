@@ -29,7 +29,6 @@
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.AddFriendActivity" />
         <activity android:name=".activity.FriendInfoActivity" />
-        <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.UpdateInfoActivity" />
         <activity android:name=".activity.MyInfoActivity" />
         <activity android:name=".activity.SetInfoActivity" />
@@ -38,6 +37,7 @@
         <activity android:name=".activity.PublishActivity" />
         <activity android:name=".activity.FriendsActivity" />
         <activity android:name=".activity.SafetyActivity" />
+        <activity android:name=".activity.FragmentActivity" />
 
         <!-- 云巴start -->
         <meta-data

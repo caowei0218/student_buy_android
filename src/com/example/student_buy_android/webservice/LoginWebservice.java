@@ -30,8 +30,8 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.example.student_buy_android.activity.FragmentActivity;
 import com.example.student_buy_android.activity.LoginActivity;
-import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.ChatUtil;
 import com.example.student_buy_android.util.Common;
@@ -136,9 +136,10 @@ public class LoginWebservice extends AsyncTask<String, Integer, String> {
 								}
 							}
 						});
-				Intent intent = new Intent(context, MainActivity.class);
+				Intent intent = new Intent(context, FragmentActivity.class);
 				context.startActivity(intent);
-				loginActivity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);//实现淡入浅出的效果
+				loginActivity.overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
 				loginActivity.finish();
 			} else {
 				Toast.makeText(context, Word.LOGIN_FAIL, Toast.LENGTH_SHORT)

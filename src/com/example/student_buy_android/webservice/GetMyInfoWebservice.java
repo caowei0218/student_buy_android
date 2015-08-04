@@ -14,8 +14,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.bean.UserBean;
+import com.example.student_buy_android.fragment.MyFragment;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
 
@@ -24,15 +24,15 @@ import com.example.student_buy_android.util.JsonBinder;
  * */
 public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 	private JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
-	private MainActivity mainActivity;
+	private MyFragment myFragment;
 	private Context context;
 	private UserBean userBean;
 	private String method = "account/info/";
 	private HttpClient httpClient;
 	private HttpGet get;
 
-	public GetMyInfoWebservice(MainActivity mainActivity, Context context) {
-		this.mainActivity = mainActivity;
+	public GetMyInfoWebservice(MyFragment myFragment, Context context) {
+		this.myFragment = myFragment;
 		this.context = context;
 	}
 
@@ -83,7 +83,7 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 					userBean.setGender("中性");
 				}
 				Common.userBean = userBean;
-				mainActivity.updateData(userBean);
+				myFragment.updateData(userBean);
 			} else {
 				Toast.makeText(context, jsonObject.getString("errors"),
 						Toast.LENGTH_SHORT).show();

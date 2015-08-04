@@ -30,8 +30,8 @@ import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.example.student_buy_android.activity.FragmentActivity;
 import com.example.student_buy_android.activity.LoginActivity;
-import com.example.student_buy_android.activity.MainActivity;
 import com.example.student_buy_android.activity.SplashActivity;
 import com.example.student_buy_android.bean.UserBean;
 import com.example.student_buy_android.util.ChatUtil;
@@ -114,7 +114,7 @@ public class Login2Webservice extends AsyncTask<String, Integer, String> {
 						new IMqttActionListener() {
 							@Override
 							public void onSuccess(IMqttToken asyncActionToken) {
-								
+
 							}
 
 							@Override
@@ -128,7 +128,10 @@ public class Login2Webservice extends AsyncTask<String, Integer, String> {
 								}
 							}
 						});
-				Intent intent = new Intent(splashActivity, MainActivity.class);
+				// Intent intent = new Intent(splashActivity,
+				// MainActivity.class);
+				Intent intent = new Intent(splashActivity,
+						FragmentActivity.class);
 				context.startActivity(intent);
 				splashActivity.overridePendingTransition(
 						android.R.anim.fade_in, android.R.anim.fade_out);// 实现淡入浅出的效果

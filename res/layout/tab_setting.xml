@@ -39,7 +39,6 @@
                     android:id="@+id/tv_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="小米稀饭"
                     android:textColor="#353535"
                     android:textSize="16sp" />
 
@@ -48,7 +47,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="帐号：caowei0218"
                     android:textColor="#353535"
                     android:textSize="16sp" />
             </LinearLayout>
