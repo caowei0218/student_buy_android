@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
+    android:layout_height="55dp"
+    android:background="@color/white"
     android:orientation="horizontal" >
 
-    <LinearLayout
-        android:id="@+id/latest_contact"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/gray"
-        android:gravity="center"
-        android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
 
-        <TextView
-            android:id="@+id/tv_chat"
+        <Button
+            android:id="@+id/btn_chat"
+            android:layout_width="120dp"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/btn_left"
+            android:text="聊天" />
+
+        <ImageView
+            android:id="@+id/iv_middle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="聊天"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/btn_chat"
+            android:background="@drawable/btn_middle" />
 
-    <LinearLayout
-        android:id="@+id/friends"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="@color/gray"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/tv_friends"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="好友"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_friends"
+            android:layout_width="120dp"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/iv_middle"
+            android:background="@drawable/btn_right"
+            android:text="好友" />
+    </RelativeLayout>
 
 </LinearLayout>

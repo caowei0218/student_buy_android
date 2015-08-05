@@ -1,6 +1,7 @@
 package com.example.student_buy_android.webservice;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -18,7 +19,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.student_buy_android.bean.FriendBean;
-import com.example.student_buy_android.fragment.ChatFragment;
+import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.util.JsonBinder;
 
@@ -27,7 +28,6 @@ import com.example.student_buy_android.util.JsonBinder;
  * */
 public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 	private JsonBinder jsonBinder = JsonBinder.buildNonDefaultBinder();
-	private ChatFragment chatFragment;
 	private Context context;
 	private String method = "account/friend/list/";
 
@@ -35,8 +35,7 @@ public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 	private HttpGet get;
 	private HttpResponse httpResponse;
 
-	public GetFriendsWebservice(ChatFragment chatFragment, Context context) {
-		this.chatFragment = chatFragment;
+	public GetFriendsWebservice(Context context) {
 		this.context = context;
 	}
 
@@ -74,10 +73,11 @@ public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 			if ("true".equals(jsonObject.getString("success"))) {
 
 				try {
-					Common.friendBeans = jsonBinder.stringToList(
+					List<FriendBean> friendBeans = jsonBinder.stringToList(
 							jsonObject.getString("friendList"),
 							FriendBean.class);
-					chatFragment.setFriendsListAdapter(Common.friendBeans);
+					MessageDao messageDao = new MessageDao();
+					messageDao.save_friend_list(friendBeans);
 
 				} catch (JsonParseException e) {
 					e.printStackTrace();

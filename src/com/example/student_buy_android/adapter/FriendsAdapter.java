@@ -35,11 +35,11 @@ public class FriendsAdapter extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return Common.friendBeans.size();
+		return friendBeans.size();
 	}
 
 	public FriendBean getItem(int position) {
-		return Common.friendBeans.get(position);
+		return friendBeans.get(position);
 	}
 
 	public long getItemId(int position) {
@@ -63,7 +63,7 @@ public class FriendsAdapter extends BaseAdapter {
 		}
 
 		holder.show_name
-				.setText(Common.friendBeans.get(position).getUsername());
+				.setText(friendBeans.get(position).getUsername());
 
 		// Volley¿ò¼Ü Í·Ïñ¼ÓÔØ
 		mQueue = Volley.newRequestQueue(context);

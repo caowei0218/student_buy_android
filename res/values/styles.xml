@@ -11,17 +11,17 @@
     <style name="login_btn_login">
         <item name="android:background">@drawable/login_btn_login</item>
     </style>
-    
+
     <style name="login_btn_regist">
         <item name="android:background">@drawable/login_btn_regist</item>
     </style>
-    
+
     <style name="send_btn_shape">
         <item name="android:background">@drawable/send_btn_shape</item>
     </style>
-    
+
     <style name="del_btn_shape">
         <item name="android:background">@drawable/del_btn_shape</item>
     </style>
-    
+
 </resources>

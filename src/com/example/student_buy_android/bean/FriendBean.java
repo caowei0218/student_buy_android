@@ -14,8 +14,17 @@ public class FriendBean implements Serializable {
 	private String address;
 	private String city;
 	private String gender;
+	private String last_message;
 	private String phoneNumber;
 	private String alias;// ±¸×¢Ãû
+
+	public String getLast_message() {
+		return last_message;
+	}
+
+	public void setLast_message(String last_message) {
+		this.last_message = last_message;
+	}
 
 	public String getAlias() {
 		return alias;

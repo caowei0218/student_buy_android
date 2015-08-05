@@ -13,15 +13,19 @@ import android.widget.TextView;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.bean.FriendBean;
+import com.example.student_buy_android.db.MessageDao;
 
 @SuppressLint({ "ViewHolder", "InflateParams" })
 public class LatestContactsAdapter extends BaseAdapter {
 	private LayoutInflater layoutInflater;
 	private Context context;
 	private List<FriendBean> latestContactLsit;
+	MessageDao messageDao = new MessageDao();
 
 	private ImageView show_image;
 	private TextView show_name;
+	private TextView tv_message;
+	private TextView tv_unread_messages;
 
 	public LatestContactsAdapter(List<FriendBean> latestContactLsit,
 			Context context) {
@@ -47,6 +51,18 @@ public class LatestContactsAdapter extends BaseAdapter {
 				null);// 这个过程相当耗时间
 		show_name = (TextView) convertView.findViewById(R.id.show_name);
 		show_name.setText(latestContactLsit.get(position).getUsername());
+		tv_message = (TextView) convertView.findViewById(R.id.tv_message);
+		tv_message.setText(latestContactLsit.get(position).getLast_message());
+		tv_unread_messages = (TextView) convertView
+				.findViewById(R.id.tv_unread_messages);
+		int count = messageDao
+				.get_personal_unread_message_count(latestContactLsit.get(
+						position).getUsername());
+		if (count == 0) {
+			tv_unread_messages.setVisibility(View.INVISIBLE);
+		} else {
+			tv_unread_messages.setText("" + count);
+		}
 		return convertView;
 	}
 

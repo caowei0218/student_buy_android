@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.student_buy_android.R;
@@ -26,6 +26,7 @@ import com.example.student_buy_android.adapter.FriendsAdapter;
 import com.example.student_buy_android.adapter.LatestContactsAdapter;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.db.MessageDao;
+import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.webservice.GetFriendsWebservice;
 
 @SuppressLint({ "ResourceAsColor", "InflateParams" })
@@ -36,13 +37,13 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	private List<View> recently_contact_view;// 用来存放聊天模块界面
 	private PagerAdapter recently_contact_Adapter;// 初始化View适配器
 	private ViewPager recently_contact_viewPager;// 用来放置界面切换
-	private LinearLayout latest_contact, friends;// 用来放置界面切换
 	private ListView lv_latest_contact;
 	private List<FriendBean> latestContactLsit;// 用来存放最近联系人
 	private LatestContactsAdapter latestContactsAdapter;
 	private ListView lv_friends;
 	private List<FriendBean> friendBeans;// 用来存放好友列表
 	private FriendsAdapter friendsAdapter;
+	private Button btn_chat, btn_friends;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -89,12 +90,10 @@ public class ChatFragment extends Fragment implements OnClickListener {
 					}
 				});
 
-		latest_contact = (LinearLayout) messageLayout
-				.findViewById(R.id.latest_contact);
-		friends = (LinearLayout) messageLayout.findViewById(R.id.friends);
-
-		latest_contact.setOnClickListener(this);
-		friends.setOnClickListener(this);
+		btn_chat = (Button) messageLayout.findViewById(R.id.btn_chat);
+		btn_friends = (Button) messageLayout.findViewById(R.id.btn_friends);
+		btn_chat.setOnClickListener(this);
+		btn_friends.setOnClickListener(this);
 
 		LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
 		View tab_recently = layoutInflater.inflate(R.layout.tab_recently, null);
@@ -149,8 +148,18 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	 * 获得最近联系人
 	 * */
 	private List<FriendBean> getLatestContacts() {
+		List<FriendBean> friendBeans = new ArrayList<FriendBean>();
+		FriendBean friendbean;
 		MessageDao messageDao = new MessageDao();
-		return messageDao.get_communication_last();
+		List<String> friends = messageDao.get_communication_last();
+		for (int i = 0; i < friends.size(); i++) {
+			friendbean = new FriendBean();
+			friendbean.setUsername(friends.get(i));
+			friendbean.setLast_message(messageDao.get_last_message(
+					Common.userBean.getUsername(), friends.get(i)));
+			friendBeans.add(friendbean);
+		}
+		return friendBeans;
 	}
 
 	/**
@@ -163,7 +172,7 @@ public class ChatFragment extends Fragment implements OnClickListener {
 		lv_latest_contact.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// 跳转好友详情页面
+				// 跳转聊天界面
 				Intent intent = new Intent(getActivity(), ChatActivity.class);
 				FriendBean friendBean = latestContactLsit.get(position);
 				intent.putExtra("friendBean", friendBean);
@@ -190,8 +199,10 @@ public class ChatFragment extends Fragment implements OnClickListener {
 		lv_friends = (ListView) recently_contact_view.get(1).findViewById(
 				R.id.friends_list);
 
+		setFriendsListAdapter();
+
 		GetFriendsWebservice getFriendListWebservice = new GetFriendsWebservice(
-				this, getActivity());
+				getActivity());
 		getFriendListWebservice.execute();
 
 		// ListView item点击事件
@@ -213,21 +224,22 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	/**
 	 * 好友集合 绑定Adapter
 	 * */
-	public void setFriendsListAdapter(List<FriendBean> friendBeans) {
-		this.friendBeans = friendBeans;
-		friendsAdapter = new FriendsAdapter(friendBeans, getActivity());
+	private void setFriendsListAdapter() {
+		MessageDao messageDao = new MessageDao();
+		this.friendBeans = messageDao.get_friend_list();
+		friendsAdapter = new FriendsAdapter(this.friendBeans, getActivity());
 		lv_friends.setAdapter(friendsAdapter);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.latest_contact:
+		case R.id.btn_chat:
 			initLatestContacts();
 			recently_contact_viewPager.setCurrentItem(0);
 			resetChatColor();
 			break;
-		case R.id.friends:
+		case R.id.btn_friends:
 			initFriends();
 			recently_contact_viewPager.setCurrentItem(1);
 			resetFriendsTextColor();
@@ -239,16 +251,16 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	 * 把聊天tab页文字变暗
 	 */
 	private void resetChatColor() {
-		latest_contact.setBackgroundColor(R.color.grey);
-		friends.setBackgroundColor(R.color.red);
+		btn_chat.setTextColor(R.color.black);
+		btn_friends.setTextColor(R.color.red);
 	}
 
 	/**
 	 * 把好友tab页文字变暗
 	 */
 	private void resetFriendsTextColor() {
-		latest_contact.setBackgroundColor(R.color.red);
-		friends.setBackgroundColor(R.color.grey);
+		btn_chat.setTextColor(R.color.red);
+		btn_friends.setTextColor(R.color.black);
 	}
 
 }

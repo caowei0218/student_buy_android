@@ -11,7 +11,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.student_buy_android.MyApplication;
-import com.example.student_buy_android.bean.ContactLast;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.Message;
 import com.example.student_buy_android.bean.Message.Type;
@@ -53,14 +52,14 @@ public class MessageDao {
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		Cursor cursor = null;
 		String sql = "select * from (select * from chat_content where sender=? and receiver=? and myaccount=? union all select * from chat_content where sender=? and receiver=? and myaccount=?)as temp order by temp.id";
-		String[] args = { sender, receiver, username, receiver, sender, username };
+		String[] args = { sender, receiver, username, receiver, sender,
+				username };
 		cursor = db.rawQuery(sql, args);
 		while (cursor.moveToNext()) {
 			Message message = new Message();
 			message.setSender(cursor.getString(1));
 			message.setReceiver(cursor.getString(2));
 			message.setMsg(cursor.getString(3));
-			// message.setDate(cursor.getString(4));
 			message.setType(username.equals(cursor.getString(1)) ? Type.OUTPUT
 					: Type.INPUT);
 			list.add(message);
@@ -75,9 +74,8 @@ public class MessageDao {
 	/**
 	 * 获取最近联系人
 	 */
-	public List<FriendBean> get_communication_last() {
-		List<FriendBean> list = new ArrayList<FriendBean>();
-		FriendBean friendBean;
+	public List<String> get_communication_last() {
+		List<String> list = new ArrayList<String>();
 		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		Cursor cursor = null;
@@ -85,9 +83,11 @@ public class MessageDao {
 		String[] args = { username, username, username, username };
 		cursor = db.rawQuery(sql, args);
 		while (cursor.moveToNext()) {
-			friendBean = new FriendBean();
-			friendBean.setUsername(cursor.getString(0));
-			list.add(friendBean);
+			list.add(cursor.getString(0));
+		}
+		if (db != null) {
+			cursor.close();
+			db.close();
 		}
 		return list;
 	}
@@ -96,11 +96,11 @@ public class MessageDao {
 	 * 获取与该用户最后一条聊天内容
 	 */
 	public String get_last_message(String send, String receive_id) {
+		String message = "";
 		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		Cursor cursor = null;
-		String message = null;
-		String sql = "select * from (select id,sender,receiver,message,save_time,isLeft,who_am_i,send_status from chat_content where sender=? and receiver=? union select id,sender,receiver,message,save_time,isLeft,who_am_i,send_status from chat_content where sender=? and receiver=?) as temp where who_am_i=? order by temp.id";
+		String sql = "select * from (select * from chat_content where sender=? and receiver=? union select * from chat_content where sender=? and receiver=?) as temp where myaccount=? order by temp.id";
 		String[] args = { send, receive_id, receive_id, send, username };
 		cursor = db.rawQuery(sql, args);
 		while (cursor.moveToNext()) {
@@ -113,7 +113,103 @@ public class MessageDao {
 		return message;
 	}
 
-	
+	/**
+	 * 保存好友列表到本地
+	 */
+	public void save_friend_list(List<FriendBean> list) {
+		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
+		SQLiteDatabase db = db_helper.getWritableDatabase();
+		db.execSQL("delete from friends");
+		for (int i = 0; i < list.size(); i++) {
+			ContentValues content_value = new ContentValues();
+			content_value.put("username", list.get(i).getUsername());
+			content_value.put("nickname", list.get(i).getNickname());
+			content_value.put("email", list.get(i).getEmail());
+			content_value.put("description", list.get(i).getDescription());
+			content_value.put("address", list.get(i).getAddress());
+			content_value.put("city", list.get(i).getCity());
+			content_value.put("gender", list.get(i).getGender());
+			content_value.put("phoneNumber", list.get(i).getPhoneNumber());
+			content_value.put("alias", list.get(i).getAlias());
+			db.insert("friends", null, content_value);
+		}
+		if (db != null) {
+			db.close();
+		}
+	}
+
+	/**
+	 * 获取本地好友列表
+	 */
+	public List<FriendBean> get_friend_list() {
+		List<FriendBean> list = new ArrayList<FriendBean>();
+		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
+		SQLiteDatabase db = db_helper.getWritableDatabase();
+		Cursor cursor = null;
+		String sql = "select * from friends";
+		cursor = db.rawQuery(sql, null);
+		while (cursor.moveToNext()) {
+			FriendBean friendBean = new FriendBean();
+			friendBean.setUsername(cursor.getString(1));
+			friendBean.setNickname(cursor.getString(2));
+			friendBean.setEmail(cursor.getString(3));
+			friendBean.setDescription(cursor.getString(4));
+			friendBean.setAddress(cursor.getString(5));
+			friendBean.setCity(cursor.getString(6));
+			friendBean.setGender(cursor.getString(7));
+			friendBean.setPhoneNumber(cursor.getString(8));
+			friendBean.setAlias(cursor.getString(9));
+			list.add(friendBean);
+		}
+		if (db != null) {
+			cursor.close();
+			db.close();
+		}
+		return list;
+	}
+
+	/**
+	 * 获取本地所有未读消息个数
+	 * */
+	public int get_unread_message_count() {
+		int i = 0;
+		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
+		SQLiteDatabase db = db_helper.getWritableDatabase();
+		Cursor cursor = null;
+		String sql = "select count(*) from chat_content where receiver=? and myaccount=? and isread='no'";
+		String[] args = { username, username };
+		cursor = db.rawQuery(sql, args);
+		while (cursor.moveToNext()) {
+			i = cursor.getInt(0);
+		}
+		if (db != null) {
+			cursor.close();
+			db.close();
+		}
+		return i;
+	}
+
+	/**
+	 * 获取本地某个好友未读消息个数
+	 * */
+	public int get_personal_unread_message_count(String friendUsername) {
+		int i = 0;
+		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
+		SQLiteDatabase db = db_helper.getWritableDatabase();
+		Cursor cursor = null;
+		String sql = "select count(*) from chat_content where sender=? and receiver=? and myaccount=? and isread='no'";
+		String[] args = { friendUsername, username, username };
+		cursor = db.rawQuery(sql, args);
+		while (cursor.moveToNext()) {
+			i = cursor.getInt(0);
+		}
+		if (db != null) {
+			cursor.close();
+			db.close();
+		}
+		return i;
+	}
+
 	/**
 	 * 更改发送消息状态
 	 */
@@ -147,27 +243,6 @@ public class MessageDao {
 		if (db != null) {
 			db.close();
 		}
-	}
-
-	/**
-	 * 获取本地未读消息个数
-	 * */
-	public int get_unread_message_count() {
-		int i = 0;
-		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
-		SQLiteDatabase db = db_helper.getWritableDatabase();
-		Cursor cursor = null;
-		String sql = "select count(*) from chat_content where receiver=? and who_am_i=? and read_or_not=?";
-		String[] args = { username, username, "0" };
-		cursor = db.rawQuery(sql, args);
-		while (cursor.moveToNext()) {
-			i = cursor.getInt(0);
-		}
-		if (db != null) {
-			cursor.close();
-			db.close();
-		}
-		return i;
 	}
 
 	/**
@@ -235,47 +310,6 @@ public class MessageDao {
 				content_value.put("who_am_i", username);
 				db.insert("contact_last", null, content_value);// 如果表总不存在插入一条
 			}
-		}
-	}
-
-	/**
-	 * 获取本地好友列表
-	 */
-	public List<ContactLast> get_friend_list() {
-		List<ContactLast> list = new ArrayList<ContactLast>();
-		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
-		SQLiteDatabase db = db_helper.getWritableDatabase();
-		Cursor cursor = null;
-		String sql = "select user_id,user_name from friend_temp where who_am_i ='"
-				+ username
-				+ "' union select user_id,user_name from contact_last where user_id='service_provider'";
-		cursor = db.rawQuery(sql, null);
-		while (cursor.moveToNext()) {
-			ContactLast contact_last = new ContactLast();
-			contact_last.setUser_id(cursor.getString(0));
-			contact_last.setUser_name(cursor.getString(1));
-			list.add(contact_last);
-		}
-		return list;
-	}
-
-	/**
-	 * 保存好友列表到本地好友临时表
-	 */
-	public void save_friend_list(List<ContactLast> list) {
-		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
-		SQLiteDatabase db = db_helper.getWritableDatabase();
-		db.execSQL("delete from friend_temp");
-		System.out.println("好友表清空了" + "---当前好友数：" + list.size());
-		for (int i = 0; i < list.size(); i++) {
-			ContentValues content_value = new ContentValues();
-			content_value.put("user_name", list.get(i).getUser_name());
-			content_value.put("user_id", list.get(i).getUser_id());
-			content_value.put("who_am_i", username);
-			db.insert("friend_temp", null, content_value);
-		}
-		if (db != null) {
-			db.close();
 		}
 	}
 
