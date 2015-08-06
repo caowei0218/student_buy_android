@@ -5,7 +5,10 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -22,9 +25,12 @@ import android.widget.ListView;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.activity.ChatActivity;
 import com.example.student_buy_android.activity.FriendInfoActivity;
+import com.example.student_buy_android.activity.ChatActivity.MyBroadcastReceiver;
 import com.example.student_buy_android.adapter.FriendsAdapter;
 import com.example.student_buy_android.adapter.LatestContactsAdapter;
 import com.example.student_buy_android.bean.FriendBean;
+import com.example.student_buy_android.bean.Message;
+import com.example.student_buy_android.bean.Message.Type;
 import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.webservice.GetFriendsWebservice;
@@ -51,6 +57,8 @@ public class ChatFragment extends Fragment implements OnClickListener {
 				container, false);
 
 		init();
+
+		registerBoradcastReceiver();
 
 		return messageLayout;
 	}
@@ -176,7 +184,8 @@ public class ChatFragment extends Fragment implements OnClickListener {
 				Intent intent = new Intent(getActivity(), ChatActivity.class);
 				FriendBean friendBean = latestContactLsit.get(position);
 				intent.putExtra("friendBean", friendBean);
-				startActivity(intent);
+				// startActivity(intent);
+				startActivityForResult(intent, 1);
 				getActivity().overridePendingTransition(android.R.anim.fade_in,
 						android.R.anim.fade_out);// 实现淡入浅出的效果
 			}
@@ -247,6 +256,14 @@ public class ChatFragment extends Fragment implements OnClickListener {
 		}
 	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == 1) {
+			initLatestContacts();
+		}
+	}
+
 	/**
 	 * 把聊天tab页文字变暗
 	 */
@@ -261,6 +278,28 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	private void resetFriendsTextColor() {
 		btn_chat.setTextColor(R.color.red);
 		btn_friends.setTextColor(R.color.black);
+	}
+
+	/**
+	 * 注册广播
+	 * */
+	private void registerBoradcastReceiver() {
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("message_received_action");
+		MyBroadcastReceiver broadcastReceiver = new MyBroadcastReceiver();
+		getActivity().registerReceiver(broadcastReceiver, intentFilter);
+	}
+
+	/**
+	 * 广播接收器
+	 * */
+	public class MyBroadcastReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Message message = (Message) intent.getExtras().get("message");
+			message.setType(Type.INPUT);
+			initLatestContacts();
+		}
 	}
 
 }

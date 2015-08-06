@@ -2,6 +2,10 @@ package com.example.student_buy_android.activity;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,9 +13,13 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.SysApplication;
+import com.example.student_buy_android.bean.Message;
+import com.example.student_buy_android.bean.Message.Type;
+import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.fragment.ChatFragment;
 import com.example.student_buy_android.fragment.HomeFragment;
 import com.example.student_buy_android.fragment.MyFragment;
@@ -29,6 +37,8 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 	private LinearLayout mTabWeiXin, mTabAddress, mTabFrd, mTabSetting;
 	private ImageButton mWeiXinImg, mAddressImg, mFrdImg, mSettingImg;
 
+	private TextView tv_unread_messages;
+
 	/**
 	 * 用于对Fragment进行管理
 	 */
@@ -43,6 +53,10 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 		// 初始化布局元素
 		fragmentManager = getFragmentManager();
 		init();
+
+		registerBoradcastReceiver();
+		getUnreadMessages();
+
 		// 第一次启动时选中第0个tab
 		setTabSelection(0);
 	}
@@ -58,6 +72,8 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 		mAddressImg = (ImageButton) findViewById(R.id.id_tab_address_img);
 		mFrdImg = (ImageButton) findViewById(R.id.id_tab_frd_img);
 		mSettingImg = (ImageButton) findViewById(R.id.id_tab_settings_img);
+
+		tv_unread_messages = (TextView) findViewById(R.id.tv_unread_messages);
 
 		mTabWeiXin.setOnClickListener(this);
 		mTabAddress.setOnClickListener(this);
@@ -170,6 +186,48 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 		}
 		if (myFragment != null) {
 			transaction.hide(myFragment);
+		}
+	}
+
+	/**
+	 * 注册广播
+	 * */
+	private void registerBoradcastReceiver() {
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("message_received_action");
+		MyBroadcastReceiver broadcastReceiver = new MyBroadcastReceiver();
+		registerReceiver(broadcastReceiver, intentFilter);
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		getUnreadMessages();
+	}
+
+	/**
+	 * 广播接收器
+	 * */
+	public class MyBroadcastReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Message message = (Message) intent.getExtras().get("message");
+			message.setType(Type.INPUT);
+			getUnreadMessages();
+		}
+	}
+
+	/**
+	 * 查询未读消息个数
+	 * */
+	private void getUnreadMessages() {
+		MessageDao messageDao = new MessageDao();
+		int count = messageDao.get_unread_message_count();
+		if (count == 0) {
+			tv_unread_messages.setVisibility(View.INVISIBLE);
+		} else {
+			tv_unread_messages.setText("" + count);
+			tv_unread_messages.setVisibility(View.VISIBLE);
 		}
 	}
 

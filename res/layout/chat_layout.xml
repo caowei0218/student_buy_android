@@ -62,7 +62,9 @@
         android:cacheColorHint="#0000"
         android:divider="@null"
         android:dividerHeight="5dp"
-        android:scrollbarStyle="outsideOverlay" >
+        android:fastScrollEnabled="true"
+        android:scrollbarStyle="insideInset"
+        android:transcriptMode="normal" >
     </ListView>
 
 </RelativeLayout>

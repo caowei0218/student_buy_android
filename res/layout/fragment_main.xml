@@ -98,13 +98,12 @@
                 android:paddingLeft="10dp" >
 
                 <TextView
-                    android:id="@+id/main_tab_unread_tv"
+                    android:id="@+id/tv_unread_messages"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/tab_unread_bg"
                     android:gravity="center"
-                    android:text="22"
                     android:textColor="@android:color/white"
                     android:textSize="12sp"
                     android:visibility="visible" />

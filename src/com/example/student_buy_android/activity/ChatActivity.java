@@ -2,7 +2,6 @@ package com.example.student_buy_android.activity;
 
 import io.yunba.android.manager.YunBaManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.paho.client.mqttv3.IMqttActionListener;
@@ -43,7 +42,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	private ChatMessageAdapter chatMessageAdapter;
 	private ListView lv_chat;
 	private Message message;
-	private List<Message> messages = new ArrayList<Message>();
+	private List<Message> messages;
+	private MessageDao messageDao;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,8 +52,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		preference = getSharedPreferences("user", Context.MODE_PRIVATE);
 
 		friendBean = (FriendBean) getIntent().getExtras().get("friendBean");
-
-		MessageDao messageDao = new MessageDao();
+		messageDao = new MessageDao();
 		messages = messageDao.getMessage(preference.getString("username", ""),
 				friendBean.getUsername());
 
@@ -61,8 +60,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		setOnClickListener();
 
 		chatMessageAdapter = new ChatMessageAdapter(this, messages);
-		lv_chat.setSelection(messages.size() - 1);
 		lv_chat.setAdapter(chatMessageAdapter);
+		lv_chat.setSelection(messages.size() - 1);// 默认最后一行
 
 		registerBoradcastReceiver();
 	}
@@ -84,10 +83,11 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		message.setMsg(msg);
 		message.setReceiver(alias);
 		message.setType(Type.OUTPUT);
-		updateChatView(message);
 		// 将聊天记录添加到本地数据库中
-		MessageDao messageDao = new MessageDao();
+		messageDao = new MessageDao();
 		messageDao.saveMessage(message);
+
+		updateChatView(message);
 
 		YunBaManager.publishToAlias(getApplicationContext(), alias,
 				jsonBinder.toJson(message), new IMqttActionListener() {
@@ -128,9 +128,13 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * 更新聊天窗口
 	 * */
 	public void updateChatView(Message message) {
-		messages.add(message);
-		chatMessageAdapter.notifyDataSetChanged();
-		lv_chat.setSelection(messages.size() - 1);
+		messageDao = new MessageDao();
+		messages = messageDao.getMessage(preference.getString("username", ""),
+				friendBean.getUsername());
+
+		chatMessageAdapter = new ChatMessageAdapter(this, messages);
+		lv_chat.setAdapter(chatMessageAdapter);
+		lv_chat.setSelection(messages.size() - 1);// 默认最后一行
 	}
 
 	public void onClick(View view) {
@@ -170,6 +174,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		if (keyCode == KeyEvent.KEYCODE_BACK
 				&& event.getAction() == KeyEvent.ACTION_DOWN) {
 			moveTaskToBack(false);
+			setResult(1);
 			finish();
 			overridePendingTransition(android.R.anim.fade_in,
 					android.R.anim.fade_out);// 实现淡入浅出的效果

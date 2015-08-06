@@ -31,3 +31,6 @@
     - name: yue_v1.0.14.apk
       version: 1.0.14
       type: release
+    - name: yue_v1.0.15.apk
+      version: 1.0.15
+      type: release
