@@ -16,12 +16,10 @@ public class AddFriendActivity extends BaseActivity implements OnClickListener{
 	private EditText friend_account;
 	private Button add_friend;
 	
-	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.addfriend_layout);
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
-		
 		init();
 	}
 

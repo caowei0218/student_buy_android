@@ -25,7 +25,6 @@ import android.widget.ListView;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.activity.ChatActivity;
 import com.example.student_buy_android.activity.FriendInfoActivity;
-import com.example.student_buy_android.activity.ChatActivity.MyBroadcastReceiver;
 import com.example.student_buy_android.adapter.FriendsAdapter;
 import com.example.student_buy_android.adapter.LatestContactsAdapter;
 import com.example.student_buy_android.bean.FriendBean;
