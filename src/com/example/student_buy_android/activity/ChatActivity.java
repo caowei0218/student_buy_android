@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,8 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	private TextView tv_name;
 	private EditText et_message;
 	private Button send;
+	private ImageButton btn_back;
+	private ImageButton btn_add_friends;
 	private FriendBean friendBean;
 	private ChatMessageAdapter chatMessageAdapter;
 	private ListView lv_chat;
@@ -57,6 +60,17 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 				friendBean.getUsername());
 
 		init();
+		// 判断该人是否是好友
+		if (friendBean.getUsername().equals(
+				messageDao.getFriendInfo(friendBean.getUsername())
+						.getUsername())) {
+			// 是好友 隐藏添加按钮
+			btn_add_friends.setVisibility(View.INVISIBLE);
+		} else {
+			// 不是好友 显示添加按钮
+			btn_add_friends.setVisibility(View.VISIBLE);
+		}
+
 		setOnClickListener();
 
 		chatMessageAdapter = new ChatMessageAdapter(this, messages);
@@ -148,6 +162,16 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 			// YunBaManager.publish(getApplicationContext(),
 			// MyApplication.TOPIC, "r", null);
 			break;
+		case R.id.btn_back:
+			moveTaskToBack(false);
+			setResult(1);
+			finish();
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
+			break;
+		case R.id.btn_add_friends:
+			Toast.makeText(this, "待开发", Toast.LENGTH_SHORT).show();
+			break;
 		default:
 			break;
 		}
@@ -158,12 +182,16 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		et_message = (EditText) findViewById(R.id.et_message);
 		send = (Button) findViewById(R.id.send);
 		lv_chat = (ListView) findViewById(R.id.lv_chat);
+		btn_back = (ImageButton) findViewById(R.id.btn_back);
+		btn_add_friends = (ImageButton) findViewById(R.id.btn_add_friends);
 
 		tv_name.setText(friendBean.getUsername());
 	}
 
 	private void setOnClickListener() {
 		send.setOnClickListener(this);
+		btn_back.setOnClickListener(this);
+		btn_add_friends.setOnClickListener(this);
 	}
 
 	/**

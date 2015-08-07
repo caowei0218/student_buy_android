@@ -169,6 +169,35 @@ public class MessageDao {
 	}
 
 	/**
+	 * 获得好友详细信息
+	 * */
+	public FriendBean getFriendInfo(String username) {
+		FriendBean friendBean = new FriendBean();
+		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
+		SQLiteDatabase db = db_helper.getWritableDatabase();
+		Cursor cursor = null;
+		String sql = "select * from friends where username=?";
+		String[] args = { username };
+		cursor = db.rawQuery(sql, args);
+		while (cursor.moveToNext()) {
+			friendBean.setUsername(cursor.getString(1));
+			friendBean.setNickname(cursor.getString(2));
+			friendBean.setEmail(cursor.getString(3));
+			friendBean.setDescription(cursor.getString(4));
+			friendBean.setAddress(cursor.getString(5));
+			friendBean.setCity(cursor.getString(6));
+			friendBean.setGender(cursor.getString(7));
+			friendBean.setPhoneNumber(cursor.getString(8));
+			friendBean.setAlias(cursor.getString(9));
+		}
+		if (db != null) {
+			cursor.close();
+			db.close();
+		}
+		return friendBean;
+	}
+
+	/**
 	 * 获取本地所有未读消息个数
 	 * */
 	public int get_unread_message_count() {
