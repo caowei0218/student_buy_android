@@ -21,8 +21,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.activity.AddFriendActivity;
 import com.example.student_buy_android.activity.ChatActivity;
 import com.example.student_buy_android.activity.FriendInfoActivity;
 import com.example.student_buy_android.adapter.FriendsAdapter;
@@ -47,6 +49,7 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	private LatestContactsAdapter latestContactsAdapter;
 	private ListView lv_friends;
 	private List<FriendBean> friendBeans;// 用来存放好友列表
+	private RelativeLayout rl_add_friends;
 	private FriendsAdapter friendsAdapter;
 	private Button btn_chat, btn_friends;
 
@@ -206,6 +209,10 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	private void initFriends() {
 		lv_friends = (ListView) recently_contact_view.get(1).findViewById(
 				R.id.friends_list);
+		rl_add_friends = (RelativeLayout) recently_contact_view.get(1)
+				.findViewById(R.id.rl_add_friends);
+
+		rl_add_friends.setOnClickListener(this);
 
 		setFriendsListAdapter();
 
@@ -241,6 +248,7 @@ public class ChatFragment extends Fragment implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		Intent intent;
 		switch (v.getId()) {
 		case R.id.btn_chat:
 			initLatestContacts();
@@ -251,6 +259,12 @@ public class ChatFragment extends Fragment implements OnClickListener {
 			initFriends();
 			recently_contact_viewPager.setCurrentItem(1);
 			resetFriendsTextColor();
+			break;
+		case R.id.rl_add_friends:
+			intent = new Intent(getActivity(), AddFriendActivity.class);
+			startActivity(intent);
+			getActivity().overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			break;
 		}
 	}
