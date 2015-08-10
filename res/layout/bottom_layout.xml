@@ -93,7 +93,6 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/tab_unread_bg"
                 android:gravity="center"
-                android:text="22"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:visibility="visible" />

@@ -23,13 +23,13 @@ import com.example.student_buy_android.db.MessageDao;
 import com.example.student_buy_android.fragment.ChatFragment;
 import com.example.student_buy_android.fragment.HomeFragment;
 import com.example.student_buy_android.fragment.MyFragment;
-import com.example.student_buy_android.fragment.SameSchoolFragment;
+import com.example.student_buy_android.fragment.ExcooFragment;
 
 public class FragmentActivity extends BaseActivity implements OnClickListener {
 
 	// 四个Fragment
 	private HomeFragment homeFragment;
-	private SameSchoolFragment sameSchoolFragment;
+	private ExcooFragment excooFragment;
 	private ChatFragment chatFragment;
 	private MyFragment myFragment;
 
@@ -125,13 +125,13 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 			break;
 		case 1:
 			mAddressImg.setImageResource(R.drawable.tab_address_pressed);
-			if (sameSchoolFragment == null) {
+			if (excooFragment == null) {
 				// 如果ContactsFragment为空，则创建一个并添加到界面上
-				sameSchoolFragment = new SameSchoolFragment();
-				transaction.add(R.id.content, sameSchoolFragment);
+				excooFragment = new ExcooFragment();
+				transaction.add(R.id.content, excooFragment);
 			} else {
 				// 如果ContactsFragment不为空，则直接将它显示出来
-				transaction.show(sameSchoolFragment);
+				transaction.show(excooFragment);
 			}
 			break;
 		case 2:
@@ -178,8 +178,8 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 		if (homeFragment != null) {
 			transaction.hide(homeFragment);
 		}
-		if (sameSchoolFragment != null) {
-			transaction.hide(sameSchoolFragment);
+		if (excooFragment != null) {
+			transaction.hide(excooFragment);
 		}
 		if (chatFragment != null) {
 			transaction.hide(chatFragment);
