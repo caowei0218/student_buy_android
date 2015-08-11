@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.adapter.HomeAdapter;
 
-@SuppressLint("HandlerLeak")
+@SuppressLint({ "HandlerLeak", "InflateParams" })
 public class HomeFragment extends Fragment implements OnClickListener {
 
 	View messageLayout;
@@ -27,6 +27,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		init();
 
 		showAdapter = new HomeAdapter(getActivity());
+		lv.addHeaderView(inflater.inflate(R.layout.layout_head_view, null,
+				false));
 		lv.setAdapter(showAdapter);
 
 		return messageLayout;

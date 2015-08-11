@@ -34,8 +34,8 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 	private MyFragment myFragment;
 
 	// 四个Tab，每个Tab包含一个按钮
-	private LinearLayout mTabWeiXin, mTabAddress, mTabFrd, mTabSetting;
-	private ImageButton mWeiXinImg, mAddressImg, mFrdImg, mSettingImg;
+	private LinearLayout ll_tab_home, ll_tab_excoo, ll_tab_chat, ll_tab_my;
+	private ImageButton mHomeImg, mExcooImg, mChatImg, mMyImg;
 
 	private TextView tv_unread_messages;
 
@@ -63,22 +63,22 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 
 	private void init() {
 		// 初始化四个LinearLayout
-		mTabWeiXin = (LinearLayout) findViewById(R.id.id_tab_weixin);
-		mTabAddress = (LinearLayout) findViewById(R.id.id_tab_address);
-		mTabFrd = (LinearLayout) findViewById(R.id.id_tab_frd);
-		mTabSetting = (LinearLayout) findViewById(R.id.id_tab_settings);
+		ll_tab_home = (LinearLayout) findViewById(R.id.ll_tab_home);
+		ll_tab_excoo = (LinearLayout) findViewById(R.id.ll_tab_excoo);
+		ll_tab_chat = (LinearLayout) findViewById(R.id.ll_tab_chat);
+		ll_tab_my = (LinearLayout) findViewById(R.id.ll_tab_my);
 		// 初始化四个按钮
-		mWeiXinImg = (ImageButton) findViewById(R.id.id_tab_weixin_img);
-		mAddressImg = (ImageButton) findViewById(R.id.id_tab_address_img);
-		mFrdImg = (ImageButton) findViewById(R.id.id_tab_frd_img);
-		mSettingImg = (ImageButton) findViewById(R.id.id_tab_settings_img);
+		mHomeImg = (ImageButton) findViewById(R.id.ib_tab_home_img);
+		mExcooImg = (ImageButton) findViewById(R.id.ib_tab_excoo_img);
+		mChatImg = (ImageButton) findViewById(R.id.ib_tab_chat_img);
+		mMyImg = (ImageButton) findViewById(R.id.ib_tab_my_img);
 
 		tv_unread_messages = (TextView) findViewById(R.id.tv_unread_messages);
 
-		mTabWeiXin.setOnClickListener(this);
-		mTabAddress.setOnClickListener(this);
-		mTabFrd.setOnClickListener(this);
-		mTabSetting.setOnClickListener(this);
+		ll_tab_home.setOnClickListener(this);
+		ll_tab_excoo.setOnClickListener(this);
+		ll_tab_chat.setOnClickListener(this);
+		ll_tab_my.setOnClickListener(this);
 	}
 
 	@Override
@@ -86,16 +86,16 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 		// 开启一个Fragment事务
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		switch (v.getId()) {
-		case R.id.id_tab_frd:
+		case R.id.ll_tab_home:
 			setTabSelection(0);
 			break;
-		case R.id.id_tab_address:
+		case R.id.ll_tab_excoo:
 			setTabSelection(1);
 			break;
-		case R.id.id_tab_weixin:
+		case R.id.ll_tab_chat:
 			setTabSelection(2);
 			break;
-		case R.id.id_tab_settings:
+		case R.id.ll_tab_my:
 			setTabSelection(3);
 			break;
 		default:
@@ -113,7 +113,7 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 		switch (index) {
 		case 0:
 			hideFragments(transaction);
-			mFrdImg.setImageResource(R.drawable.tab_find_frd_pressed);
+			mHomeImg.setImageResource(R.drawable.tab_home_pressed);
 			if (homeFragment == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
 				homeFragment = new HomeFragment();
@@ -124,7 +124,7 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case 1:
-			mAddressImg.setImageResource(R.drawable.tab_address_pressed);
+			mExcooImg.setImageResource(R.drawable.tab_excoo_pressed);
 			if (excooFragment == null) {
 				// 如果ContactsFragment为空，则创建一个并添加到界面上
 				excooFragment = new ExcooFragment();
@@ -135,7 +135,7 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case 2:
-			mWeiXinImg.setImageResource(R.drawable.tab_weixin_pressed);
+			mChatImg.setImageResource(R.drawable.tab_chat_pressed);
 			if (chatFragment == null) {
 				// 如果NewsFragment为空，则创建一个并添加到界面上
 				chatFragment = new ChatFragment();
@@ -147,7 +147,7 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 			break;
 		case 3:
 		default:
-			mSettingImg.setImageResource(R.drawable.tab_settings_pressed);
+			mMyImg.setImageResource(R.drawable.tab_my_pressed);
 			if (myFragment == null) {
 				// 如果SettingFragment为空，则创建一个并添加到界面上
 				myFragment = new MyFragment();
@@ -165,10 +165,10 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 	 * 把所有图片变暗
 	 */
 	private void resetImg() {
-		mWeiXinImg.setImageResource(R.drawable.tab_weixin_normal);
-		mAddressImg.setImageResource(R.drawable.tab_address_normal);
-		mFrdImg.setImageResource(R.drawable.tab_find_frd_normal);
-		mSettingImg.setImageResource(R.drawable.tab_settings_normal);
+		mHomeImg.setImageResource(R.drawable.tab_home_normal);
+		mExcooImg.setImageResource(R.drawable.tab_excoo_normal);
+		mChatImg.setImageResource(R.drawable.tab_chat_normal);
+		mMyImg.setImageResource(R.drawable.tab_my_normal);
 	}
 
 	/**

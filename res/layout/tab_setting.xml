@@ -51,7 +51,8 @@
                 android:src="@drawable/btn_add" />
         </RelativeLayout>
     </LinearLayout>
-    <ScrollView
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" >
@@ -65,6 +66,7 @@
                 android:id="@+id/rl_info"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:layout_marginTop="0.1dp"
                 android:background="@drawable/btn_list_item_bg"
                 android:clickable="true" >
 

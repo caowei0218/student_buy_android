@@ -50,69 +50,18 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_excoo_type"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#e3e3e3"
-        android:orientation="horizontal" >
+        android:layout_height="0.1dp"
+        android:background="#ebebeb" />
 
-        <View
-            android:layout_width="28dp"
-            android:layout_height="match_parent" >
-        </View>
+    <include layout="@layout/excoo_topbar_layout" />
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="100"
-            android:background="#FFFFFF" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="我的衣橱"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-        </RelativeLayout>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/center" />
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="100"
-            android:background="#FFFFFF" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="我的收藏"
-                android:textColor="#000000"
-                android:textSize="20sp" />
-        </RelativeLayout>
-
-        <View
-            android:layout_width="28dp"
-            android:layout_height="match_parent" >
-        </View>
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/lv_excoo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" >
-    </ListView>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/id_viewpage"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </android.support.v4.view.ViewPager>
 
 </LinearLayout>

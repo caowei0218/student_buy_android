@@ -10,14 +10,19 @@
         android:layout_weight="1" >
     </FrameLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="#dadada" />
+
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/bottom_bar" >
+        android:background="@color/white" >
 
         <LinearLayout
-            android:id="@+id/id_tab_frd"
+            android:id="@+id/ll_tab_home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -25,22 +30,16 @@
             android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/id_tab_frd_img"
+                android:id="@+id/ib_tab_home_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00000000"
                 android:clickable="false"
-                android:src="@drawable/tab_find_frd_pressed" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="首页"
-                android:textColor="#FFFFFF" />
+                android:src="@drawable/tab_home_pressed" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/id_tab_address"
+            android:id="@+id/ll_tab_excoo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -48,18 +47,12 @@
             android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/id_tab_address_img"
+                android:id="@+id/ib_tab_excoo_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00000000"
                 android:clickable="false"
-                android:src="@drawable/tab_address_normal" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="同城"
-                android:textColor="#FFFFFF" />
+                android:src="@drawable/tab_excoo_normal" />
         </LinearLayout>
 
         <FrameLayout
@@ -70,25 +63,19 @@
             android:gravity="center" >
 
             <LinearLayout
-                android:id="@+id/id_tab_weixin"
+                android:id="@+id/ll_tab_chat"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="center"
                 android:orientation="vertical" >
 
                 <ImageButton
-                    android:id="@+id/id_tab_weixin_img"
+                    android:id="@+id/ib_tab_chat_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#00000000"
                     android:clickable="false"
-                    android:src="@drawable/tab_weixin_normal" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="聊"
-                    android:textColor="#FFFFFF" />
+                    android:src="@drawable/tab_chat_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,7 +98,7 @@
         </FrameLayout>
 
         <LinearLayout
-            android:id="@+id/id_tab_settings"
+            android:id="@+id/ll_tab_my"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -119,18 +106,12 @@
             android:orientation="vertical" >
 
             <ImageButton
-                android:id="@+id/id_tab_settings_img"
+                android:id="@+id/ib_tab_my_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00000000"
                 android:clickable="false"
-                android:src="@drawable/tab_settings_normal" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我"
-                android:textColor="#FFFFFF" />
+                android:src="@drawable/tab_my_normal" />
         </LinearLayout>
     </LinearLayout>
 
