@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -39,6 +40,8 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 
 	private TextView tv_unread_messages;
 
+	private String account;
+
 	/**
 	 * 用于对Fragment进行管理
 	 */
@@ -50,6 +53,11 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.fragment_main);
 		SysApplication.getInstance().addActivity(this);// 将该activity添加到管理类中去。
+
+		SharedPreferences sp = getSharedPreferences("user",
+				Context.MODE_PRIVATE);
+		account = sp.getString("username", "");
+
 		// 初始化布局元素
 		fragmentManager = getFragmentManager();
 		init();
@@ -83,6 +91,7 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		Intent intent;
 		// 开启一个Fragment事务
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		switch (v.getId()) {
@@ -90,10 +99,24 @@ public class FragmentActivity extends BaseActivity implements OnClickListener {
 			setTabSelection(0);
 			break;
 		case R.id.ll_tab_excoo:
-			setTabSelection(1);
+			if (!"".equals(account)) {
+				setTabSelection(1);
+			} else {
+				intent = new Intent(this, LoginActivity.class);
+				startActivity(intent);
+				overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
+			}
 			break;
 		case R.id.ll_tab_chat:
-			setTabSelection(2);
+			if (!"".equals(account)) {
+				setTabSelection(2);
+			} else {
+				intent = new Intent(this, LoginActivity.class);
+				startActivity(intent);
+				overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
+			}
 			break;
 		case R.id.ll_tab_my:
 			setTabSelection(3);
