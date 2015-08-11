@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -31,12 +33,16 @@ public class ExcooFragment extends Fragment implements OnClickListener {
 	private ListView lv_wardrobe;
 	private ListView lv_collection;
 
-	// private ListView listView;
 	private ExcooAdapter excooAdapter;
+
+	private String account;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		messageLayout = inflater.inflate(R.layout.tab_excoo, container, false);
+		SharedPreferences sp = getActivity().getSharedPreferences("user",
+				Context.MODE_PRIVATE);
+		account = sp.getString("username", "");
 
 		initView();
 
@@ -129,18 +135,24 @@ public class ExcooFragment extends Fragment implements OnClickListener {
 	 * 初始化我的衣橱
 	 * */
 	private void initWardrobe() {
-		lv_wardrobe = (ListView) excoo_view.get(0).findViewById(
-				R.id.lv_wardrobe);
-		excooAdapter = new ExcooAdapter(getActivity());
-		lv_wardrobe.setAdapter(excooAdapter);
+		if (!"".equals(account)) {
+			lv_wardrobe = (ListView) excoo_view.get(0).findViewById(
+					R.id.lv_wardrobe);
+			lv_wardrobe.setVisibility(View.VISIBLE);
+			excooAdapter = new ExcooAdapter(getActivity());
+			lv_wardrobe.setAdapter(excooAdapter);
+		}
 	}
 
 	/**
 	 * 初始化我的收藏
 	 * */
 	private void initCollection() {
-		lv_collection = (ListView) excoo_view.get(1).findViewById(
-				R.id.lv_collection);
+		if (!"".equals(account)) {
+			lv_collection = (ListView) excoo_view.get(1).findViewById(
+					R.id.lv_collection);
+			lv_collection.setVisibility(View.VISIBLE);
+		}
 	}
 
 	/**

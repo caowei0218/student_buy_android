@@ -116,7 +116,7 @@ public class MessageDao {
 	/**
 	 * 保存好友列表到本地
 	 */
-	public void save_friend_list(List<FriendBean> list) {
+	public void save_friend_list(List<FriendBean> list, String myAccount) {
 		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		db.execSQL("delete from friends");
@@ -131,6 +131,7 @@ public class MessageDao {
 			content_value.put("gender", list.get(i).getGender());
 			content_value.put("phoneNumber", list.get(i).getPhoneNumber());
 			content_value.put("alias", list.get(i).getAlias());
+			content_value.put("myaccount", myAccount);
 			db.insert("friends", null, content_value);
 		}
 		if (db != null) {
@@ -141,13 +142,14 @@ public class MessageDao {
 	/**
 	 * 获取本地好友列表
 	 */
-	public List<FriendBean> get_friend_list() {
+	public List<FriendBean> get_friend_list(String myaccount) {
 		List<FriendBean> list = new ArrayList<FriendBean>();
 		DBHelper db_helper = new DBHelper(MyApplication.getInstance());
 		SQLiteDatabase db = db_helper.getWritableDatabase();
 		Cursor cursor = null;
-		String sql = "select * from friends";
-		cursor = db.rawQuery(sql, null);
+		String sql = "select * from friends where myaccount=?";
+		String[] args = { myaccount };
+		cursor = db.rawQuery(sql, args);
 		while (cursor.moveToNext()) {
 			FriendBean friendBean = new FriendBean();
 			friendBean.setUsername(cursor.getString(1));

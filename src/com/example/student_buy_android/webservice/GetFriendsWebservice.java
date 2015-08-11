@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -76,8 +77,11 @@ public class GetFriendsWebservice extends AsyncTask<String, Integer, String> {
 					List<FriendBean> friendBeans = jsonBinder.stringToList(
 							jsonObject.getString("friendList"),
 							FriendBean.class);
+					SharedPreferences sp = this.context.getSharedPreferences(
+							"user", Context.MODE_PRIVATE);
 					MessageDao messageDao = new MessageDao();
-					messageDao.save_friend_list(friendBeans);
+					messageDao.save_friend_list(friendBeans,
+							sp.getString("username", ""));
 
 				} catch (JsonParseException e) {
 					e.printStackTrace();

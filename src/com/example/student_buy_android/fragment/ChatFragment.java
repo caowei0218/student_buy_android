@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -53,10 +54,14 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	private FriendsAdapter friendsAdapter;
 	private Button btn_chat, btn_friends;
 
+	private String account;
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		messageLayout = inflater.inflate(R.layout.tab_message_layout,
-				container, false);
+		messageLayout = inflater.inflate(R.layout.tab_chat, container, false);
+		SharedPreferences sp = getActivity().getSharedPreferences("user",
+				Context.MODE_PRIVATE);
+		account = sp.getString("username", "");
 
 		init();
 
@@ -207,33 +212,36 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	 * 初始化好友列表
 	 * */
 	private void initFriends() {
-		lv_friends = (ListView) recently_contact_view.get(1).findViewById(
-				R.id.friends_list);
-		rl_add_friends = (RelativeLayout) recently_contact_view.get(1)
-				.findViewById(R.id.rl_add_friends);
+		if (!"".equals(account)) {
 
-		rl_add_friends.setOnClickListener(this);
+			lv_friends = (ListView) recently_contact_view.get(1).findViewById(
+					R.id.friends_list);
+			rl_add_friends = (RelativeLayout) recently_contact_view.get(1)
+					.findViewById(R.id.rl_add_friends);
+			rl_add_friends.setVisibility(View.VISIBLE);
+			rl_add_friends.setOnClickListener(this);
 
-		setFriendsListAdapter();
+			setFriendsListAdapter();
 
-		GetFriendsWebservice getFriendListWebservice = new GetFriendsWebservice(
-				getActivity());
-		getFriendListWebservice.execute();
+			GetFriendsWebservice getFriendListWebservice = new GetFriendsWebservice(
+					getActivity());
+			getFriendListWebservice.execute();
 
-		// ListView item点击事件
-		lv_friends.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// 跳转好友详情页面
-				Intent intent = new Intent(getActivity(),
-						FriendInfoActivity.class);
-				FriendBean friendBean = friendBeans.get(position);
-				intent.putExtra("friendBean", friendBean);
-				startActivity(intent);
-				getActivity().overridePendingTransition(android.R.anim.fade_in,
-						android.R.anim.fade_out);// 实现淡入浅出的效果
-			}
-		});
+			// ListView item点击事件
+			lv_friends.setOnItemClickListener(new OnItemClickListener() {
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					// 跳转好友详情页面
+					Intent intent = new Intent(getActivity(),
+							FriendInfoActivity.class);
+					FriendBean friendBean = friendBeans.get(position);
+					intent.putExtra("friendBean", friendBean);
+					startActivity(intent);
+					getActivity().overridePendingTransition(
+							android.R.anim.fade_in, android.R.anim.fade_out);// 实现淡入浅出的效果
+				}
+			});
+		}
 	}
 
 	/**
@@ -241,7 +249,10 @@ public class ChatFragment extends Fragment implements OnClickListener {
 	 * */
 	private void setFriendsListAdapter() {
 		MessageDao messageDao = new MessageDao();
-		this.friendBeans = messageDao.get_friend_list();
+		SharedPreferences sp = getActivity().getSharedPreferences("user",
+				Context.MODE_PRIVATE);
+		this.friendBeans = messageDao.get_friend_list(sp.getString("username",
+				""));
 		friendsAdapter = new FriendsAdapter(this.friendBeans, getActivity());
 		lv_friends.setAdapter(friendsAdapter);
 	}

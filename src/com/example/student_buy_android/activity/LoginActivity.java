@@ -130,22 +130,38 @@ public class LoginActivity extends BaseActivity {
 		login_et_password = (EditText) findViewById(R.id.login_et_password);
 	}
 
+//	/**
+//	 * 再按一次退出程序
+//	 * */
+//	@SuppressWarnings("static-access")
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		if (keyCode == KeyEvent.KEYCODE_BACK
+//				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+//			if ((System.currentTimeMillis() - exitTime) > 2000) {
+//				Toast.makeText(getApplicationContext(),
+//						Word.LOGINACTIVITY_PRESS_AGAIN_TO_EXIT_THE_PROGRAM,
+//						Toast.LENGTH_SHORT).show();
+//				exitTime = System.currentTimeMillis();
+//			} else {
+//				SysApplication.getInstance().exit();
+//			}
+//			return true;
+//		}
+//		return super.onKeyDown(keyCode, event);
+//	}
+	
 	/**
-	 * 再按一次退出程序
+	 * 返回
 	 * */
-	@SuppressWarnings("static-access")
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK
 				&& event.getAction() == KeyEvent.ACTION_DOWN) {
-			if ((System.currentTimeMillis() - exitTime) > 2000) {
-				Toast.makeText(getApplicationContext(),
-						Word.LOGINACTIVITY_PRESS_AGAIN_TO_EXIT_THE_PROGRAM,
-						Toast.LENGTH_SHORT).show();
-				exitTime = System.currentTimeMillis();
-			} else {
-				SysApplication.getInstance().exit();
-			}
+			moveTaskToBack(false);
+			finish();
+			overridePendingTransition(android.R.anim.fade_in,
+					android.R.anim.fade_out);// 实现淡入浅出的效果
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

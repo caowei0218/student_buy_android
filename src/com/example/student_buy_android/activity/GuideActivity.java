@@ -116,7 +116,7 @@ public class GuideActivity extends BaseActivity {
 		start.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				startActivity(new Intent(GuideActivity.this,
-						LoginActivity.class));
+						FragmentActivity.class));
 				GuideActivity.this.finish();
 				mPopupWindow.dismiss();
 			}

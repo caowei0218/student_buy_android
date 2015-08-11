@@ -1,7 +1,9 @@
 package com.example.student_buy_android.fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.student_buy_android.R;
+import com.example.student_buy_android.activity.LoginActivity;
 import com.example.student_buy_android.activity.MyInfoActivity;
 import com.example.student_buy_android.activity.PublishActivity;
 import com.example.student_buy_android.activity.SetInfoActivity;
@@ -26,13 +29,16 @@ public class MyFragment extends Fragment implements OnClickListener {
 	private RelativeLayout rl_info, rl_publish, rl_sell, rl_buy, rl_collect,
 			rl_setting;
 
+	private String account;
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		messageLayout = inflater
-				.inflate(R.layout.tab_setting, container, false);
+		messageLayout = inflater.inflate(R.layout.tab_my, container, false);
 
 		init();
-		getMyInfo();
+		if (!"".equals(account)) {
+			getMyInfo();
+		}
 
 		return messageLayout;
 	}
@@ -58,6 +64,10 @@ public class MyFragment extends Fragment implements OnClickListener {
 		rl_buy.setOnClickListener(this);
 		rl_collect.setOnClickListener(this);
 		rl_setting.setOnClickListener(this);
+
+		SharedPreferences sp = getActivity().getSharedPreferences("user",
+				Context.MODE_PRIVATE);
+		account = sp.getString("username", "");
 	}
 
 	/**
@@ -82,10 +92,17 @@ public class MyFragment extends Fragment implements OnClickListener {
 		Intent intent;
 		switch (v.getId()) {
 		case R.id.rl_info:
-			intent = new Intent(getActivity(), MyInfoActivity.class);
-			startActivity(intent);
-			getActivity().overridePendingTransition(android.R.anim.fade_in,
-					android.R.anim.fade_out);// 实现淡入浅出的效果
+			if (!"".equals(account)) {
+				intent = new Intent(getActivity(), MyInfoActivity.class);
+				startActivity(intent);
+				getActivity().overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
+			} else {
+				intent = new Intent(getActivity(), LoginActivity.class);
+				startActivity(intent);
+				getActivity().overridePendingTransition(android.R.anim.fade_in,
+						android.R.anim.fade_out);// 实现淡入浅出的效果
+			}
 			break;
 		case R.id.rl_publish:
 			intent = new Intent(getActivity(), PublishActivity.class);
@@ -112,5 +129,4 @@ public class MyFragment extends Fragment implements OnClickListener {
 			break;
 		}
 	}
-
 }

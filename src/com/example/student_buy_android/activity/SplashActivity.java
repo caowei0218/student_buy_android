@@ -98,7 +98,8 @@ public class SplashActivity extends BaseActivity {
 		String gender = sp.getString("gender", "");
 		String age = sp.getString("age_group", "");
 		if ("".equals(account)) {
-			Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+			Intent intent = new Intent(SplashActivity.this,
+					FragmentActivity.class);
 			startActivity(intent);
 			SplashActivity.this.finish();
 		} else if (account != null && !"".equals(account)) {
