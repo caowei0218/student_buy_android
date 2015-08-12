@@ -17,6 +17,15 @@ public class FriendBean implements Serializable {
 	private String last_message;
 	private String phoneNumber;
 	private String alias;// 备注名
+	private String photoName;// 头像名
+
+	public String getPhotoName() {
+		return photoName;
+	}
+
+	public void setPhotoName(String photoName) {
+		this.photoName = photoName;
+	}
 
 	public String getLast_message() {
 		return last_message;

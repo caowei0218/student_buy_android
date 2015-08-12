@@ -12,12 +12,13 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.util.BitmapCache;
+import com.example.student_buy_android.util.BitmapUtil;
 import com.example.student_buy_android.util.Common;
+import com.example.student_buy_android.view.CustomNetworkImageView;
 
 @SuppressLint({ "ViewHolder", "InflateParams" })
 public class FriendsAdapter extends BaseAdapter {
@@ -46,13 +47,13 @@ public class FriendsAdapter extends BaseAdapter {
 		return 0;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = layoutInflater.inflate(
 					R.layout.friends_layout_listitem, null);// 这个过程相当耗时间
-			holder.show_image = (NetworkImageView) convertView
+			holder.show_image = (CustomNetworkImageView) convertView
 					.findViewById(R.id.show_image);
 			holder.show_image.setDefaultImageResId(R.drawable.empty_photo);
 			holder.show_image.setErrorImageResId(R.drawable.ic_launcher);
@@ -62,19 +63,25 @@ public class FriendsAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 
-		holder.show_name
-				.setText(friendBeans.get(position).getUsername());
+		holder.show_name.setText(friendBeans.get(position).getUsername());
 
-		// Volley框架 头像加载
-		mQueue = Volley.newRequestQueue(context);
-		imageLoader = new ImageLoader(mQueue, new BitmapCache());
-		holder.show_image.setImageUrl(Common.IMAGES[position], imageLoader);
+		// 如果头像在本地有 就直接去本地加载 没有再去网络加载
+		if (BitmapUtil.isExists(Common.photoName[position])) {
+			holder.show_image.setLocalImageBitmap(BitmapUtil
+					.getLocalBitmap(Common.photoName[position]));
+		} else {
+			// Volley框架 头像加载
+			mQueue = Volley.newRequestQueue(context);
+			imageLoader = new ImageLoader(mQueue, new BitmapCache(
+					Common.photoName[position]));
+			holder.show_image.setImageUrl(Common.IMAGES[position], imageLoader);
 
+		}
 		return convertView;
 	}
 
 	private class ViewHolder {
-		NetworkImageView show_image;
+		CustomNetworkImageView show_image;
 		TextView show_name;
 	}
 

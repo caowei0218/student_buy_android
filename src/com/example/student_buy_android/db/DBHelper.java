@@ -9,7 +9,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	private static final String DataBase_NAME = "YUE.db";
 	private static final int DataBase_Verision = 1;
 	private static final String MESSAGE_TABLE = "create table chat_content(id integer primary key autoincrement,sender,receiver,message,save_time,isread,myaccount)";// 用来存放聊天内容
-	private static final String FRIENDS = "create table friends(id integer primary key autoincrement,username,nickname,email,description,address,city,gender,phoneNumber,alias,myaccount)";// 用来存放好友列表
+	private static final String FRIENDS = "create table friends(id integer primary key autoincrement,username,nickname,email,description,address,city,gender,phoneNumber,alias,myaccount,photoName)";// 用来存放好友列表
 	private static final String create_person = "create table person(name primary key,password)";// 创建表
 	private static final String create_contact_last = "create table contact_last(user_id ,user_name,who_am_i, primary key(user_id,who_am_i) )";// 创建最近联系人表
 	private static final String create_friend = "create table friend(user_id ,user_name,who_am_i, primary key(user_id,who_am_i) )";// 创建最近联系人表的临时表

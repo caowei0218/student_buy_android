@@ -14,6 +14,8 @@ import com.example.student_buy_android.MyApplication;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.Message;
 import com.example.student_buy_android.bean.Message.Type;
+import com.example.student_buy_android.util.BitmapUtil;
+import com.example.student_buy_android.util.Common;
 
 public class MessageDao {
 	private String username = MyApplication.getInstance()
@@ -132,6 +134,9 @@ public class MessageDao {
 			content_value.put("phoneNumber", list.get(i).getPhoneNumber());
 			content_value.put("alias", list.get(i).getAlias());
 			content_value.put("myaccount", myAccount);
+
+			content_value.put("photoName", Common.photoName[i]);
+
 			db.insert("friends", null, content_value);
 		}
 		if (db != null) {

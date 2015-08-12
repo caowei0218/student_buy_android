@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e3e3e3"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/Regist_tittle_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/tvRegistTittle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="注册"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <ImageButton
+            android:id="@+id/ibRegistReturn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:src="@drawable/btn_quick_return" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Regist_phone_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Regist_tittle_layout"
+        android:background="@color/white" >
+
+        <EditText
+            android:id="@+id/etRegistPhone"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
+            android:hint="请输入手机号码"
+            android:numeric="integer"
+            android:singleLine="true"
+            android:textColor="#cccccc"
+            android:textSize="18sp" >
+
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnRegistSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Regist_phone_layout"
+        android:layout_toRightOf="@+id/Regist_phone_layout"
+        android:background="#f33400"
+        android:text="确定发送"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:id="@+id/Regist_checkNo_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Regist_phone_layout"
+        android:background="@color/white" >
+
+        <EditText
+            android:id="@+id/etRegistcheckNo"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:singleLine="true"
+            android:textColor="#cccccc"
+            android:textSize="18sp" >
+
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvRegistTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Regist_checkNo_layout"
+        android:layout_toRightOf="@+id/Regist_checkNo_layout"
+        android:background="#f33400"
+        android:gravity="center"
+        android:text="60秒"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:id="@+id/Regist_password_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/Regist_checkNo_layout"
+        android:background="@color/white" >
+
+        <EditText
+            android:id="@+id/etRegistPassword"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@null"
+            android:hint="请输入密码6-12位"
+            android:singleLine="true"
+            android:textColor="#cccccc"
+            android:textSize="18sp" >
+
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/Regist_regist_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/Regist_password_layout"
+        android:background="@color/white" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="确定注册"
+            android:textColor="#f33400"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

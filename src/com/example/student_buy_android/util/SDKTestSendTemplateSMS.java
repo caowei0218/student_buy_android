@@ -11,7 +11,8 @@ public class SDKTestSendTemplateSMS {
 	 * 发送短信
 	 */
 	@SuppressWarnings("unchecked")
-	public static void sendSMS(String phoneNumber, String templateId, String[] datas) {
+	public static void sendSMS(String phoneNumber, String templateId,
+			String[] datas) {
 		HashMap<String, Object> result = null;
 
 		// 初始化SDK
