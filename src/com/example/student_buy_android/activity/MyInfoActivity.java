@@ -9,9 +9,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.SysApplication;
+import com.example.student_buy_android.util.BitmapCache;
+import com.example.student_buy_android.util.BitmapUtil;
 import com.example.student_buy_android.util.Common;
+import com.example.student_buy_android.view.CustomNetworkImageView;
 
 public class MyInfoActivity extends BaseActivity implements OnClickListener {
 
@@ -19,6 +25,10 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
 			rl_description, rl_address, rl_city, rl_gender, rl_phoneNumber;
 	private TextView tv_username, tv_nikename, tv_email, tv_description,
 			tv_address, tv_city, tv_gender, tv_phoneNumber;
+	private CustomNetworkImageView iv_avatar;
+
+	private ImageLoader imageLoader;
+	private RequestQueue mQueue;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,6 +41,7 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
 
 	private void init() {
 		rl_avatar = (RelativeLayout) findViewById(R.id.rl_avatar);
+		iv_avatar = (CustomNetworkImageView) findViewById(R.id.iv_avatar);
 		rl_nikename = (RelativeLayout) findViewById(R.id.rl_nikename);
 		rl_erweima = (RelativeLayout) findViewById(R.id.rl_erweima);
 		rl_email = (RelativeLayout) findViewById(R.id.rl_email);
@@ -72,6 +83,20 @@ public class MyInfoActivity extends BaseActivity implements OnClickListener {
 		tv_city.setText(Common.userBean.getCity());
 		tv_gender.setText(Common.userBean.getGender());
 		tv_phoneNumber.setText(Common.userBean.getPhoneNumber());
+
+		// 如果头像在本地有 就直接去本地加载 没有再去网络加载
+		if (BitmapUtil.isExists(Common.userBean.getPhotoName())) {
+			iv_avatar.setLocalImageBitmap(BitmapUtil
+					.getLocalBitmap(Common.userBean.getPhotoName()));
+		} else {
+			// Volley框架 头像加载
+			mQueue = Volley.newRequestQueue(this);
+			imageLoader = new ImageLoader(mQueue, new BitmapCache(
+					Common.userBean.getPhotoName()));
+			iv_avatar.setImageUrl(
+					Common.IMAGES_URL + Common.userBean.getPhotoName(),
+					imageLoader);
+		}
 	}
 
 	@Override

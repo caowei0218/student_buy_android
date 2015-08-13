@@ -20,6 +20,15 @@ public class UserBean implements Serializable {
 	private String token;
 	private String address;
 	private String city;
+	private String photoName;
+
+	public String getPhotoName() {
+		return photoName;
+	}
+
+	public void setPhotoName(String photoName) {
+		this.photoName = photoName;
+	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;

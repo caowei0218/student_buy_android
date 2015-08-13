@@ -14,7 +14,7 @@
         android:background="@null"
         android:gravity="center" >
 
-        <ImageView
+        <com.example.student_buy_android.view.CustomNetworkImageView
             android:id="@+id/show_image"
             android:layout_width="50dp"
             android:layout_height="50dp"

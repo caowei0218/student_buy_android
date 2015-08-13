@@ -172,6 +172,8 @@ public class ChatFragment extends Fragment implements OnClickListener {
 			friendbean.setUsername(friends.get(i));
 			friendbean.setLast_message(messageDao.get_last_message(
 					Common.userBean.getUsername(), friends.get(i)));
+			friendbean.setPhotoName(messageDao.getFriendInfo(friends.get(i))
+					.getPhotoName());
 			friendBeans.add(friendbean);
 		}
 		return friendBeans;

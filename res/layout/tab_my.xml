@@ -43,13 +43,15 @@
                 android:background="@drawable/btn_list_item_bg"
                 android:clickable="true" >
 
-                <ImageView
+                <com.example.student_buy_android.view.CustomNetworkImageView
                     android:id="@+id/iv_avatar"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="12dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/empty_photo" />
 
                 <LinearLayout

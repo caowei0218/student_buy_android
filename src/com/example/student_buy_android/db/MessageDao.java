@@ -14,7 +14,6 @@ import com.example.student_buy_android.MyApplication;
 import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.Message;
 import com.example.student_buy_android.bean.Message.Type;
-import com.example.student_buy_android.util.BitmapUtil;
 import com.example.student_buy_android.util.Common;
 
 public class MessageDao {
@@ -166,6 +165,7 @@ public class MessageDao {
 			friendBean.setGender(cursor.getString(7));
 			friendBean.setPhoneNumber(cursor.getString(8));
 			friendBean.setAlias(cursor.getString(9));
+			friendBean.setPhotoName(cursor.getString(11));
 			list.add(friendBean);
 		}
 		if (db != null) {
@@ -196,6 +196,7 @@ public class MessageDao {
 			friendBean.setGender(cursor.getString(7));
 			friendBean.setPhoneNumber(cursor.getString(8));
 			friendBean.setAlias(cursor.getString(9));
+			friendBean.setPhotoName(cursor.getString(11));
 		}
 		if (db != null) {
 			cursor.close();

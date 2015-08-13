@@ -68,21 +68,24 @@ public class PublishAdapter extends BaseAdapter {
 		// VolleyøÚº‹ Õº∆¨º”‘ÿ
 		mQueue = Volley.newRequestQueue(context);
 		imageLoader = new ImageLoader(mQueue, new BitmapCache());
-		holder.iv_image1.setImageUrl(Common.IMAGES[0], imageLoader);
+		holder.iv_image1.setImageUrl(Common.IMAGES_URL + Common.photoName[0],
+				imageLoader);
 
 		holder.iv_image2.setDefaultImageResId(R.drawable.empty_photo);
 		holder.iv_image2.setErrorImageResId(R.drawable.ic_launcher);
 		// VolleyøÚº‹ Õº∆¨º”‘ÿ
 		mQueue = Volley.newRequestQueue(context);
 		imageLoader = new ImageLoader(mQueue, new BitmapCache());
-		holder.iv_image2.setImageUrl(Common.IMAGES[1], imageLoader);
+		holder.iv_image2.setImageUrl(Common.IMAGES_URL + Common.photoName[1],
+				imageLoader);
 
 		holder.iv_image3.setDefaultImageResId(R.drawable.empty_photo);
 		holder.iv_image3.setErrorImageResId(R.drawable.ic_launcher);
 		// VolleyøÚº‹ Õº∆¨º”‘ÿ
 		mQueue = Volley.newRequestQueue(context);
 		imageLoader = new ImageLoader(mQueue, new BitmapCache());
-		holder.iv_image3.setImageUrl(Common.IMAGES[2], imageLoader);
+		holder.iv_image3.setImageUrl(Common.IMAGES_URL + Common.photoName[2],
+				imageLoader);
 
 		return convertView;
 	}

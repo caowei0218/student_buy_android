@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -82,6 +84,8 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 				} else if ("GENDER_UNKNOW".equals(userBean.getGender())) {
 					userBean.setGender("中性");
 				}
+				userBean.setPhotoName(Common.photoName[1]);
+				saveUserinfo(userBean);
 				Common.userBean = userBean;
 				myFragment.updateData(userBean);
 			} else {
@@ -92,5 +96,27 @@ public class GetMyInfoWebservice extends AsyncTask<String, Integer, String> {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 将用户信息保存在SharedPreferences中
+	 * */
+	private void saveUserinfo(UserBean userBean) {
+		SharedPreferences prefereces = context.getSharedPreferences("user",
+				Context.MODE_PRIVATE);
+		Editor editor = prefereces.edit();
+		editor.putString("username", userBean.getUsername());
+		editor.putString("password", userBean.getPassword());
+		editor.putString("user_id", userBean.getUser_id());
+		editor.putString("nickName", userBean.getNickname());
+		editor.putString("description", userBean.getDescription());
+		editor.putString("age", userBean.getAge());
+		editor.putString("gender", userBean.getGender());
+		editor.putString("address", userBean.getAddress());
+		editor.putString("city", userBean.getCity());
+		editor.putString("email", userBean.getEmail());
+		editor.putString("phoneNumber", userBean.getPhoneNumber());
+		editor.putString("photoName", userBean.getPhotoName());
+		editor.commit();
 	}
 }

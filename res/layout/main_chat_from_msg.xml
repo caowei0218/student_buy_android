@@ -16,10 +16,11 @@
             android:layout_marginLeft="10dp"
             android:orientation="vertical" >
 
-            <ImageView
+            <com.example.student_buy_android.view.CustomNetworkImageView
                 android:id="@+id/chat_from_icon"
                 android:layout_width="49dp"
                 android:layout_height="49dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/empty_photo" />
         </LinearLayout>
 

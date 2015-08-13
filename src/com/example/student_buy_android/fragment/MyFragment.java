@@ -13,12 +13,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
 import com.example.student_buy_android.R;
 import com.example.student_buy_android.activity.LoginActivity;
 import com.example.student_buy_android.activity.MyInfoActivity;
 import com.example.student_buy_android.activity.PublishActivity;
 import com.example.student_buy_android.activity.SetInfoActivity;
 import com.example.student_buy_android.bean.UserBean;
+import com.example.student_buy_android.util.BitmapCache;
+import com.example.student_buy_android.util.BitmapUtil;
+import com.example.student_buy_android.util.Common;
+import com.example.student_buy_android.view.CustomNetworkImageView;
 import com.example.student_buy_android.webservice.GetMyInfoWebservice;
 
 public class MyFragment extends Fragment implements OnClickListener {
@@ -28,6 +35,10 @@ public class MyFragment extends Fragment implements OnClickListener {
 	private TextView tv_nickname, tv_username, tv_publish_number;
 	private RelativeLayout rl_info, rl_publish, rl_sell, rl_buy, rl_collect,
 			rl_setting;
+	private CustomNetworkImageView iv_avatar;
+
+	private ImageLoader imageLoader;
+	private RequestQueue mQueue;
 
 	private String account;
 
@@ -57,6 +68,8 @@ public class MyFragment extends Fragment implements OnClickListener {
 		tv_username = (TextView) messageLayout.findViewById(R.id.tv_username);
 		tv_publish_number = (TextView) messageLayout
 				.findViewById(R.id.tv_publish_number);
+		iv_avatar = (CustomNetworkImageView) messageLayout
+				.findViewById(R.id.iv_avatar);
 
 		rl_info.setOnClickListener(this);
 		rl_publish.setOnClickListener(this);
@@ -85,6 +98,19 @@ public class MyFragment extends Fragment implements OnClickListener {
 	public void updateData(UserBean userBean) {
 		tv_username.setText(userBean.getUsername());
 		tv_nickname.setText(userBean.getNickname());
+
+		// 如果头像在本地有 就直接去本地加载 没有再去网络加载
+		if (BitmapUtil.isExists(userBean.getPhotoName())) {
+			iv_avatar.setLocalImageBitmap(BitmapUtil.getLocalBitmap(userBean
+					.getPhotoName()));
+		} else {
+			// Volley框架 头像加载
+			mQueue = Volley.newRequestQueue(getActivity());
+			imageLoader = new ImageLoader(mQueue, new BitmapCache(
+					userBean.getPhotoName()));
+			iv_avatar.setImageUrl(Common.IMAGES_URL + userBean.getPhotoName(),
+					imageLoader);
+		}
 	}
 
 	@Override

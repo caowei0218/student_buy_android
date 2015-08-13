@@ -66,21 +66,23 @@ public class FriendsAdapter extends BaseAdapter {
 		holder.show_name.setText(friendBeans.get(position).getUsername());
 
 		// 如果头像在本地有 就直接去本地加载 没有再去网络加载
-		if (BitmapUtil.isExists(Common.photoName[position])) {
+		if (BitmapUtil.isExists(friendBeans.get(position).getPhotoName())) {
 			holder.show_image.setLocalImageBitmap(BitmapUtil
-					.getLocalBitmap(Common.photoName[position]));
+					.getLocalBitmap(friendBeans.get(position).getPhotoName()));
 		} else {
 			// Volley框架 头像加载
 			mQueue = Volley.newRequestQueue(context);
 			imageLoader = new ImageLoader(mQueue, new BitmapCache(
 					Common.photoName[position]));
-			holder.show_image.setImageUrl(Common.IMAGES[position], imageLoader);
-
+			holder.show_image.setImageUrl(
+					Common.IMAGES_URL
+							+ friendBeans.get(position).getPhotoName(),
+					imageLoader);
 		}
 		return convertView;
 	}
 
-	private class ViewHolder {
+	class ViewHolder {
 		CustomNetworkImageView show_image;
 		TextView show_name;
 	}

@@ -5,7 +5,24 @@
     android:background="#ebebeb"
     android:orientation="vertical" >
 
-    <include layout="@layout/top_layout" />
+    <LinearLayout
+        android:id="@+id/ll_setting_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#ffffff"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:src="@drawable/excoo" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -25,13 +42,15 @@
                 android:background="@drawable/btn_list_item_bg"
                 android:clickable="true" >
 
-                <ImageView
+                <com.example.student_buy_android.view.CustomNetworkImageView
                     android:id="@+id/iv_avatar"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_gravity="center"
                     android:layout_marginRight="30dp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/empty_photo" />
 
                 <TextView

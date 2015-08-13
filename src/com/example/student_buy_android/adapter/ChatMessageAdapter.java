@@ -2,10 +2,7 @@ package com.example.student_buy_android.adapter;
 
 import java.util.List;
 
-import com.example.student_buy_android.R;
-import com.example.student_buy_android.bean.Message;
-import com.example.student_buy_android.bean.Message.Type;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +10,28 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.student_buy_android.MyApplication;
+import com.example.student_buy_android.R;
+import com.example.student_buy_android.bean.FriendBean;
+import com.example.student_buy_android.bean.Message;
+import com.example.student_buy_android.bean.Message.Type;
+import com.example.student_buy_android.util.BitmapUtil;
+import com.example.student_buy_android.util.Common;
+import com.example.student_buy_android.view.CustomNetworkImageView;
+
+@SuppressLint("InflateParams")
 public class ChatMessageAdapter extends BaseAdapter {
+	private Context context;
 	private LayoutInflater mInflater;
 	private List<Message> messages;
+	private FriendBean friendBean;
 
-	public ChatMessageAdapter(Context context, List<Message> messages) {
+	public ChatMessageAdapter(Context context, List<Message> messages,
+			FriendBean friendBean) {
 		mInflater = LayoutInflater.from(context);
 		this.messages = messages;
+		this.context = context;
+		this.friendBean = friendBean;
 	}
 
 	@Override
@@ -64,13 +76,26 @@ public class ChatMessageAdapter extends BaseAdapter {
 						parent, false);
 				viewHolder.content = (TextView) convertView
 						.findViewById(R.id.chat_from_content);
+				viewHolder.iv_avatar = (CustomNetworkImageView) convertView
+						.findViewById(R.id.chat_from_icon);
+				// 对方头像
+				viewHolder.iv_avatar.setLocalImageBitmap(BitmapUtil
+						.getLocalBitmap(friendBean.getPhotoName()));
 				convertView.setTag(viewHolder);
 			} else {
 				convertView = mInflater.inflate(R.layout.main_chat_send_msg,
 						null);
-
 				viewHolder.content = (TextView) convertView
 						.findViewById(R.id.chat_send_content);
+				viewHolder.iv_avatar = (CustomNetworkImageView) convertView
+						.findViewById(R.id.chat_send_icon);
+				// 本人头像
+				viewHolder.iv_avatar.setLocalImageBitmap(BitmapUtil
+						.getLocalBitmap(MyApplication
+								.getInstance()
+								.getSharedPreferences("user",
+										Context.MODE_PRIVATE)
+								.getString("photoName", "")));
 				convertView.setTag(viewHolder);
 			}
 
@@ -84,8 +109,9 @@ public class ChatMessageAdapter extends BaseAdapter {
 	}
 
 	private class ViewHolder {
-		public TextView name;
-		public TextView content;
+		CustomNetworkImageView iv_avatar;
+		TextView name;
+		TextView content;
 	}
 
 }

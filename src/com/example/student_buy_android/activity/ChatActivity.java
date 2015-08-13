@@ -73,7 +73,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 
 		setOnClickListener();
 
-		chatMessageAdapter = new ChatMessageAdapter(this, messages);
+		chatMessageAdapter = new ChatMessageAdapter(this, messages, friendBean);
 		lv_chat.setAdapter(chatMessageAdapter);
 		lv_chat.setSelection(messages.size() - 1);// 默认最后一行
 
@@ -146,7 +146,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		messages = messageDao.getMessage(preference.getString("username", ""),
 				friendBean.getUsername());
 
-		chatMessageAdapter = new ChatMessageAdapter(this, messages);
+		chatMessageAdapter = new ChatMessageAdapter(this, messages, friendBean);
 		lv_chat.setAdapter(chatMessageAdapter);
 		lv_chat.setSelection(messages.size() - 1);// 默认最后一行
 	}
