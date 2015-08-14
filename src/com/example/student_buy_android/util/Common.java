@@ -12,6 +12,8 @@ public class Common {
 	public static boolean share = false;
 	public static String SESSIONID;// 定义一个静态的字段，保存sessionID
 
+	public static String URL = "http://10.86.255.70:8080/ExcooServerSoa/";
+
 	// //家里外网环境
 	// public static final String[] IMAGES = new String[] {
 	// "http://60.20.141.202/caowei/images/big_img1.jpg",

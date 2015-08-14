@@ -128,7 +128,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/Regist_regist_layout"
+        android:id="@+id/regist_regist_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/Regist_password_layout"

@@ -16,7 +16,6 @@ import com.example.student_buy_android.bean.FriendBean;
 import com.example.student_buy_android.bean.Message;
 import com.example.student_buy_android.bean.Message.Type;
 import com.example.student_buy_android.util.BitmapUtil;
-import com.example.student_buy_android.util.Common;
 import com.example.student_buy_android.view.CustomNetworkImageView;
 
 @SuppressLint("InflateParams")
